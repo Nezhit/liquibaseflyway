@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: id_cust
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Title
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Adress
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: your_name
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id_emp
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Name
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Surname
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Papaname
+                  type: varchar(20)
+              - column:
+                  name: Birthdate
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Address
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Passport
+                  type: integer
+                  constraints:
+                    nullable: false
+                    unique: true
+
+  - changeSet:
+      id: 3
+      author: your_name
+      changes:
+        - createTable:
+            tableName: types
+            columns:
+              - column:
+                  name: id_type
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Title
+                  type: varchar(255) # Adjusted for potential JPA default length
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 4
+      author: your_name
+      changes:
+        - createTable:
+            tableName: producers
+            columns:
+              - column:
+                  name: id_prod
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: Title
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Adress
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+

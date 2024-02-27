@@ -1,0 +1,32 @@
+spring:
+  # Основной источник данных (для Liquibase)
+  datasource:
+
+      url: jdbc:postgresql://localhost:5432/liquibase
+      username: postgres
+      password: root
+      driver-class-name: org.postgresql.Driver
+
+
+  # Настройки Liquibase
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    url: jdbc:postgresql://localhost:5432/liquibase
+    driver-class-name: org.postgresql.Driver
+    user: postgres
+    password: root
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/flyway
+    driver-class-name: org.postgresql.Driver
+    user: postgres
+    password: root
+    locations: classpath:db/migration
+  # JPA и Hibernate настройки (если нужны)
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+
+

@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: your_name
+      changes:
+        - createTable:
+            tableName: testtable
+            columns:
+              - column:
+                  name: id_test
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: testintdata
+                  type: integer
+              - column:
+                  name: testvarchardata
+                  type: varchar(20)
+  - changeSet:
+      id: 8
+      author: your_name
+      changes:
+        - insert:
+            tableName: testtable
+            columns:
+              - column:
+                  name: testintdata
+                  value: 1234
+              - column:
+                  name: testvarchardata
+                  value: "test"
+  - changeSet:
+      id: 9
+      author: your_name
+      changes:
+        - delete:
+            tableName: testtable
+            where: "testintdata = 1234"
+  - changeSet:
+      id: 10
+      author: your_name
+      changes:
+        - dropColumn:
+            tableName: testtable
+            columnName: testintdata
+  - changeSet:
+      id: 11
+      author: your_name
+      changes:
+        - dropTable:
+            tableName: testtable
