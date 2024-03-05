@@ -8,6 +8,6 @@ databaseChangeLog:
       file: db/changelog/changeset/editing-db.yaml
 database:
   driver: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/liquibase
+  url: jdbc:postgresql://service-db/optoviy
   username: postgres
   password: root
