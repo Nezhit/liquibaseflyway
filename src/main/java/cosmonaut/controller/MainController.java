@@ -33,4 +33,8 @@ public class MainController {
     public String toLoginPage() {
         return "login";
     }
+    @GetMapping("/personpage")
+    public String getPersonPage(){
+        return "personpage";
+    }
 }

@@ -41,19 +41,19 @@ public class ChatController {
     public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto){
        return messageService.saveMessage(messageDto);
     }
-    @GetMapping("/updateChat/{receiver}")
+    @GetMapping("/updateChat/{chatId}")
     @ResponseBody
-    public Page<Message> updateChat(@PathVariable String receiver, Pageable pageable) {
+    public Page<Message> updateChat(@PathVariable Long chatId, Pageable pageable) {
 
-        Page<Message> messages = messageService.getMessagesForChat(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(receiver),pageable);
+        Page<Message> messages = messageService.getMessagesForChat(chatId,pageable);
 
         return messages;
     }
-    @GetMapping("/updateChatDesc/{receiver}")
+    @GetMapping("/updateChatDesc/{chatId}")
     @ResponseBody
-    public Page<Message> updateChatDesc(@PathVariable String receiver, Pageable pageable) {
+    public Page<Message> updateChatDesc(@PathVariable Long chatId, Pageable pageable) {
 
-        Page<Message> messages = messageService.getMessagesForChatDesc(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(receiver),pageable);
+        Page<Message> messages = messageService.getMessagesForChatDesc(chatId,pageable);
 
         return messages;
     }

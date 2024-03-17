@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+
+<div>
+    <h2>Личный кабинет</h2>
+    <form id="uploadAvatarForm" enctype="multipart/form-data">
+        <label for="avatar">Выберите аватарку:</label>
+        <input type="file" id="avatar" name="avatar" accept="image/*">
+        <button type="submit">Загрузить</button>
+    </form>
+    <!-- Показать текущую аватарку, если она есть -->
+    <div>
+        <h4>Текущая аватарка:</h4>
+        <img id="currentAvatar" src="" alt="Текущая аватарка" style="width: 100px; height: 100px; border-radius: 50%;">
+        <!-- Предполагается, что JavaScript обновит src изображения, используя URL из Local Storage или запроса к серверу -->
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#uploadAvatarForm').on('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '/profile/uploadAvatar',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // Предполагается, что сервер возвращает URL сохраненной аватарки в ответе
+                    localStorage.setItem('avatarUrl', response.avatarUrl);
+                    alert('Аватарка успешно загружена!');
+                },
+                error: function() {
+                    alert('Произошла ошибка при загрузке аватарки.');
+                }
+            });
+        });
+    });
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const avatarUrl = localStorage.getItem('avatarUrl');
+        if(avatarUrl) {
+            document.getElementById('currentAvatar').src ="http://localhost:8080/images/"+ avatarUrl;
+        }
+    });
+</script>
+
+</body>
+</html>

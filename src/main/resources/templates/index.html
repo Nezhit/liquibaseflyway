@@ -30,5 +30,20 @@
     и мэнеджер. Реализована возможность регистрации для новых пользователей. Досупны следующие страницы: главная,
     магазин, корзина, заказы, вход в систему и регистрация.</p>
 </div>
+<div id="avatarUrl" th:if="${currentUser != null}" th:data-avatar-url="  ${currentUser.avatarUrl}" style="display:none;"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let avatarElement = document.getElementById('avatarUrl');
+        if (avatarElement) {
+            const avatarUrl = avatarElement.getAttribute('data-avatar-url');
+            if (avatarUrl) {
+                localStorage.setItem('avatarUrl', avatarUrl);
+            }
+        }
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>

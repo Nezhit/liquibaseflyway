@@ -26,9 +26,27 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
                     <li class="nav-item">
                         <a class="nav-link btn btn-success" th:href="@{/login}">Логин</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/personpage">
+                            <img id="navbarAvatar" src="" alt="Аватар" style="width: 40px; height: 40px; border-radius: 50%;">
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const avatarUrl = localStorage.getItem('avatarUrl');
+              //  alert("avatarUrl");
+                if (avatarUrl) {
+
+                    document.getElementById('navbarAvatar').src = "http://localhost:8080/images/" + avatarUrl;
+                }
+            });
+
+        </script>
     </div>
+
 </body>
+
 </html>

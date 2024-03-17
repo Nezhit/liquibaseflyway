@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MessageService {
@@ -28,7 +29,8 @@ public class MessageService {
     UserService userService;
     public ResponseEntity<?> saveMessage(MessageDto messageDto){
         Message message=new Message();
-        Chat chat = chatRepo.findChatBySenderAndReceiver(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(messageDto.getReceiver())).get();
+        //Chat chat = chatRepo.findChatByUsers(messageDto.getUsers()).get();
+        Chat chat = chatRepo.findChatById(messageDto.getChatId()).get();
         message.setText(messageDto.getMessage());
         message.setChat(chat);
         message.setTime(LocalDateTime.now());
@@ -36,14 +38,14 @@ public class MessageService {
         return ResponseEntity.ok(")");
     }
 
-    public Page<Message> getMessagesForChat(User currentLoggedUser, User receiver, Pageable pageable) {
-        Chat chat = chatRepo.findChatBySenderAndReceiver(currentLoggedUser,receiver).get();
+    public Page<Message> getMessagesForChat(Long chatId, Pageable pageable) {
+        Chat chat = chatRepo.findChatById(chatId).get();
         List<Message> messages = messageRepo.findByChat(chat);
-        return messageRepo.findByChatSenderAndChatReceiverOrderByTime(currentLoggedUser, receiver, pageable);
+        return messageRepo.findByChatOrderByTime(chat, pageable);
     }
-    public Page<Message> getMessagesForChatDesc(User currentLoggedUser, User receiver, Pageable pageable) {
-        Chat chat = chatRepo.findChatBySenderAndReceiver(currentLoggedUser,receiver).get();
+    public Page<Message> getMessagesForChatDesc(Long chatId, Pageable pageable) {
+        Chat chat = chatRepo.findChatById(chatId).get();
         List<Message> messages = messageRepo.findByChat(chat);
-        return messageRepo.findByChatSenderAndChatReceiverOrderByTimeDesc(currentLoggedUser, receiver, pageable);
+        return messageRepo.findByChatOrderByTimeDesc(chat, pageable);
     }
 }

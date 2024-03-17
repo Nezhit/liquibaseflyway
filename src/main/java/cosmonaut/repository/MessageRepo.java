@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface MessageRepo extends JpaRepository<Message,Long> {
     List<Message> findByChat(Chat chat);
-    Page<Message> findByChatSenderAndChatReceiverOrderByTime(User sender, User receiver, Pageable pageable);
-    Page<Message> findByChatSenderAndChatReceiverOrderByTimeDesc(User sender, User receiver, Pageable pageable);
+    Page<Message> findByChatOrderByTime(Chat chat, Pageable pageable);
+    Page<Message> findByChatOrderByTimeDesc(Chat chat, Pageable pageable);
 
 }
