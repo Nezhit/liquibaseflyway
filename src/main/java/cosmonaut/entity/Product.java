@@ -1,6 +1,9 @@
 package cosmonaut.entity;
 
+import cosmonaut.entity.enums.ProductType;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "products")
@@ -16,6 +19,13 @@ public class Product {
 
     @Column(name = "price")
     private int price;
+
+    @Column(name = "arrival_time")
+    private LocalDate arrivalTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_type")
+    private ProductType productType;
 
     public Product() {}
 
@@ -47,6 +57,14 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public LocalDate getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public ProductType getProductType() {
+        return productType;
     }
 
     @Override

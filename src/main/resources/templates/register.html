@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Вход в аккаунт</title>
+    <title>Регистрация</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -14,20 +14,25 @@
     <div id="loginbox" style="margin-top: 50px;" class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <div>Вход в аккаунт</div>
+                <div>Регистрация</div>
             </div>
             <div style="padding-top: 30px" class="panel-body">
-                <form th:action="@{/authenticateTheUser}" method="POST" class="form-horizontal">
+                <form th:action="@{/register}" method="POST" class="form-horizontal">
                     <div style="margin-bottom: 25px" class="input-group">
                         <input type="text" name="username" placeholder="username" class="form-control">
                     </div>
                     <div style="margin-bottom: 25px" class="input-group">
                         <input type="password" name="password" placeholder="password" class="form-control">
                     </div>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <input type="text" name="name" placeholder="name" class="form-control">
+                    </div>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <input type="text" name="city" placeholder="city" class="form-control">
+                    </div>
                     <div style="margin-top: 10px; text-align: center;" class="form-group">
                         <div class="col-sm-10 controls">
-                            <button type="submit">Вход</button>
-                            <button><a th:href="@{/register}">Регистрация</a></button>
+                            <button type="submit">Регистрация</button>
                         </div>
                     </div>
                 </form>

@@ -1,7 +1,15 @@
 package cosmonaut.entity;
 
+import cosmonaut.entity.enums.UserRole;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "users")
@@ -14,52 +22,26 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "enabled")
-    private boolean enabled;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Authority> authorities;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_profile_id", referencedColumnName = "id")
+    private UserProfile userProfile;
+    @ManyToMany(mappedBy = "users")
+    private Set<Chat> chats; // Добавлено для двусторонней связи
     public User() {}
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String username, String password, UserRole role, UserProfile userProfile) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+        this.role = role;
+        this.userProfile = userProfile;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public List<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
-    @Override
-    public String toString() {
-        return "User [" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                "]\n";
-    }
 }

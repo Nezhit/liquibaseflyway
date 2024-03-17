@@ -15,32 +15,28 @@
 
 <div class="container">
     <div th:replace="~{navigation :: navigation(Shop)}"></div>
-    <h2>Shop</h2>
-    <span th:if="${products.getSize() == 0}">Products list is empty</span>
-    <table th:if="${products.getSize() > 0}" class="table table-hover">
+    <h2>Магазин</h2>
+    <table class="table table-hover">
         <thead class="thead-light">
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Price, руб.</th>
-            <th></th>
-            <th></th>
+            <th><a th:href="@{/shop/sort/name}">Название</a></th>
+            <th><a th:href="@{/shop/sort/price}">Цена (руб.)</a></th>
+            <th><a th:href="@{/shop/sort/date-of-arrival}">Дата поступления</a></th>
+            <th><a th:href="@{/shop/sort/category}">Категория</a></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
-            <td th:text="${product.id}"></td>
             <td th:text="${product.title}"></td>
             <td th:text="${product.price}"></td>
-            <td><a class="btn btn-secondary" th:href="@{'/details/' + ${product.id}}">Details</a></td>
-            <td><a class="btn btn-success" th:href="@{'/cart/add/' + ${product.id}}">Add to cart</a></td>
-            <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger" th:href="@{'/remove/' + ${product.id}}">Delete</a>
+            <td th:text="${product.arrivalTime}"></td>
+            <td th:text="${product.productType}"></td>
+            <td><a class="btn btn-success" th:href="@{'/cart/add/' + ${product.id}}">В корзину</a></td>
             </td>
         </tr>
         </tbody>
     </table>
-    <p th:text="${'Page: ' + (products.getNumber() + 1)}"></p>
 </div>
 </body>
 </html>

@@ -15,6 +15,9 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
+    @Column(name = "is_accepted")
+    private boolean isAccepted;
+
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
@@ -36,6 +39,14 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean getIsAccepted() {
+        return isAccepted;
+    }
+
+    public void setIsAccepted(boolean isAccepted) {
+        this.isAccepted = isAccepted;
     }
 
     public List<OrderItem> getOrderItems() {

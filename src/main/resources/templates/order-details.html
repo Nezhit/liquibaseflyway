@@ -2,7 +2,6 @@
 
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
-
 <head>
     <meta charset="utf-8"/>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,25 +14,22 @@
 <body>
 <div class="container">
     <div th:replace="~{navigation :: navigation(activeTab)}"></div>
-    <h2>Order details</h2>
+    <h2>Детали заказа</h2>
     <table class="table table-hover">
         <thead class="thead-light">
         <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Product cart
-                <br>id, title, price (руб.)
+            <th>Покупатель</th>
+            <th>Корзина
+                <br>название, цена (руб.)
             </th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td th:text="${selectedOrder.id}"></td>
             <td th:text="${selectedOrder.user.username}"></td>
             <td>
                 <table>
                     <tr th:each="item : ${selectedOrder.orderItems}">
-                        <td th:text="${item.product.id}"></td>
                         <td th:text="${item.product.title}"></td>
                         <td th:text="${item.product.price}"></td>
                     </tr>
@@ -42,9 +38,6 @@
         </tr>
         </tbody>
     </table>
-    <div><a class="btn btn-danger"
-            th:href="@{'/orders/order-details/remove/' + ${selectedOrder.id}}">Cancel order</a>
-    </div>
 </div>
 </body>
 </html>

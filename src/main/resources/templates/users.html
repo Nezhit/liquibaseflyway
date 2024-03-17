@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="~{navigation :: navigation(Users)}"></div>
+<h1>User List</h1>
+<table class="table table-hover">
+    <thead class="thead-light">
+    <tr>
+
+        <th>Username</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users.content}">
+        <td th:text="${user.getUsername()}">Name</td>
+        <td><a class="btn btn-success" th:href="@{'/openchat/' + ${user.getUsername()}}">Написать</a></td>
+
+    </tr>
+    </tbody>
+</table>
+<div th:if="${users.totalPages > 1}">
+    <ul class="pagination">
+        <li th:class="${users.first ? 'disabled' : ''}">
+            <a th:href="@{'/users?page=' + ${users.number - 1}}">Previous</a>
+        </li>
+        <li th:each="pageNumber : ${#numbers.sequence(0, users.totalPages - 1)}" th:class="${users.number == pageNumber ? 'active' : ''}">
+            <a th:href="@{'/users?page=' + ${pageNumber}}" th:text="${pageNumber + 1}">1</a>
+        </li>
+        <li th:class="${users.last ? 'disabled' : ''}">
+            <a th:href="@{'/users?page=' + ${users.number + 1}}">Next</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -15,30 +15,29 @@
 <body>
 <div class="container">
     <div th:replace="~{navigation :: navigation(Orders)}"></div>
-    <h2>Orders &#127811</h2>
-    <span th:if="${orders.size() == 0}">No orders yet..</span>
-    <table sec:authorize="isAuthenticated()" th:if="${orders.size() > 0}"
+    <h2>Заказы</h2>
+    <span th:if="${orders.size() == 0}">Нет заказов</span>
+    <table th:if="${orders.size() > 0}"
            class="table table-hover">
         <thead class="thead-light">
         <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Order</th>
+            <th>Покупатель</th>
+            <th>Принят ли заказ</th>
+            <th>Детали заказа</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
-            <td th:text="${order.id}"></td>
             <td th:text="${order.user.username}"></td>
-            <td><a class="btn btn-secondary" th:href="@{'/orders/order-details/' + ${order.id}}">Details</a></td>
-            <td><a class="btn btn-danger" th:href="@{'/orders/remove/' + ${order.id}}">Cancel</a></td>
+            <td th:text="${order.isAccepted}"></td>
+            <td><a class="btn btn-secondary" th:href="@{'/orders/order-details/' + ${order.id}}">Детали заказа</a></td>
+            <td><a class="btn" th:href="@{'/orders/accept/' + ${order.id}}">Подтвердить заказ</a></td>
+            <td><a class="btn btn-danger" th:href="@{'/orders/remove/' + ${order.id}}">Отменить заказ</a></td>
         </tr>
         </tbody>
     </table>
-    <div sec:authorize="isAnonymous()" th:if="${orders.size()>0}">
-        <p>To make order, please, <a class="btn btn-success" th:href="@{/login}">Login</a></p>
-    </div>
 </div>
 </body>
 </html>

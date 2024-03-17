@@ -4,6 +4,7 @@ import cosmonaut.entity.Order;
 import cosmonaut.entity.User;
 import cosmonaut.service.OrderService;
 import cosmonaut.service.UserService;
+import cosmonaut.util.CurrentUserUtils;
 import cosmonaut.util.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class OrderController {
 
     private ShoppingCart cart;
 
+    private CurrentUserUtils currentUserUtils;
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -39,11 +42,16 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @Autowired
+    public void setCurrentUserUtils(CurrentUserUtils currentUserUtils) {
+        this.currentUserUtils = currentUserUtils;
+    }
+
     @GetMapping("")
-    public String showOrders(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
+    public String showOrders(Model model) {
+        User user = currentUserUtils.getCurrentLoggedUser();
         model.addAttribute("user", user);
-        model.addAttribute("orders", orderService.getCustomOrders(principal));
+        model.addAttribute("orders", orderService.getCustomOrders());
         return "orders";
     }
 
@@ -55,13 +63,20 @@ public class OrderController {
     }
 
     @GetMapping("/create_order")
-    public String createOrder(Principal principal) {
-        User user = userService.findByUsername(principal.getName());
+    public String createOrder() {
+        User user = currentUserUtils.getCurrentLoggedUser();
         Order orderFromItems = orderService.createOrderFromItems(user, cart.getOrderItems());
-        return "redirect:order-details/" + orderFromItems.getId();
+        cart.clearUserCart();
+        return "redirect:/orders/order-details/" + orderFromItems.getId();
     }
 
-    @GetMapping({"/remove/{id}", "/order-details/remove/{id}"})
+    @GetMapping("/accept/{id}")
+    public String acceptOrderById(@PathVariable("id") Long id) {
+        orderService.acceptOrderById(id);
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/remove/{id}")
     public String deleteOrderById(@PathVariable("id") Long id) {
         orderService.deleteOrderById(id);
         return "redirect:/orders";

@@ -24,23 +24,11 @@
 <body>
 <div class="container">
     <div th:replace="~{navigation :: navigation(Home)}"></div>
-    <h2 style="color: #005139;">Spring Store <span style="color: #457725;">&#127811</span></h2>
+    <h2 style="color: #005000;">Главная страница</h2>
     <p style="text-align: justify;">
-        Simple online store on the Spring framework (Java). In particular, for this project I used Spring Boot, MVC
-        (model-view-controller), Thymeleaf template engine and Spring Security for authentication and access-control.
-        Also, I took Hibernate ORM as a Java Persistence API realization. I used PostgreSQL as a database for this
-        project and Git version control system. My Spring Store application deployed to Heroku cloud application
-        platform.</p>
-    <p><a href="https://github.com/RenatFaiz/SpringStore">View on GitHub</a></p>
-    <div class="logos_block">
-        <img src="images/spring.png" alt="Spring logo">
-        <img src="images/spring_boot_logo.png" alt="Spring Boot logo">
-        <img src="images/html5.gif" alt="HTML5 logo">
-        <img src="images/hibernate_logo.png" alt="Hibernate logo">
-        <img src="images/postgresql-logo.png" alt="PostgreSQL logo">
-        <img src="images/heroku_logo.svg" alt="Heroku logo">
-    </div>
-    <div th:replace="footer :: footer"></div>
+        Пример реализации интернет магазина. Система поддерживает три типа пользователей: администратор, покупатель
+    и мэнеджер. Реализована возможность регистрации для новых пользователей. Досупны следующие страницы: главная,
+    магазин, корзина, заказы, вход в систему и регистрация.</p>
 </div>
 </body>
 </html>
