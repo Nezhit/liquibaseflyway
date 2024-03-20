@@ -15,7 +15,7 @@ public class MyInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if ("/login".equals(request.getRequestURI())||"/authenticateTheUser".equals(request.getRequestURI())) {
+        if ("/login".equals(request.getRequestURI())||"/authenticateTheUser".equals(request.getRequestURI())||"/register".equals(request.getRequestURI())||"/logout".equals(request.getRequestURI())) {
             // Для страницы ошибки перехват не нужен, пропускаем запрос
             return true;
         }
