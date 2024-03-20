@@ -40,7 +40,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
               //  alert("avatarUrl");
                 if (avatarUrl) {
 
-                    document.getElementById('navbarAvatar').src = "http://localhost:8080/images/" + avatarUrl;
+                    document.getElementById('navbarAvatar').src = "/getAvatar/" + avatarUrl;
                 }
             });
 

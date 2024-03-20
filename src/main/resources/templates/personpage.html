@@ -72,7 +72,7 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         const avatarUrl = localStorage.getItem('avatarUrl');
         if(avatarUrl) {
-            document.getElementById('currentAvatar').src ="http://localhost:8080/images/"+ avatarUrl;
+            document.getElementById('currentAvatar').src ="/getAvatar/"+ avatarUrl;
         }
     });
 </script>
