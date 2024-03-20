@@ -1,19 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Личный кабинет</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-
-<div>
+<div class="container mt-5">
     <h2>Личный кабинет</h2>
-    <form id="uploadAvatarForm" enctype="multipart/form-data">
-        <label for="avatar">Выберите аватарку:</label>
-        <input type="file" id="avatar" name="avatar" accept="image/*">
-        <button type="submit">Загрузить</button>
+    <div class="mb-3">
+        <span class="fw-bold">Username:</span>
+        <span th:text="${user.getUsername()}">username_placeholder</span>
+    </div>
+    <div class="mb-3">
+        <span class="fw-bold">Password:</span>
+        <span th:text="${user.getPassword()}">password_placeholder</span>
+    </div>
+    <div class="mb-3">
+        <span class="fw-bold">City:</span>
+        <span th:text="${user.getUserProfile().getCity()}">city_placeholder</span>
+    </div>
+    <div class="mb-3">
+        <span class="fw-bold">Name:</span>
+        <span th:text="${user.getUserProfile().getName()}">name_placeholder</span>
+    </div>
+    <form id="uploadAvatarForm" enctype="multipart/form-data" class="mb-3">
+        <div class="mb-3">
+            <label for="avatar" class="form-label">Выберите аватарку:</label>
+            <input type="file" id="avatar" name="avatar" accept="image/*" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
     </form>
-    <!-- Показать текущую аватарку, если она есть -->
+</div>
+
+
+<!-- Показать текущую аватарку, если она есть -->
     <div>
         <h4>Текущая аватарка:</h4>
         <img id="currentAvatar" src="" alt="Текущая аватарка" style="width: 100px; height: 100px; border-radius: 50%;">

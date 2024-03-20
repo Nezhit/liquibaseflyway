@@ -74,7 +74,7 @@
         });
     }
 
-    function updateChat(page = 0, size = 10) {
+    function updateChat(page = 0, size = 5) {
         $.ajax({
             url: '/updateChat/' + chatId,
             type: 'GET',
@@ -99,7 +99,7 @@
         });
     }
 
-    function updateChatDesc(page = 0, size = 10) {
+    function updateChatDesc(page = 0, size = 5) {
         $.ajax({
             url: '/updateChatDesc/' + chatId,
             type: 'GET',

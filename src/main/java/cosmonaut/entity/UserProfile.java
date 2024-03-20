@@ -1,6 +1,9 @@
 package cosmonaut.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cosmonaut.entity.enums.UserRole;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile {
@@ -22,6 +27,7 @@ public class UserProfile {
     private String city;
 
     @OneToOne(mappedBy = "userProfile")
+    @JsonIgnore
     private User user;
 
     public UserProfile() {}
@@ -31,35 +37,4 @@ public class UserProfile {
         this.city = city;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
