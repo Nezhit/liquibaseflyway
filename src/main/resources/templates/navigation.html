@@ -36,12 +36,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
         </nav>
         <script>
             window.addEventListener('DOMContentLoaded', (event) => {
-                const avatarUrl = localStorage.getItem('avatarUrl');
-              //  alert("avatarUrl");
-                if (avatarUrl) {
+                const timestamp = new Date().getTime();
+                document.getElementById('navbarAvatar').src = `/getAvatar/?t=${timestamp}`;
 
-                    document.getElementById('navbarAvatar').src = "/getAvatar/" + avatarUrl;
-                }
             });
 
         </script>

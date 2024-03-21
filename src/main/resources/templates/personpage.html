@@ -70,10 +70,9 @@
     });
 
     window.addEventListener('DOMContentLoaded', (event) => {
-        const avatarUrl = localStorage.getItem('avatarUrl');
-        if(avatarUrl) {
-            document.getElementById('currentAvatar').src ="/getAvatar/"+ avatarUrl;
-        }
+        const timestamp = new Date().getTime();
+        document.getElementById('currentAvatar').src = `/getAvatar/?t=${timestamp}`;
+
     });
 </script>
 

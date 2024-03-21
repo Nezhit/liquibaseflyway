@@ -1,5 +1,7 @@
 package cosmonaut.service;
 
+import cosmonaut.util.CurrentUserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Access;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +27,8 @@ public class FileStorageService {
     @Value("avatars/")
     private String imagePath;
     private final ResourceLoader resourceLoader;
+    @Autowired
+    private CurrentUserUtils currentUserUtils;
 
 
 
@@ -43,11 +48,14 @@ public class FileStorageService {
         return fileName;
     }
 
-    public ResponseEntity<byte[]> getImage(String imageName) {
+    public ResponseEntity<byte[]> getImage() {
         try {
+            String avatarUrl = currentUserUtils.getCurrentLoggedUser().getAvatarUrl();
+            System.out.println("Ava= "+avatarUrl);
+            Path path = Paths.get(imagePath + avatarUrl);
 
+            System.out.println("Пытаемся получить файл по пути: " + path.toString()); // Логируем путь
 
-            Path path = Paths.get(imagePath + imageName);
             if (Files.exists(path)) {
                 byte[] imageData = Files.readAllBytes(path);
                 String contentType = Files.probeContentType(path);
@@ -55,6 +63,7 @@ public class FileStorageService {
                 MediaType mediaType = MediaType.parseMediaType(contentType);
                 return ResponseEntity.ok().contentType(mediaType).body(imageData);
             } else {
+                System.out.println("Файл не найден: " + path.toString()); // Логируем, если файл не найден
                 return ResponseEntity.notFound().build();
             }
         } catch (IOException e) {
@@ -62,4 +71,5 @@ public class FileStorageService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 }

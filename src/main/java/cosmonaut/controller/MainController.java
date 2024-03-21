@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,7 +58,7 @@ public class MainController implements MainControllerApi {
         return "personpage";
     }
     @Override
-    public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
-        return fileStorageService.getImage(imageName);
+    public ResponseEntity<byte[]> getImage(@RequestParam(value = "t", required = false) Long timestamp) {
+        return fileStorageService.getImage();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 
 @Service
@@ -18,6 +19,8 @@ public class UserService {
     private FileStorageService fileStorageService;
     @Autowired
     private CurrentUserUtils currentUserUtils;
+    @Autowired
+    EntityManager entityManager;
 
     public UserService() {
     }
@@ -38,6 +41,12 @@ public class UserService {
 
         user.setAvatarUrl(fileStorageService.storeFile(multipartFile));
         userRepository.save(user);
+        entityManager.clear();
+        // Получаем обновленные данные пользователя из базы данных
+        User updatedUser = findByUsername(currentUserUtils.getCurrentLoggedUser().getUsername());
+
+        // Обновляем информацию в CurrentUserUtils
+        currentUserUtils.setCurrentLoggedUser(updatedUser);
         return user.getAvatarUrl();
     }
 
