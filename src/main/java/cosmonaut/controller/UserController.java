@@ -1,5 +1,6 @@
 package cosmonaut.controller;
 
+import cosmonaut.controller.api.UserControllerApi;
 import cosmonaut.entity.User;
 import cosmonaut.entity.UserProfile;
 import cosmonaut.entity.enums.UserRole;
@@ -21,7 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class UserController {
+
+public class UserController implements UserControllerApi {
 
     private UserRepository userRepository;
     private CurrentUserUtils currentUserUtils;
@@ -33,7 +35,7 @@ public class UserController {
 
     @Autowired
     public void setCurrentUserUtils(CurrentUserUtils currentUserUtils) { this.currentUserUtils = currentUserUtils; }
-
+@Override
     @PostMapping("/authenticateTheUser")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userRepository.findByUsernameAndPassword(username, password);
@@ -48,17 +50,20 @@ public class UserController {
         }
         else return "login";
     }
+    @Override
 
     @GetMapping("/logout")
     public String logout() {
         currentUserUtils.setCurrentLoggedUser(null);
         return "index";
     }
+    @Override
 
     @GetMapping("/register")
     public String toRegisterPage() {
         return "register";
     }
+    @Override
 
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password,
@@ -70,6 +75,8 @@ public class UserController {
         }
         else return "register";
     }
+    @Override
+
     @PostMapping("/profile/uploadAvatar")
     public ResponseEntity<Map<String, String>> uploadAvatar(@RequestParam("avatar") MultipartFile avatar) throws IOException {
         String avatarUrl = userService.uploadAvatar(avatar);

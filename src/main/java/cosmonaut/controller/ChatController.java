@@ -1,5 +1,6 @@
 package cosmonaut.controller;
 
+import cosmonaut.controller.api.ChatControllerApi;
 import cosmonaut.dto.MessageDto;
 import cosmonaut.entity.Message;
 import cosmonaut.repository.UserRepository;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class ChatController {
+public class ChatController implements ChatControllerApi {
     private CurrentUserUtils currentUserUtils;
     @Autowired
     private ChatService chatService;
@@ -32,25 +33,26 @@ public class ChatController {
         this.currentUserUtils = currentUserUtils;
     }
 
-    @GetMapping("/openchat/{username}")
+    @Override
     public String getChat(@PathVariable String username, Model model){
         model.addAttribute("chat",chatService.openChat(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(username)));
         return "chatpage";
     }
-    @PostMapping("/sendMessage")
+    @Override
+
     public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto){
        return messageService.saveMessage(messageDto);
     }
-    @GetMapping("/updateChat/{chatId}")
-    @ResponseBody
+    @Override
+
     public Page<Message> updateChat(@PathVariable Long chatId, Pageable pageable) {
 
         Page<Message> messages = messageService.getMessagesForChat(chatId,pageable);
 
         return messages;
     }
-    @GetMapping("/updateChatDesc/{chatId}")
-    @ResponseBody
+    @Override
+
     public Page<Message> updateChatDesc(@PathVariable Long chatId, Pageable pageable) {
 
         Page<Message> messages = messageService.getMessagesForChatDesc(chatId,pageable);

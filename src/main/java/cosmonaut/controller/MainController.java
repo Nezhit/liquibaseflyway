@@ -1,5 +1,6 @@
 package cosmonaut.controller;
 
+import cosmonaut.controller.api.MainControllerApi;
 import cosmonaut.repository.UserRepository;
 import cosmonaut.service.FileStorageService;
 import cosmonaut.service.UserService;
@@ -23,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
-public class MainController {
+public class MainController implements MainControllerApi {
 
     private UserRepository userRepository;
     @Autowired
@@ -34,23 +35,20 @@ public class MainController {
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    @GetMapping("/index")
+    @Override
     public String toHomepage() {
         return "index";
     }
-
-    @RequestMapping("/users")
+    @Override
     public String showAllUsers(Model model, Pageable pageable) {
         model.addAttribute("users", userRepository.findAll(pageable));
         return "users";
     }
-
-    @GetMapping("/login")
+    @Override
     public String toLoginPage() {
         return "login";
     }
-    @GetMapping("/personpage")
+    @Override
     public String getPersonPage(Model model){
         if(currentUserUtils.getCurrentLoggedUser() == null){
             return "redirect:/login";
@@ -58,7 +56,7 @@ public class MainController {
         model.addAttribute("user",currentUserUtils.getCurrentLoggedUser());
         return "personpage";
     }
-    @GetMapping("/getAvatar/{imageName}")
+    @Override
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
         return fileStorageService.getImage(imageName);
     }
