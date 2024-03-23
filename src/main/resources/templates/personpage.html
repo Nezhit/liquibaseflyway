@@ -9,40 +9,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<div th:replace="~{navigation :: navigation(Users)}"></div>
 <div class="container mt-5">
     <h2>Личный кабинет</h2>
-    <div class="mb-3">
-        <span class="fw-bold">Username:</span>
-        <span th:text="${user.getUsername()}">username_placeholder</span>
-    </div>
-    <div class="mb-3">
-        <span class="fw-bold">Password:</span>
-        <span th:text="${user.getPassword()}">password_placeholder</span>
-    </div>
-    <div class="mb-3">
-        <span class="fw-bold">City:</span>
-        <span th:text="${user.getUserProfile().getCity()}">city_placeholder</span>
-    </div>
-    <div class="mb-3">
-        <span class="fw-bold">Name:</span>
-        <span th:text="${user.getUserProfile().getName()}">name_placeholder</span>
-    </div>
-    <form id="uploadAvatarForm" enctype="multipart/form-data" class="mb-3">
-        <div class="mb-3">
-            <label for="avatar" class="form-label">Выберите аватарку:</label>
-            <input type="file" id="avatar" name="avatar" accept="image/*" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">Загрузить</button>
-    </form>
-</div>
-
-
-<!-- Показать текущую аватарку, если она есть -->
     <div>
         <h4>Текущая аватарка:</h4>
-        <img id="currentAvatar" src="" alt="Текущая аватарка" style="width: 100px; height: 100px; border-radius: 50%;">
+        <img id="currentAvatar" src="" alt="Текущая аватарка" style="width: 100px; height: 100px;">
         <!-- Предполагается, что JavaScript обновит src изображения, используя URL из Local Storage или запроса к серверу -->
     </div>
+    <div class="mainInfo">
+        <div>
+            <span >Логин:</span>
+            <span th:text="${user.getUsername()}">username_placeholder</span>
+        </div>
+        <div>
+            <span >Пароль:</span>
+            <span th:text="${user.getPassword()}">password_placeholder</span>
+        </div>
+        <div>
+            <span >Email:</span>
+            <span th:text="${user.getEmail()}">email_placeholder</span>
+        </div>
+        <div>
+            <span >Город:</span>
+            <span th:text="${user.getUserProfile().getCity()}">city_placeholder</span>
+        </div>
+        <div >
+            <span >Имя:</span>
+            <span th:text="${user.getUserProfile().getName()}">name_placeholder</span>
+        </div>
+    </div>
+
+    <form id="uploadAvatarForm" enctype="multipart/form-data" class="mb-3">
+        <div class="mb-3">
+            <label for="avatar" class="form-label">Изменить аватар профиля: </label>
+            <input type="file" id="avatar" name="avatar" accept="image/*" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить аватар</button>
+    </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -77,4 +81,59 @@
 </script>
 
 </body>
+<style>
+    .mainInfo {
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 16px;
+        border-width: 1px;
+        border-style: groove;
+        border-radius: 10px;
+        font-size: medium;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .logos_block {
+        padding: 5px;
+    }
+
+    body {
+        background: url(https://trafaret-decor.ru/sites/default/files/2022-12/Biology%20background%20%2828%29.jpg);
+        margin:0 auto;
+        canvas: stretch;
+    }
+
+    .logos_block img {
+        height: 40px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 20px;
+        background: white;
+    }
+
+    h2 {
+        font-family: Impact, Charcoal, sans-serif;
+        text-align: center;
+        color: #1c2e55;
+    }
+
+    p {
+        color: #333;
+        line-height: 1.6;
+    }
+
+    a {
+        color: #3c4459;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
 </html>

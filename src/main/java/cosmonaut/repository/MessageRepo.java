@@ -15,5 +15,7 @@ public interface MessageRepo extends JpaRepository<Message,Long> {
     List<Message> findByChat(Chat chat);
     Page<Message> findByChatOrderByTime(Chat chat, Pageable pageable);
     Page<Message> findByChatOrderByTimeDesc(Chat chat, Pageable pageable);
+    Page<Message> findByUser(User user, Pageable pageable);
+    Long countMessagesByUser(User user);
 
 }

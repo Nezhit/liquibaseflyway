@@ -34,6 +34,7 @@ public class MessageService {
         message.setText(messageDto.getMessage());
         message.setChat(chat);
         message.setTime(LocalDateTime.now());
+        message.setUser(currentUserUtils.getCurrentLoggedUser());
         messageRepo.save(message);
         return ResponseEntity.ok(")");
     }
@@ -47,5 +48,8 @@ public class MessageService {
         Chat chat = chatRepo.findChatById(chatId).get();
         List<Message> messages = messageRepo.findByChat(chat);
         return messageRepo.findByChatOrderByTimeDesc(chat, pageable);
+    }
+    public Page<Message> getMessagesForUser(User user, Pageable pageable){
+        return messageRepo.findByUser(user,pageable);
     }
 }

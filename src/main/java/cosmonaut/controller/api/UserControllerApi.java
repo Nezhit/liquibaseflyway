@@ -21,9 +21,10 @@ public interface UserControllerApi {
     String toRegisterPage();
 
     @PostMapping("/register")
-    String register(@RequestParam String username, @RequestParam String password, @RequestParam String name, @RequestParam String city);
+    String register(@RequestParam String username, @RequestParam String password, @RequestParam String name,@RequestParam String email, @RequestParam String city);
 
     @PostMapping("/profile/uploadAvatar")
     ResponseEntity<Map<String, String>> uploadAvatar(@RequestParam("avatar") MultipartFile avatar) throws IOException;
-
+    @GetMapping("/user-statistics")
+    public String getUserStatistics(Model model);
 }

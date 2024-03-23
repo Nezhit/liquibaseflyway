@@ -4,31 +4,26 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <style type="text/css">
-        .logos_block {
-            padding: 5px;
-        }
 
-        .logos_block img {
-            height: 40px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
-    <title>Spring Store</title>
+    <title>WebChat Biology</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+<div th:replace="~{navigation :: navigation(Home)}"></div>
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Home)}"></div>
-    <h2 style="color: #005000;">Главная страница</h2>
+    <h2>Описание</h2>
     <p style="text-align: justify;">
-        Пример реализации интернет магазина. Система поддерживает три типа пользователей: администратор, покупатель
-    и мэнеджер. Реализована возможность регистрации для новых пользователей. Досупны следующие страницы: главная,
-    магазин, корзина, заказы, вход в систему и регистрация.</p>
+        Курсовой проект на тему "Web-приложение `Чат`". Выполнил ст-т гр. 20ВП1 Акмашев С.В.</p>
+        <p style="text-align: justify;"> Тематика чата: Онлайн чат для любителей микробиологии и генетики. Добро пожаловать на главную страницу онлайн чата!
+        Для навигации по сайту используйте вкладки сверху страницы. Удачных исследований!</p>
+    <h2>Справочная информация</h2>
+    <p style="text-align: justify;"> Генетика (от греч. γενητως — «порождающий, происходящий от кого-то») — раздел биологии, занимающийся изучением генов, генетических вариаций и наследственности в организмах.
+        В зависимости от объекта исследования выделяют генетику растений, животных, микроорганизмов, человека и других.
+        Идеи и методы генетики играют важную роль в медицине, сельском хозяйстве, микробиологической промышленности, а также в генной инженерии.</p>
+    <p style="text-align: justify;"> Микробиология (греч. μικρος — малый, лат. bios — жизнь, лат. logos — учение) — наука, предметом изучения которой являются микроскопические существа, называемые микроорганизмами (микробами) (включающими в себя: Одноклеточные организмы, Многоклеточные организмы и Бесклеточные), их биологические признаки и взаимоотношения с другими организмами, населяющими нашу планету. В область интересов микробиологии входит их систематика, морфология, физиология, биохимия, эволюция, роль в экосистемах, а также возможности практического использования.</p>
 </div>
 <div id="avatarUrl" th:if="${currentUser != null}" th:data-avatar-url="  ${currentUser.avatarUrl}" style="display:none;"></div>
 <script th:inline="javascript">
@@ -46,4 +41,47 @@
 </script>
 
 </body>
+<style type="text/css">
+    .logos_block {
+        padding: 5px;
+    }
+
+    body {
+        background: url(https://trafaret-decor.ru/sites/default/files/2022-12/Biology%20background%20%2828%29.jpg);
+        margin:0 auto;
+        canvas: stretch;
+    }
+
+    .logos_block img {
+        height: 40px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 20px;
+        background: white;
+    }
+
+    h2 {
+        font-family: Impact, Charcoal, sans-serif;
+        text-align: center;
+        color: #1c2e55;
+    }
+
+    p {
+        color: #333;
+        line-height: 1.6;
+    }
+
+    a {
+        color: #3c4459;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
 </html>

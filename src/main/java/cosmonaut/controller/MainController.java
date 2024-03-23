@@ -42,7 +42,7 @@ public class MainController implements MainControllerApi {
     }
     @Override
     public String showAllUsers(Model model, Pageable pageable) {
-        model.addAttribute("users", userRepository.findAll(pageable));
+        model.addAttribute("users", userRepository.findByUsernameNot(currentUserUtils.getCurrentLoggedUser().getUsername(),pageable));
         return "users";
     }
     @Override

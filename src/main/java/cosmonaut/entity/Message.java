@@ -2,7 +2,9 @@ package cosmonaut.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +27,10 @@ public class Message {
     @JsonIgnore
     @JoinColumn(name = "chat_id")
     private Chat chat;
+    @ManyToOne
+    @JoinColumn(name = "user_name", referencedColumnName = "username")
+    @JsonIgnoreProperties({"chats"})
+    private User user;
 
     private LocalDateTime time;
 

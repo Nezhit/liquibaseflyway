@@ -36,6 +36,7 @@ public class ChatController implements ChatControllerApi {
     @Override
     public String getChat(@PathVariable String username, Model model){
         model.addAttribute("chat",chatService.openChat(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(username)));
+        model.addAttribute("currentUser",currentUserUtils.getCurrentLoggedUser());
         return "chatpage";
     }
     @Override

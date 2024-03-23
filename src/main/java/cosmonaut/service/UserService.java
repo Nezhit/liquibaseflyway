@@ -1,5 +1,6 @@
 package cosmonaut.service;
 
+import cosmonaut.dto.UserStatisticDTO;
 import cosmonaut.entity.User;
 import cosmonaut.repository.UserRepository;
 import cosmonaut.util.CurrentUserUtils;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -48,6 +50,9 @@ public class UserService {
         // Обновляем информацию в CurrentUserUtils
         currentUserUtils.setCurrentLoggedUser(updatedUser);
         return user.getAvatarUrl();
+    }
+    public List<UserStatisticDTO> getUserStatistics() {
+        return userRepository.findUserStatistics();
     }
 
 }

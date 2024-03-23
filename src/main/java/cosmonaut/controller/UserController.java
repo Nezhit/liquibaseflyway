@@ -1,6 +1,7 @@
 package cosmonaut.controller;
 
 import cosmonaut.controller.api.UserControllerApi;
+import cosmonaut.dto.UserStatisticDTO;
 import cosmonaut.entity.User;
 import cosmonaut.entity.UserProfile;
 import cosmonaut.entity.enums.UserRole;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -67,10 +69,10 @@ public class UserController implements UserControllerApi {
 
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password,
-                           @RequestParam String name, @RequestParam String city) {
+                           @RequestParam String name, @RequestParam String email,@RequestParam String city) {
         User user = userRepository.findByUsernameAndPassword(username, password);
         if (user == null) {
-            userRepository.save(new User(username, password, UserRole.USER, new UserProfile(name, city)));
+            userRepository.save(new User(username, password, email ,new UserProfile(name, city)));
             return "login";
         }
         else return "register";
@@ -83,6 +85,13 @@ public class UserController implements UserControllerApi {
         Map<String, String> response = new HashMap<>();
         response.put("avatarUrl", avatarUrl);
         return ResponseEntity.ok(response);
+    }
+    @Override
+
+    public String getUserStatistics(Model model){
+        List<UserStatisticDTO> userStatistics = userService.getUserStatistics();
+        model.addAttribute("userStatistics", userStatistics);
+        return "userStatistics";
     }
 
 }
