@@ -18,6 +18,7 @@
     <div id="chatMessages" class="mt-4"></div>
     <div class="input-group mt-4">
         <textarea id="messageInput" class="form-control" placeholder="Напишите что-нибудь интересного..."></textarea>
+        <input type="file" id="fileInput" class="form-control">
         <div class="input-group-append">
             <button id="sendMessageBtn" class="btn btn-primary" type="button">Отправить</button>
         </div>
@@ -36,16 +37,37 @@
     // Assuming chatId is globally available or retrieved from the URL/another source
     var chatId = $('#chatId').text(); // Placeholder, replace with actual logic to obtain chat ID
 
+    // function sendMessage() {
+    //     var messageText = $('#messageInput').val();
+    //     $.ajax({
+    //         url: '/sendMessage',
+    //         type: 'POST',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify({
+    //             chatId: chatId,
+    //             message: messageText
+    //         }),
+    //         success: function(response) {
+    //             updateChat();
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //         }
+    //     });
+    // }
     function sendMessage() {
         var messageText = $('#messageInput').val();
+        var fileInput = document.getElementById('fileInput');
+        var formData = new FormData();
+        formData.append("message", messageText);
+        formData.append("file", fileInput.files[0]);
+
         $.ajax({
-            url: '/sendMessage',
+            url: '/chats/' + chatId + '/messages/upload',
             type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                chatId: chatId,
-                message: messageText
-            }),
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(response) {
                 updateChat();
             },
@@ -54,6 +76,7 @@
             }
         });
     }
+
 
     function updateChat(page = 0, size = 5) {
         $.ajax({
@@ -69,8 +92,11 @@
                 response.content.forEach(function(message) {
                     var messageClass = message.user.username === currentUser ? 'chat-message sent' : 'chat-message';
                     var messageHtml = '<div class="' + messageClass + '">' +
-                        '<p class="chat-message-text">' + message.text + '</p>' +
-                        '<span class="chat-message-time">' + message.time + '</span>' +
+                        '<p class="chat-message-text">' + message.text + '</p>' ;
+                    if (message.fileUrl) {
+                        messageHtml += '<a href="/files/' + message.fileUrl + '" download="downloaded_file">Скачать файл</a>';
+                    }
+                    messageHtml +=  '<span class="chat-message-time">' + message.time + '</span>' +
                         '</div>';
                     $('#chatMessages').append(messageHtml);
                 });

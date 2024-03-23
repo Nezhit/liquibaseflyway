@@ -34,6 +34,7 @@ public class MessageService {
         message.setText(messageDto.getMessage());
         message.setChat(chat);
         message.setTime(LocalDateTime.now());
+        message.setFileUrl(messageDto.getFileUrl());
         message.setUser(currentUserUtils.getCurrentLoggedUser());
         messageRepo.save(message);
         return ResponseEntity.ok(")");

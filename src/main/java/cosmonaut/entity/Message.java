@@ -31,7 +31,8 @@ public class Message {
     @JoinColumn(name = "user_name", referencedColumnName = "username")
     @JsonIgnoreProperties({"chats"})
     private User user;
-
+    @Column(name = "file_url")
+    private String fileUrl;
     private LocalDateTime time;
 
 }

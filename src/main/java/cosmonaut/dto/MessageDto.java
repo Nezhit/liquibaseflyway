@@ -13,5 +13,6 @@ import java.util.Set;
 public class MessageDto {
     private String message;
     private Set<User> users;
+    private String fileUrl;
     private Long chatId;
 }

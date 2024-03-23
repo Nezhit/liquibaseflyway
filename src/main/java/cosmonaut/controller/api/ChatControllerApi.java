@@ -2,11 +2,15 @@ package cosmonaut.controller.api;
 
 import cosmonaut.dto.MessageDto;
 import cosmonaut.entity.Message;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface ChatControllerApi {
     @GetMapping("/openchat/{username}")
@@ -22,4 +26,12 @@ public interface ChatControllerApi {
     @GetMapping("/updateChatDesc/{chatId}")
     @ResponseBody
     Page<Message> updateChatDesc(@PathVariable Long chatId, Pageable pageable);
+
+    @PostMapping("/chats/{chatId}/messages/upload")
+    public ResponseEntity<?> uploadMessage(@PathVariable Long chatId,
+                                           @RequestParam("message") String message,
+                                           @RequestParam(value = "file", required = false) MultipartFile file);
+
+    @GetMapping("/files/{filename:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request) throws Exception;
 }
