@@ -119,10 +119,16 @@
             },
             success: function(response) {
                 $('#chatMessages').empty();
+                var currentUser = $('#currentUser').text(); // Повторное использование, убедитесь, что этот элемент есть на странице
                 response.content.forEach(function(message) {
-                    var messageHtml = '<div class="chat-message">' +
-                        '<p class="chat-message-text">' + message.text + '</p>' +
-                        '<span class="chat-message-time">' + message.time + '</span>' +
+                    // Определение класса сообщения в зависимости от того, кто является отправителем
+                    var messageClass = message.user.username === currentUser ? 'chat-message sent' : 'chat-message';
+                    var messageHtml = '<div class="' + messageClass + '">' +
+                        '<p class="chat-message-text">' + message.text + '</p>';
+                    if (message.fileUrl) {
+                        messageHtml += '<a href="/files/' + message.fileUrl + '" download="downloaded_file">Скачать файл</a>';
+                    }
+                    messageHtml += '<span class="chat-message-time">' + message.time + '</span>' +
                         '</div>';
                     $('#chatMessages').append(messageHtml);
                 });
@@ -133,6 +139,7 @@
             }
         });
     }
+
 
     function updatePagination(totalPages, updateFunction, size) {
         $('#pagination ul').empty();
