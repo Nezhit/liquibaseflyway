@@ -19,6 +19,8 @@ public interface MainControllerApi {
 
     @GetMapping("/personpage")
     String getPersonPage(Model model);
+    @GetMapping("/sentMessages")
+    String getSentMessagesPage();
 
     @GetMapping("/getAvatar")
     ResponseEntity<byte[]> getImage(@RequestParam(value = "t", required = false) Long timestamp);

@@ -57,6 +57,12 @@ public class MainController implements MainControllerApi {
         model.addAttribute("user",currentUserUtils.getCurrentLoggedUser());
         return "personpage";
     }
+
+    @Override
+    public String getSentMessagesPage() {
+        return "sentmessages";
+    }
+
     @Override
     public ResponseEntity<byte[]> getImage(@RequestParam(value = "t", required = false) Long timestamp) {
         return fileStorageService.getImage();

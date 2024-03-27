@@ -76,19 +76,30 @@ public class FileStorageService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    public  void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
+    public  ResponseEntity<?> saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
+        // Проверка на наличие файла в запросе
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+            try {
+                Path uploadPath = Paths.get(uploadDir);
 
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ioe) {
-            throw new IOException("Could not save file: " + fileName, ioe);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                try (InputStream inputStream = multipartFile.getInputStream()) {
+                    Path filePath = uploadPath.resolve(fileName);
+                    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ioe) {
+                    throw new IOException("Could not save file: " + fileName, ioe);
+                }
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload file: " + fileName);
+            }
         }
+        return ResponseEntity.ok("File uploaded successfully: " + fileName);
+
     }
     public Resource loadFileAsResource(String fileName) throws Exception {
         try {

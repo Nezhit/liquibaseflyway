@@ -53,4 +53,7 @@ public class MessageService {
     public Page<Message> getMessagesForUser(User user, Pageable pageable){
         return messageRepo.findByUser(user,pageable);
     }
+    public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start,LocalDateTime end,Pageable pageable){
+        return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(),start,end,pageable);
+    }
 }

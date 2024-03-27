@@ -17,6 +17,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
                     <li class="nav-item" th:classappend="${activeTab == 'Statistic' ? 'active' : ''}">
                         <a class="nav-link" th:href="@{/user-statistics}">Статистика</a>
                     </li>
+                    <li class="nav-item" th:classappend="${activeTab == 'MessagesHistory' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/sentMessages}">История</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Авторизация</a>
                     </li>

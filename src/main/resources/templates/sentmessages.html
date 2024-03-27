@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sent Messages</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- noUiSlider CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+
+        .chat-message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            max-width: 70%;
+        }
+        .chat-message.sent {
+            margin-left: auto;
+            background-color: #DCF8C6;
+        }
+        .chat-message-text {
+            margin-top: 5px;
+            color: #666;
+        }
+        .chat-message-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 5px;
+            display: block;
+        }
+        body {
+            background: url(https://trafaret-decor.ru/sites/default/files/2022-12/Biology%20background%20%2828%29.jpg);
+            margin: 0 auto;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            background: white;
+        }
+        h2 {
+            font-family: Impact, Charcoal, sans-serif;
+            text-align: center;
+            color: #1c2e55;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{navigation :: navigation(MessagesHistory)}"></div>
+<div class="container">
+    <h2>Sent Messages</h2>
+    <div id="slider" class="slider-container"></div>
+    <div id="dateRange"></div>
+    <div id="chatMessages" class="mt-4"></div>
+    <div id="pagination" class="mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center"></ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Включение Bootstrap, jQuery и noUiSlider -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
+<script>
+    // Инициализация noUiSlider
+    var slider = document.getElementById('slider');
+    noUiSlider.create(slider, {
+        start: [+new Date() - 86400000, +new Date()],
+        connect: true,
+        range: {
+            'min': +new Date() - 86400000 * 30,
+            'max': +new Date()
+        },
+        format: {
+            to: function(value) {
+                return new Date(value).toISOString();
+            },
+            from: function(value) {
+                return value;
+            }
+        }
+    });
+
+    slider.noUiSlider.on('update', function(values, handle) {
+        document.getElementById('dateRange').innerHTML = 'From: ' + values[0].split('T')[0] + ' To: ' + values[1].split('T')[0];
+
+        updateChat(values[0], values[1]);
+    });
+
+
+    function updateChat(startTime, endTime, page = 0, size = 5) {
+        $.ajax({
+            url: '/getMessagesForUserBetweenDates',
+            type: 'GET',
+
+            data: {
+                startTime: new Date(startTime).toISOString(),
+                endTime: new Date(endTime).toISOString(),
+                page: page,
+                size: size
+            },
+            success: function(response) {
+                $('#chatMessages').empty();
+                // Assuming currentUser is fetched or defined elsewhere accurately
+                var currentUser = $('#currentUser').text();
+                response.content.forEach(function(message) {
+                    var messageClass = message.user.username === currentUser ? 'chat-message sent' : 'chat-message';
+                    var messageHtml = '<div class="' + messageClass + '">' +
+                        '<p class="chat-message-text">' + message.text + '</p>';
+                    if (message.fileUrl) {
+                        messageHtml += '<a href="' + message.fileUrl + '" download>Скачать файл</a>';
+                    }
+                    messageHtml += '<span class="chat-message-time">' + new Date(message.time).toLocaleString() + '</span></div>';
+                    $('#chatMessages').append(messageHtml);
+                });
+
+                updatePagination(response.totalPages, function(newPage) {
+                    updateChat(startTime, endTime, newPage, size);
+                }, size);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading messages: ", xhr.responseText);
+            }
+        });
+    }
+
+
+    function updatePagination(totalPages, callback, size) {
+        $('#pagination ul').empty();
+        for (var i = 0; i < totalPages; i++) {
+            var li = $('<li class="page-item"></li>');
+            var a = $('<a class="page-link" href="#">').text(i + 1);
+            a.on('click', (function(page) {
+                return function(e) {
+                    e.preventDefault();
+                    callback(page, size);
+                };
+            })(i));
+            li.append(a);
+            $('#pagination ul').append(li);
+        }
+    }
+    // Инициализация чата при загрузке страницы
+    $(document).ready(function() {
+        var initialStart = new Date(+new Date() - 86400000).toISOString(); // -1 день от текущей даты
+        var initialEnd = new Date().toISOString();
+        updateChat(initialStart, initialEnd);
+    });
+</script>
+</body>
+</html>
+
+

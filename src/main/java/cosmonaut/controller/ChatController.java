@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -39,89 +41,79 @@ public class ChatController implements ChatControllerApi {
     MessageService messageService;
     @Autowired
     FileStorageService fileStorageService;
+
     @Autowired
     public void setCurrentUserUtils(CurrentUserUtils currentUserUtils) {
         this.currentUserUtils = currentUserUtils;
     }
 
     @Override
-    public String getChat(@PathVariable String username, Model model){
-        model.addAttribute("chat",chatService.openChat(currentUserUtils.getCurrentLoggedUser(),userService.findByUsername(username)));
-        model.addAttribute("currentUser",currentUserUtils.getCurrentLoggedUser());
+    public String getChat(@PathVariable String username, Model model) {
+        model.addAttribute("chat", chatService.openChat(currentUserUtils.getCurrentLoggedUser(), userService.findByUsername(username)));
+        model.addAttribute("currentUser", currentUserUtils.getCurrentLoggedUser());
         return "chatpage";
     }
+
     @Override
 
-    public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto){
-       return messageService.saveMessage(messageDto);
+    public ResponseEntity<?> receiveMessage(@RequestBody MessageDto messageDto) {
+        return messageService.saveMessage(messageDto);
     }
+
     @Override
 
     public Page<Message> updateChat(@PathVariable Long chatId, Pageable pageable) {
 
-        Page<Message> messages = messageService.getMessagesForChat(chatId,pageable);
+        Page<Message> messages = messageService.getMessagesForChat(chatId, pageable);
 
         return messages;
     }
+
     @Override
 
     public Page<Message> updateChatDesc(@PathVariable Long chatId, Pageable pageable) {
 
-        Page<Message> messages = messageService.getMessagesForChatDesc(chatId,pageable);
+        Page<Message> messages = messageService.getMessagesForChatDesc(chatId, pageable);
 
         return messages;
     }
+
+    @Override
+    public Page<Message> getMessagesForUserBetweenDates(String startTime, String endTime, Pageable pageable) {
+        LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_DATE_TIME);
+        LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_DATE_TIME);
+        return messageService.getMessagesForUserBetweenDates(start,end,pageable);
+    }
+
     @Override
 
-    public ResponseEntity<?> uploadMessage(@PathVariable Long chatId,
-                                           @RequestParam("message") String message,
-                                           @RequestParam(value = "file", required = false) MultipartFile file){
+    public ResponseEntity<?> uploadMessage(@PathVariable Long chatId, @RequestParam("message") String message, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         String uploadDir = "avatars";
-        String fileName = null;
-
-        // Проверка на наличие файла в запросе
+        String fileName=null;
         if (file != null && !file.isEmpty()) {
             fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-            try {
-                fileStorageService.saveFile(uploadDir, fileName, file);
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload file: " + fileName);
-            }
         }
-
-        MessageDto messageDto=new MessageDto();
-        messageDto.setChatId(chatId);
-        messageDto.setMessage(message);
-        messageDto.setFileUrl(fileName);
+        MessageDto messageDto = new MessageDto(message,fileName,chatId);
         messageService.saveMessage(messageDto);
-
-        return ResponseEntity.ok("File uploaded successfully: " + fileName);
+        return fileStorageService.saveFile(uploadDir, fileName, file);
     }
 
     @Override
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(String filename, HttpServletRequest request) throws Exception {
         Resource resource = fileStorageService.loadFileAsResource(filename);
-
         if (resource == null) {
             return ResponseEntity.notFound().build();
         }
-
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            // logger.info("Could not determine file type.");
+            System.out.println("Исключение сработало");
         }
-
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 }
