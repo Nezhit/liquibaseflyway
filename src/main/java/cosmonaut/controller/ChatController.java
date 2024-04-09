@@ -101,18 +101,6 @@ public class ChatController implements ChatControllerApi {
     public ResponseEntity<Resource> downloadFile(String filename, HttpServletRequest request) throws Exception {
         Resource resource = fileStorageService.loadFileAsResource(filename);
        return fileStorageService.checkResource(resource, request);
-//        if (resource == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        String contentType = null;
-//        try {
-//            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-//        } catch (IOException ex) {
-//            System.out.println("Исключение сработало");
-//        }
-//        if (contentType == null) {
-//            contentType = "application/octet-stream";
-//        }
-//        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+
     }
 }

@@ -20,7 +20,6 @@ public class MessageDto {
 
     public MessageDto(String message, String fileUrl, Long chatId) {
         this.message = message;
-
         this.fileUrl = fileUrl;
         this.chatId = chatId;
     }

@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-
 public class UserController implements UserControllerApi {
 
     private UserRepository userRepository;
@@ -33,11 +32,16 @@ public class UserController implements UserControllerApi {
     private UserService userService;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) { this.userRepository = userRepository; }
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Autowired
-    public void setCurrentUserUtils(CurrentUserUtils currentUserUtils) { this.currentUserUtils = currentUserUtils; }
-@Override
+    public void setCurrentUserUtils(CurrentUserUtils currentUserUtils) {
+        this.currentUserUtils = currentUserUtils;
+    }
+
+    @Override
     @PostMapping("/authenticateTheUser")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userRepository.findByUsernameAndPassword(username, password);
@@ -49,36 +53,37 @@ public class UserController implements UserControllerApi {
                 model.addAttribute("avatarUrl", user.getAvatarUrl());
             }
             return "index";
-        }
-        else return "login";
+        } else return "login";
     }
-    @Override
 
+    @Override
     @GetMapping("/logout")
     public String logout() {
         currentUserUtils.setCurrentLoggedUser(null);
         return "index";
     }
-    @Override
 
+    @Override
     @GetMapping("/register")
     public String toRegisterPage() {
         return "register";
     }
-    @Override
 
+    @Override
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password,
-                           @RequestParam String name, @RequestParam String email,@RequestParam String city) {
+    public String register(@RequestParam String username,
+                           @RequestParam String password,
+                           @RequestParam String name,
+                           @RequestParam String email,
+                           @RequestParam String city) {
         User user = userRepository.findByUsernameAndPassword(username, password);
         if (user == null) {
-            userRepository.save(new User(username, password, email ,new UserProfile(name, city)));
+            userRepository.save(new User(username, password, email, new UserProfile(name, city)));
             return "login";
-        }
-        else return "register";
+        } else return "register";
     }
-    @Override
 
+    @Override
     @PostMapping("/profile/uploadAvatar")
     public ResponseEntity<Map<String, String>> uploadAvatar(@RequestParam("avatar") MultipartFile avatar) throws IOException {
         String avatarUrl = userService.uploadAvatar(avatar);
@@ -86,9 +91,9 @@ public class UserController implements UserControllerApi {
         response.put("avatarUrl", avatarUrl);
         return ResponseEntity.ok(response);
     }
-    @Override
 
-    public String getUserStatistics(Model model){
+    @Override
+    public String getUserStatistics(Model model) {
         List<UserStatisticDTO> userStatistics = userService.getUserStatistics();
         model.addAttribute("userStatistics", userStatistics);
         return "userStatistics";

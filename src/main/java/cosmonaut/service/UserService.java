@@ -38,8 +38,9 @@ public class UserService {
         }
         return null;
     }
+
     public String uploadAvatar(MultipartFile multipartFile) throws IOException {
-        User user=findByUsername(currentUserUtils.getCurrentLoggedUser().getUsername());
+        User user = findByUsername(currentUserUtils.getCurrentLoggedUser().getUsername());
 
         user.setAvatarUrl(fileStorageService.storeFile(multipartFile));
         userRepository.save(user);
@@ -51,6 +52,7 @@ public class UserService {
         currentUserUtils.setCurrentLoggedUser(updatedUser);
         return user.getAvatarUrl();
     }
+
     public List<UserStatisticDTO> getUserStatistics() {
         return userRepository.findUserStatistics();
     }

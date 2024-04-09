@@ -29,8 +29,9 @@ public class MessageService {
     CurrentUserUtils currentUserUtils;
     @Autowired
     UserService userService;
-    public ResponseEntity<?> saveMessage(MessageDto messageDto){
-        Message message=new Message();
+
+    public ResponseEntity<?> saveMessage(MessageDto messageDto) {
+        Message message = new Message();
         //Chat chat = chatRepo.findChatByUsers(messageDto.getUsers()).get();
         Chat chat = chatRepo.findChatById(messageDto.getChatId()).get();
         message.setText(messageDto.getMessage());
@@ -47,16 +48,19 @@ public class MessageService {
         List<Message> messages = messageRepo.findByChat(chat);
         return messageRepo.findByChatOrderByTime(chat, pageable);
     }
+
     public Page<Message> getMessagesForChatDesc(Long chatId, Pageable pageable) {
         Chat chat = chatRepo.findChatById(chatId).get();
         List<Message> messages = messageRepo.findByChat(chat);
         return messageRepo.findByChatOrderByTimeDesc(chat, pageable);
     }
-    public Page<Message> getMessagesForUser(User user, Pageable pageable){
-        return messageRepo.findByUser(user,pageable);
+
+    public Page<Message> getMessagesForUser(User user, Pageable pageable) {
+        return messageRepo.findByUser(user, pageable);
     }
-    public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start,LocalDateTime end,Pageable pageable){
-        return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(),start,end,pageable);
+
+    public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start, LocalDateTime end, Pageable pageable) {
+        return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(), start, end, pageable);
     }
 
     public String getFileName(MultipartFile file) {
@@ -64,7 +68,7 @@ public class MessageService {
 
         if (file != null && !file.isEmpty()) {
             return StringUtils.cleanPath(file.getOriginalFilename());
-        }else {
+        } else {
             throw new RuntimeException("File is empty or null");
         }
     }

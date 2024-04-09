@@ -36,7 +36,6 @@ public class FileStorageService {
     private CurrentUserUtils currentUserUtils;
 
 
-
     public FileStorageService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
@@ -56,7 +55,7 @@ public class FileStorageService {
     public ResponseEntity<byte[]> getImage() {
         try {
             String avatarUrl = currentUserUtils.getCurrentLoggedUser().getAvatarUrl();
-            System.out.println("Ava= "+avatarUrl);
+            System.out.println("Ava= " + avatarUrl);
             Path path = Paths.get(imagePath + avatarUrl);
 
             System.out.println("Пытаемся получить файл по пути: " + path.toString()); // Логируем путь
@@ -76,7 +75,8 @@ public class FileStorageService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    public  ResponseEntity<?> saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
+
+    public ResponseEntity<?> saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         // Проверка на наличие файла в запросе
         if (multipartFile != null && !multipartFile.isEmpty()) {
             fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -101,11 +101,12 @@ public class FileStorageService {
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
 
     }
+
     public Resource loadFileAsResource(String fileName) throws Exception {
         try {
             Path filePath = Paths.get(imagePath + fileName);
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new FileNotFoundException("File not found " + fileName);

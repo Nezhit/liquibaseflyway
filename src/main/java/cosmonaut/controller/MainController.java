@@ -32,29 +32,34 @@ public class MainController implements MainControllerApi {
     private FileStorageService fileStorageService;
     @Autowired
     private CurrentUserUtils currentUserUtils;
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public String toHomepage() {
         return "index";
     }
+
     @Override
     public String showAllUsers(Model model, Pageable pageable) {
-        model.addAttribute("users", userRepository.findByUsernameNot(currentUserUtils.getCurrentLoggedUser().getUsername(),pageable));
+        model.addAttribute("users", userRepository.findByUsernameNot(currentUserUtils.getCurrentLoggedUser().getUsername(), pageable));
         return "users";
     }
+
     @Override
     public String toLoginPage() {
         return "login";
     }
+
     @Override
-    public String getPersonPage(Model model){
-        if(currentUserUtils.getCurrentLoggedUser() == null){
+    public String getPersonPage(Model model) {
+        if (currentUserUtils.getCurrentLoggedUser() == null) {
             return "redirect:/login";
         }
-        model.addAttribute("user",currentUserUtils.getCurrentLoggedUser());
+        model.addAttribute("user", currentUserUtils.getCurrentLoggedUser());
         return "personpage";
     }
 
