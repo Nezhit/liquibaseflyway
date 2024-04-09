@@ -90,9 +90,7 @@ public class ChatController implements ChatControllerApi {
     public ResponseEntity<?> uploadMessage(@PathVariable Long chatId, @RequestParam("message") String message, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         String uploadDir = "avatars";
         String fileName=null;
-        if (file != null && !file.isEmpty()) {
-            fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        }
+        fileName=messageService.getFileName(file);
         MessageDto messageDto = new MessageDto(message,fileName,chatId);
         messageService.saveMessage(messageDto);
         return fileStorageService.saveFile(uploadDir, fileName, file);
@@ -102,18 +100,19 @@ public class ChatController implements ChatControllerApi {
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(String filename, HttpServletRequest request) throws Exception {
         Resource resource = fileStorageService.loadFileAsResource(filename);
-        if (resource == null) {
-            return ResponseEntity.notFound().build();
-        }
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            System.out.println("Исключение сработало");
-        }
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+       return fileStorageService.checkResource(resource, request);
+//        if (resource == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        String contentType = null;
+//        try {
+//            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+//        } catch (IOException ex) {
+//            System.out.println("Исключение сработало");
+//        }
+//        if (contentType == null) {
+//            contentType = "application/octet-stream";
+//        }
+//        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
     }
 }

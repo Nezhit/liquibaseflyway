@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,5 +57,15 @@ public class MessageService {
     }
     public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start,LocalDateTime end,Pageable pageable){
         return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(),start,end,pageable);
+    }
+
+    public String getFileName(MultipartFile file) {
+        String uploadDir = "avatars";
+
+        if (file != null && !file.isEmpty()) {
+            return StringUtils.cleanPath(file.getOriginalFilename());
+        }else {
+            throw new RuntimeException("File is empty or null");
+        }
     }
 }
