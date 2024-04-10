@@ -45,15 +45,8 @@ public class UserController implements UserControllerApi {
     @PostMapping("/authenticateTheUser")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userRepository.findByUsernameAndPassword(username, password);
-        if (user != null) {
-            currentUserUtils.setCurrentLoggedUser(user);
-            // Добавление URL аватарки в модель, если он доступен
-            if (user.getAvatarUrl() != null && !user.getAvatarUrl().isEmpty()) {
-                model.addAttribute("currentUser", user);
-                model.addAttribute("avatarUrl", user.getAvatarUrl());
-            }
-            return "index";
-        } else return "login";
+        return userService.checkUserAndPutToModel(user,model);
+
     }
 
     @Override
@@ -76,11 +69,7 @@ public class UserController implements UserControllerApi {
                            @RequestParam String name,
                            @RequestParam String email,
                            @RequestParam String city) {
-        User user = userRepository.findByUsernameAndPassword(username, password);
-        if (user == null) {
-            userRepository.save(new User(username, password, email, new UserProfile(name, city)));
-            return "login";
-        } else return "register";
+        return userService.registerLogic(username,password,name,email,city);
     }
 
     @Override

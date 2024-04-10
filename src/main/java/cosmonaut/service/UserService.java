@@ -2,11 +2,13 @@ package cosmonaut.service;
 
 import cosmonaut.dto.UserStatisticDTO;
 import cosmonaut.entity.User;
+import cosmonaut.entity.UserProfile;
 import cosmonaut.repository.UserRepository;
 import cosmonaut.util.CurrentUserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
@@ -57,4 +59,24 @@ public class UserService {
         return userRepository.findUserStatistics();
     }
 
+
+    public String checkUserAndPutToModel(User user, Model model) {
+        if (user != null) {
+            currentUserUtils.setCurrentLoggedUser(user);
+            // Добавление URL аватарки в модель, если он доступен
+            if (user.getAvatarUrl() != null && !user.getAvatarUrl().isEmpty()) {
+                model.addAttribute("currentUser", user);
+                model.addAttribute("avatarUrl", user.getAvatarUrl());
+            }
+            return "index";
+        } else return "login";
+    }
+
+    public String registerLogic(String username, String password, String name, String email, String city) {
+        User user = userRepository.findByUsernameAndPassword(username, password);
+        if (user == null) {
+            userRepository.save(new User(username, password, email, new UserProfile(name, city)));
+            return "login";
+        } else return "register";
+    }
 }

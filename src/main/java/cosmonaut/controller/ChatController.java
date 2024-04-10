@@ -88,12 +88,11 @@ public class ChatController implements ChatControllerApi {
     @Override
 
     public ResponseEntity<?> uploadMessage(@PathVariable Long chatId, @RequestParam("message") String message, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        String uploadDir = "avatars";
-        String fileName=null;
+        String fileName;
         fileName=messageService.getFileName(file);
         MessageDto messageDto = new MessageDto(message,fileName,chatId);
         messageService.saveMessage(messageDto);
-        return fileStorageService.saveFile(uploadDir, fileName, file);
+        return fileStorageService.saveFile("avatars", fileName, file);
     }
 
     @Override
