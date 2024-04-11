@@ -40,7 +40,6 @@ public class ServiceUnit {
     @BeforeEach
     void setUp() {
         userService = new UserService(userRepository,fileStorageService,currentUserUtils,entityManager);
-        userService.setUserRepository(userRepository);
     }
 
     @Test
