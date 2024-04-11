@@ -18,6 +18,4 @@ public class Producer {
 
     @Column(name = "Phone", nullable = false, length = 11)
     private String phone;
-
-
 }

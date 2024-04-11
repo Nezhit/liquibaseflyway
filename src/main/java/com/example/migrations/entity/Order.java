@@ -36,6 +36,4 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_emp", nullable = false)
     private Employee employee;
-
-
 }

@@ -13,7 +13,4 @@ public class Type {
     private Long id;
     @Column(name = "Title")
     private String Title;
-
-
-
 }

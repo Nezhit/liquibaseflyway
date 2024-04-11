@@ -30,9 +30,8 @@ public class Employee {
     @Column(name = "Phone", nullable = false, length = 11)
     private String phone;
 
-    @Column(name = "Passport", nullable = false,unique = true)
+    @Column(name = "Passport", nullable = false, unique = true)
     private Integer passport;
-
 
 
 }
