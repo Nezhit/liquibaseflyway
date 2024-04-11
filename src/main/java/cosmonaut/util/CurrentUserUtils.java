@@ -1,9 +1,7 @@
 package cosmonaut.util;
 
-import org.springframework.stereotype.Component;
 import cosmonaut.entity.User;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CurrentUserUtils {

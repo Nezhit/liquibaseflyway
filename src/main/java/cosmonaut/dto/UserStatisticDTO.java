@@ -13,6 +13,4 @@ public class UserStatisticDTO {
         this.username = username;
         this.messageCount = messageCount;
     }
-
-
 }

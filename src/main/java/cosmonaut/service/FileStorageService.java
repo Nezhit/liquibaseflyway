@@ -1,7 +1,6 @@
 package cosmonaut.service;
 
 import cosmonaut.util.CurrentUserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -32,23 +31,22 @@ public class FileStorageService {
     @Value("avatars/")
     private String imagePath;
     private final ResourceLoader resourceLoader;
-    @Autowired
-    private CurrentUserUtils currentUserUtils;
+
+    private final CurrentUserUtils currentUserUtils;
 
 
-    public FileStorageService(ResourceLoader resourceLoader) {
+    public FileStorageService(ResourceLoader resourceLoader, CurrentUserUtils currentUserUtils) {
         this.resourceLoader = resourceLoader;
+        this.currentUserUtils = currentUserUtils;
     }
 
     public String storeFile(MultipartFile file) throws IOException {
         // Генерация уникального имени файла для избежания конфликтов
         String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
         String fileName = UUID.randomUUID().toString() + "." + fileExtension;
-
         // Путь к директории для сохранения файла
         Path path = Paths.get(uploadDir + fileName);
         Files.copy(file.getInputStream(), path);
-
         return fileName;
     }
 
@@ -57,13 +55,10 @@ public class FileStorageService {
             String avatarUrl = currentUserUtils.getCurrentLoggedUser().getAvatarUrl();
             System.out.println("Ava= " + avatarUrl);
             Path path = Paths.get(imagePath + avatarUrl);
-
             System.out.println("Пытаемся получить файл по пути: " + path.toString()); // Логируем путь
-
             if (Files.exists(path)) {
                 byte[] imageData = Files.readAllBytes(path);
                 String contentType = Files.probeContentType(path);
-
                 MediaType mediaType = MediaType.parseMediaType(contentType);
                 return ResponseEntity.ok().contentType(mediaType).body(imageData);
             } else {
@@ -80,7 +75,6 @@ public class FileStorageService {
         // Проверка на наличие файла в запросе
         if (multipartFile != null && !multipartFile.isEmpty()) {
             fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-
             try {
                 Path uploadPath = Paths.get(uploadDir);
 
@@ -95,7 +89,8 @@ public class FileStorageService {
                     throw new IOException("Could not save file: " + fileName, ioe);
                 }
             } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload file: " + fileName);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Could not upload file: " + fileName);
             }
         }
         return ResponseEntity.ok("File uploaded successfully: " + fileName);
@@ -129,7 +124,9 @@ public class FileStorageService {
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
+                        + resource.getFilename() + "\"").body(resource);
 
     }
 }

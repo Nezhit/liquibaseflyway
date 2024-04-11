@@ -3,13 +3,11 @@ package cosmonaut.dto;
 import cosmonaut.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
 @NoArgsConstructor
-
 @Getter
 @Setter
 public class MessageDto {

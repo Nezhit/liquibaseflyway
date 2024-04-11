@@ -13,7 +13,9 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     User findByUsernameAndPassword(String username, String password);
+
     Page findByUsernameNot(String username, Pageable pageable);
+
     @Query("SELECT new cosmonaut.dto.UserStatisticDTO(m.user.username, COUNT(m)) " +
             "FROM Message m " +
             "GROUP BY m.user.username " +

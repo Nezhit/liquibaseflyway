@@ -1,7 +1,6 @@
 package cosmonaut.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import cosmonaut.entity.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,20 +20,17 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String city;
-
     @OneToOne(mappedBy = "userProfile")
     @JsonIgnore
     private User user;
 
-    public UserProfile() {}
+    public UserProfile() {
+    }
 
     public UserProfile(String name, String city) {
         this.name = name;
         this.city = city;
     }
-
 }

@@ -5,8 +5,6 @@ import cosmonaut.entity.User;
 import cosmonaut.entity.UserProfile;
 import cosmonaut.repository.UserRepository;
 import cosmonaut.util.CurrentUserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,21 +16,21 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    @Autowired
-    private FileStorageService fileStorageService;
-    @Autowired
-    private CurrentUserUtils currentUserUtils;
-    @Autowired
-    EntityManager entityManager;
+    private final UserRepository userRepository;
+    private final FileStorageService fileStorageService;
+    private final CurrentUserUtils currentUserUtils;
+    private final EntityManager entityManager;
 
-    public UserService() {
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       FileStorageService fileStorageService,
+                       CurrentUserUtils currentUserUtils,
+                       EntityManager entityManager) {
         this.userRepository = userRepository;
+        this.fileStorageService = fileStorageService;
+        this.currentUserUtils = currentUserUtils;
+        this.entityManager = entityManager;
     }
+
 
     public User findByUsername(String username) {
         if (userRepository.findById(username).isPresent()) {
@@ -49,7 +47,6 @@ public class UserService {
         entityManager.clear();
         // Получаем обновленные данные пользователя из базы данных
         User updatedUser = findByUsername(currentUserUtils.getCurrentLoggedUser().getUsername());
-
         // Обновляем информацию в CurrentUserUtils
         currentUserUtils.setCurrentLoggedUser(updatedUser);
         return user.getAvatarUrl();
@@ -58,7 +55,6 @@ public class UserService {
     public List<UserStatisticDTO> getUserStatistics() {
         return userRepository.findUserStatistics();
     }
-
 
     public String checkUserAndPutToModel(User user, Model model) {
         if (user != null) {
@@ -72,7 +68,11 @@ public class UserService {
         } else return "login";
     }
 
-    public String registerLogic(String username, String password, String name, String email, String city) {
+    public String registerLogic(String username,
+                                String password,
+                                String name,
+                                String email,
+                                String city) {
         User user = userRepository.findByUsernameAndPassword(username, password);
         if (user == null) {
             userRepository.save(new User(username, password, email, new UserProfile(name, city)));

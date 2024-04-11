@@ -7,7 +7,6 @@ import cosmonaut.entity.User;
 import cosmonaut.repository.ChatRepo;
 import cosmonaut.repository.MessageRepo;
 import cosmonaut.util.CurrentUserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +16,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MessageService {
-    @Autowired
-    MessageRepo messageRepo;
-    @Autowired
-    ChatRepo chatRepo;
-    @Autowired
-    CurrentUserUtils currentUserUtils;
-    @Autowired
-    UserService userService;
+    private final MessageRepo messageRepo;
+
+    private final ChatRepo chatRepo;
+
+    private final CurrentUserUtils currentUserUtils;
+
+    private final UserService userService;
+
+    public MessageService(MessageRepo messageRepo, ChatRepo chatRepo, CurrentUserUtils currentUserUtils, UserService userService) {
+        this.messageRepo = messageRepo;
+        this.chatRepo = chatRepo;
+        this.currentUserUtils = currentUserUtils;
+        this.userService = userService;
+    }
 
     public ResponseEntity<?> saveMessage(MessageDto messageDto) {
         Message message = new Message();
-        //Chat chat = chatRepo.findChatByUsers(messageDto.getUsers()).get();
         Chat chat = chatRepo.findChatById(messageDto.getChatId()).get();
         message.setText(messageDto.getMessage());
         message.setChat(chat);
@@ -59,13 +62,15 @@ public class MessageService {
         return messageRepo.findByUser(user, pageable);
     }
 
-    public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start, LocalDateTime end, Pageable pageable) {
-        return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(), start, end, pageable);
+    public Page<Message> getMessagesForUserBetweenDates(LocalDateTime start,
+                                                        LocalDateTime end,
+                                                        Pageable pageable) {
+        return messageRepo.findByUserAndTimeBetween(currentUserUtils.getCurrentLoggedUser().getUsername(),
+                start, end, pageable);
     }
 
     public String getFileName(MultipartFile file) {
         String uploadDir = "avatars";
-
         if (file != null && !file.isEmpty()) {
             return StringUtils.cleanPath(file.getOriginalFilename());
         } else {
