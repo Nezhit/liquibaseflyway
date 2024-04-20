@@ -5,11 +5,13 @@ import com.example.migrations.dto.EmployeeRsDto;
 import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.entity.Employee;
 import com.example.migrations.repository.EmployeeRepo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Tag(name = "Employee service", description = "Service providing basci CRUD operations")
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
 
@@ -47,3 +49,4 @@ public class EmployeeService {
         return new EmployeeRsDto(employeeRepo.findById(id).orElseThrow(() -> new RuntimeException("Сотрудник не найден")));
     }
 }
+

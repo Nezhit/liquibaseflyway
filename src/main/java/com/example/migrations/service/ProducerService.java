@@ -5,11 +5,13 @@ import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.repository.ProducerRepo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Tag(name = "Producer service", description = "Service providing basci CRUD operations")
 public class ProducerService {
     private final ProducerRepo producerRepo;
 

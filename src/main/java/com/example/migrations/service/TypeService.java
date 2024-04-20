@@ -5,11 +5,14 @@ import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Tag(name = "Type service", description = "Service providing basci CRUD operations")
+
 public class TypeService {
     private final TypeRepo typeRepo;
 

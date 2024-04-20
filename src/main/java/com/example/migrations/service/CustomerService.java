@@ -5,11 +5,13 @@ import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Tag(name = "Customer service", description = "Service providing basci CRUD operations")
 public class CustomerService {
     private final CustomerRepo customerRepo;
 
