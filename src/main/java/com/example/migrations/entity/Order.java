@@ -1,17 +1,23 @@
 package com.example.migrations.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "goods_orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_go")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_goods", nullable = false)

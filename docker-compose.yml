@@ -6,46 +6,13 @@ services:
       POSTGRES_DB: optoviy
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-
-
-
+    command: -c 'listen_addresses=*'
     restart: unless-stopped
+    ports:
+      - "5432:5432"  # Публикация порта для доступа с localhost
     volumes:
-      -  ./infrastructure/db/create-db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - ./infrastructure/db/create-db.sql:/docker-entrypoint-initdb.d/create_db.sql
       - postgres_data:/var/lib/postgresql/data
-
-  pgadmin:
-    container_name: pgadmin4_container
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: vlad.mishikhin@mail.ru
-      PGADMIN_DEFAULT_PASSWORD: root
-
-    ports:
-      - "5050:80"
-  backend: # Используйте подходящее название для вашего приложения
-    image: client:0.0.1
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8181:8181" # Перенаправление портов, если требуется доступ извне
-    depends_on:
-      - service-db # Гарантирует, что service-db запустится перед вашим приложением
-    environment:
-      - SERVER_PORT=8181
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/optoviy
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
-    networks:
-      - default
-
-networks:
-  default:
-    external:
-      name: migrations_default
-
 
 volumes:
   postgres_data:

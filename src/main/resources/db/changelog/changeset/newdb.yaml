@@ -1,0 +1,251 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: your_name
+      changes:
+        - dropTable:
+            tableName: goods_orders
+            cascadeConstraints: true
+        - dropTable:
+            tableName: goods
+            cascadeConstraints: true
+        - dropTable:
+            tableName: producers
+            cascadeConstraints: true
+        - dropTable:
+            tableName: types
+            cascadeConstraints: true
+        - dropTable:
+            tableName: employees
+            cascadeConstraints: true
+        - dropTable:
+            tableName: customers
+            cascadeConstraints: true
+
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: id_cust
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: your_name
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id_emp
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: papaname
+                  type: varchar(20)
+              - column:
+                  name: birthdate
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport
+                  type: integer
+                  constraints:
+                    nullable: false
+                    unique: true
+
+  - changeSet:
+      id: 3
+      author: your_name
+      changes:
+        - createTable:
+            tableName: types
+            columns:
+              - column:
+                  name: id_type
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 4
+      author: your_name
+      changes:
+        - createTable:
+            tableName: producers
+            columns:
+              - column:
+                  name: id_prod
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: char(11)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 5
+      author: your_name
+      changes:
+        - createTable:
+            tableName: goods
+            columns:
+              - column:
+                  name: id_good
+                  type: serial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: id_type
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_prod
+                  type: integer
+                  constraints:
+                    nullable: false
+            constraints:
+              - foreignKey:
+                  name: fk_goods_types
+                  references:
+                    table: types
+                    column: id_type
+              - foreignKey:
+                  name: fk_goods_producers
+                  references:
+                    table: producers
+                    column: id_prod
+
+  - changeSet:
+      id: 6
+      author: your_name
+      changes:
+        - createTable:
+            tableName: goods_orders
+            columns:
+              - column:
+                  name: id_go
+                  type: serial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: id_goods
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrive_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_cust
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: numeric(7,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_emp
+                  type: integer
+                  constraints:
+                    nullable: false
+            constraints:
+              - foreignKey:
+                  name: fk_goods_orders_goods
+                  references:
+                    table: goods
+                    column: id_good
+              - foreignKey:
+                  name: fk_goods_orders_customers
+                  references:
+                    table: customers
+                    column: id_cust
+              - foreignKey:
+                  name: fk_goods_orders_employees
+                  references:
+                    table: employees
+                    column: id_emp

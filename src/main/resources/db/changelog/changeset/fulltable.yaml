@@ -18,7 +18,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: Adress
+                  name: Address
                   type: varchar(20)
                   constraints:
                     nullable: false
@@ -114,7 +114,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: Adress
+                  name: Address
                   type: varchar(20)
                   constraints:
                     nullable: false

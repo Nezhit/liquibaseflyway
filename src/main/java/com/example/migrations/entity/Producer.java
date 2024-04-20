@@ -1,14 +1,20 @@
 package com.example.migrations.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "producers")
 public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_prod")
-    private Integer id;
+    private Long id;
 
     @Column(name = "Title", nullable = false, length = 15)
     private String title;
