@@ -7,6 +7,8 @@ import com.example.migrations.repository.OrderRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
    private final OrderRepo orderRepo;
@@ -15,11 +17,11 @@ public class OrderService {
         this.orderRepo = orderRepo;
     }
 
-    public ResponseEntity<?> getOrders() {
-        return ResponseEntity.ok(orderRepo.findAll());
+    public List<Order> getOrders() {
+        return orderRepo.findAll();
     }
 
-    public ResponseEntity<?> createOrder(OrderDto orderDto) {
+    public Order createOrder(OrderDto orderDto) {
         Order order = new Order();
         order.setAmount(orderDto.getAmount());
         order.setOrderDate(orderDto.getOrderDate());
@@ -29,11 +31,11 @@ public class OrderService {
         order.setCustomer(orderDto.getCustomer());
         order.setPrice(orderDto.getPrice());
         orderRepo.save(order);
-        return ResponseEntity.ok("Заказ создан");
+        return order;
     }
 
-    public ResponseEntity<?> updateOrder(OrderDto orderDto) {
-        Order order=orderRepo.findById(orderDto.getId()).get();
+    public Order updateOrder(Long id,OrderDto orderDto) {
+        Order order=orderRepo.findById(id).get();
         order.setAmount(orderDto.getAmount());
         order.setOrderDate(orderDto.getOrderDate());
         order.setArriveDate(orderDto.getArriveDate());
@@ -42,12 +44,12 @@ public class OrderService {
         order.setCustomer(orderDto.getCustomer());
         order.setPrice(orderDto.getPrice());
         orderRepo.save(order);
-        return ResponseEntity.ok("Заказ обновлен");
+        return order;
     }
 
-    public ResponseEntity<?> deleteOrder(Long id) {
+    public Order deleteOrder(Long id) {
         Order order=orderRepo.findById(id).get();
         orderRepo.delete(order);
-        return ResponseEntity.ok("Заказ удален");
+        return order;
     }
 }

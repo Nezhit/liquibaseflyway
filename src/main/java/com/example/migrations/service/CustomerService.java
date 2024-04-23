@@ -6,6 +6,8 @@ import com.example.migrations.repository.CustomerRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
     private final CustomerRepo customerRepo;
@@ -14,35 +16,39 @@ public class CustomerService {
         this.customerRepo = customerRepo;
     }
 
-    public ResponseEntity<?> createCustomer(CustomerDto customerDto) {
+    public Customer createCustomer(CustomerDto customerDto) {
         System.out.println(customerDto.toString());
         if (customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
-            return ResponseEntity.badRequest().body("Не все обязательные поля заполнены");
+            throw new RuntimeException("Не все поля заполнены");
         }
         Customer customer = new Customer(customerDto.getTitle(), customerDto.getAddress(), customerDto.getPhone());
         customerRepo.save(customer);
-        return ResponseEntity.ok("Запись добавлена");
+        return customer;
     }
 
-    public ResponseEntity<?> updateCustomer(CustomerDto customerDto) {
+    public Customer updateCustomer(Long id,CustomerDto customerDto) {
         if (customerDto.getId() == null || customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
-            return ResponseEntity.badRequest().body("Не все обязательные поля заполнены");
+            throw new RuntimeException("Не все поля заполнены");
         }
-        Customer customer = customerRepo.findById(customerDto.getId()).orElse(null);
+        Customer customer = customerRepo.findById(id).orElse(null);
         if (customer == null) {
-            return ResponseEntity.notFound().build();
+            throw new RuntimeException("Покупатель не найден");
         }
         customer.setAddress(customerDto.getAddress());
         customer.setPhone(customerDto.getPhone());
         customer.setTitle(customerDto.getTitle());
         customerRepo.save(customer);
-        return ResponseEntity.ok("Пользователь с id = " + customer.getId() + " обновлен");
+        return customer;
     }
 
-    public ResponseEntity<?> deleteCustomer(Long id) {
+    public Customer deleteCustomer(Long id) {
         Customer customer=customerRepo.findById(id).get();
         customerRepo.delete(customer);
-        return ResponseEntity.ok("Удален");
+        return customer;
+    }
+
+    public List<Customer> getCustomers() {
+        return customerRepo.findAll();
     }
 }
 

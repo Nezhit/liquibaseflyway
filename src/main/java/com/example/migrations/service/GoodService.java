@@ -6,6 +6,8 @@ import com.example.migrations.repository.GoodRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GoodService {
     private final GoodRepo goodRepo;
@@ -14,32 +16,32 @@ public class GoodService {
         this.goodRepo = goodRepo;
     }
 
-    public ResponseEntity<?> getGoods() {
-        return ResponseEntity.ok(goodRepo.findAll());
+    public List<Good> getGoods() {
+        return goodRepo.findAll();
     }
 
-    public ResponseEntity<?> createGood(GoodDto goodDto) {
+    public Good createGood(GoodDto goodDto) {
         Good good= new Good();
         good.setProducer(goodDto.getProducer());
         good.setTitle(goodDto.getTitle());
         good.setType(goodDto.getType());
         goodRepo.save(good);
-        return ResponseEntity.ok("Товар создан");
+        return good;
     }
 
-    public ResponseEntity<?> updateGood(GoodDto goodDto) {
-        Good good=goodRepo.findById(goodDto.getId()).get();
+    public Good updateGood(Long id, GoodDto goodDto) {
+        Good good=goodRepo.findById(id).get();
         good.setProducer(goodDto.getProducer());
         good.setTitle(goodDto.getTitle());
         good.setType(goodDto.getType());
         goodRepo.save(good);
-        return ResponseEntity.ok("Товар обновлен");
+        return good;
 
     }
 
-    public ResponseEntity<?> deleteGood(Long id) {
+    public Good deleteGood(Long id) {
         Good good=goodRepo.findById(id).get();
         goodRepo.delete(good);
-        return ResponseEntity.ok("Товар удаелн");
+        return good;
     }
 }

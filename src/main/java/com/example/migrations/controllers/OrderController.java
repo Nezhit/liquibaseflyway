@@ -3,8 +3,11 @@ package com.example.migrations.controllers;
 import com.example.migrations.controllers.api.OrderApi;
 import com.example.migrations.dto.GoodDto;
 import com.example.migrations.dto.OrderDto;
+import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public class OrderController implements OrderApi {
     private final OrderService orderService;
@@ -15,22 +18,22 @@ public class OrderController implements OrderApi {
 
 
     @Override
-    public ResponseEntity<?> getOrders() {
+    public List<Order> getOrders() {
         return orderService.getOrders();
     }
 
     @Override
-    public ResponseEntity<?> createOrder(OrderDto orderDto) {
+    public Order createOrder(OrderDto orderDto) {
         return orderService.createOrder(orderDto);
     }
 
     @Override
-    public ResponseEntity<?> updateOrder(OrderDto orderDto) {
-        return orderService.updateOrder(orderDto);
+    public Order updateOrder(Long id,OrderDto orderDto) {
+        return orderService.updateOrder(id,orderDto);
     }
 
     @Override
-    public ResponseEntity<?> deleteOrder(Long id) {
+    public Order deleteOrder(Long id) {
         return orderService.deleteOrder(id);
     }
 }

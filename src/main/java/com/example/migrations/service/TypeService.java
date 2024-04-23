@@ -6,6 +6,8 @@ import com.example.migrations.repository.TypeRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TypeService {
     private final TypeRepo typeRepo;
@@ -14,28 +16,28 @@ public class TypeService {
         this.typeRepo = typeRepo;
     }
 
-    public ResponseEntity<?> getTypes() {
-        return ResponseEntity.ok(typeRepo.findAll());
+    public List<Type> getTypes() {
+        return typeRepo.findAll();
     }
 
-    public ResponseEntity<?> createType(TypeDto typeDto) {
+    public Type createType(TypeDto typeDto) {
         Type type=new Type();
         type.setTitle(typeDto.getTitle());
         typeRepo.save(type);
-        return ResponseEntity.ok("Тип создан");
+        return type;
     }
 
-    public ResponseEntity<?> updateType(TypeDto typeDto) {
-        Type type=typeRepo.findById(typeDto.getId()).get();
+    public Type updateType(Long id,TypeDto typeDto) {
+        Type type=typeRepo.findById(id).get();
         type.setTitle(typeDto.getTitle());
         typeRepo.save(type);
-        return ResponseEntity.ok("Тип обновлен");
+        return type;
 
     }
 
-    public ResponseEntity<?> deleteType(Long id) {
+    public Type deleteType(Long id) {
         Type type=typeRepo.findById(id).get();
         typeRepo.delete(type);
-        return ResponseEntity.ok("Удален тип");
+        return type;
     }
 }

@@ -3,38 +3,40 @@ package com.example.migrations.controllers;
 import com.example.migrations.controllers.api.EmployeeApi;
 import com.example.migrations.dto.CustomerDto;
 import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.entity.Employee;
 import com.example.migrations.repository.EmployeeRepo;
 import com.example.migrations.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class EmployeeController implements EmployeeApi {
     private final EmployeeService employeeService;
-    private final EmployeeRepo employeeRepo;
 
-    public EmployeeController(EmployeeService employeeService, EmployeeRepo employeeRepo) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.employeeRepo = employeeRepo;
+    }
+
+
+    @Override
+    public List<Employee> getEmployees() {
+        return employeeService.getEmployees();
     }
 
     @Override
-    public ResponseEntity<?> getEmployees() {
-        return ResponseEntity.ok(employeeRepo.findAll());
-    }
-
-    @Override
-    public ResponseEntity<?> createEmployee(EmployeeDto employeeDto) {
+    public Employee createEmployee(EmployeeDto employeeDto) {
         return employeeService.createEmployee(employeeDto);
     }
 
     @Override
-    public ResponseEntity<?> updateEmployee(EmployeeDto employeeDto) {
-        return employeeService.updateEmployee(employeeDto);
+    public Employee updateEmployee(Long id,EmployeeDto employeeDto) {
+        return employeeService.updateEmployee(id,employeeDto);
     }
 
     @Override
-    public ResponseEntity<?> deleteEmployee(Long id) {
-        return null;
+    public Employee deleteEmployee(Long id) {
+        return employeeService.deleteEmployee(id);
     }
 }

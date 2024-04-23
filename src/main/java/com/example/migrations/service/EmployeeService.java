@@ -6,6 +6,8 @@ import com.example.migrations.repository.EmployeeRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
@@ -14,7 +16,7 @@ public class EmployeeService {
         this.employeeRepo = employeeRepo;
     }
 
-    public ResponseEntity<?> createEmployee(EmployeeDto employeeDto) {
+    public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee=new Employee();
         employee.setPassport(employeeDto.getPassport());
         employee.setBirthdate(employeeDto.getBirthdate());
@@ -24,10 +26,10 @@ public class EmployeeService {
         employee.setPapaname(employeeDto.getPapaname());
         employee.setName(employeeDto.getName());
         employeeRepo.save(employee);
-        return ResponseEntity.ok("Сотрудник создан");
+        return employee;
     }
 
-    public ResponseEntity<?> updateEmployee(EmployeeDto employeeDto) {
+    public Employee updateEmployee(Long id,EmployeeDto employeeDto) {
         Employee employee=employeeRepo.findById(employeeDto.getId()).get();
         employee.setPassport(employeeDto.getPassport());
         employee.setBirthdate(employeeDto.getBirthdate());
@@ -37,6 +39,16 @@ public class EmployeeService {
         employee.setPapaname(employeeDto.getPapaname());
         employee.setName(employeeDto.getName());
         employeeRepo.save(employee);
-        return ResponseEntity.ok("Сотрудник обновлен");
+        return employee;
+    }
+
+    public List<Employee> getEmployees() {
+        return employeeRepo.findAll();
+    }
+
+    public Employee deleteEmployee(Long id) {
+        Employee employee = employeeRepo.findById(id).get();
+        employeeRepo.delete(employee);
+        return employee;
     }
 }

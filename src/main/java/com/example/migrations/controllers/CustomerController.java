@@ -10,33 +10,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class CustomerController implements CustomerApi {
-    private final CustomerRepo customerRepo;
+
     private final CustomerService customerService;
 
-    public CustomerController(CustomerRepo customerRepo, CustomerService customerService) {
-        this.customerRepo = customerRepo;
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
+
     @Override
-    public ResponseEntity<?> getCustomers() {
-        return ResponseEntity.ok(customerRepo.findAll());
+    public List<Customer> getCustomers() {
+        return customerService.getCustomers();
     }
 
     @Override
-    public ResponseEntity<?> createCustomer(@RequestBody CustomerDto customerDto) {
+    public Customer createCustomer(@RequestBody CustomerDto customerDto) {
         return customerService.createCustomer(customerDto);
     }
 
     @Override
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customerDto) {
-        return customerService.updateCustomer(customerDto);
+    public Customer updateCustomer(@PathVariable Long id,@RequestBody CustomerDto customerDto) {
+        return customerService.updateCustomer(id,customerDto);
     }
 
     @Override
-    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+    public Customer deleteCustomer(@PathVariable Long id) {
       return customerService.deleteCustomer(id);
     }
 }

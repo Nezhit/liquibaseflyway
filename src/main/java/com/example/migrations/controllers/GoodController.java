@@ -2,9 +2,12 @@ package com.example.migrations.controllers;
 
 import com.example.migrations.controllers.api.GoodApi;
 import com.example.migrations.dto.GoodDto;
+import com.example.migrations.entity.Good;
 import com.example.migrations.service.GoodService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GoodController implements GoodApi {
@@ -15,22 +18,22 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public ResponseEntity<?> getGoods() {
+    public List<Good> getGoods() {
         return goodService.getGoods();
     }
 
     @Override
-    public ResponseEntity<?> createGood(GoodDto goodDto) {
+    public Good createGood(GoodDto goodDto) {
         return goodService.createGood(goodDto);
     }
 
     @Override
-    public ResponseEntity<?> updateGood(GoodDto goodDto) {
-        return goodService.updateGood(goodDto);
+    public Good updateGood(Long id,GoodDto goodDto) {
+        return goodService.updateGood(id,goodDto);
     }
 
     @Override
-    public ResponseEntity<?> deleteGood(Long id) {
+    public Good deleteGood(Long id) {
         return goodService.deleteGood(id);
     }
 }
