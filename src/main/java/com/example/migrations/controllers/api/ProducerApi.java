@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 public interface ProducerApi {
-    @GetMapping("/api/getEmployees")
+    @GetMapping("/api/getProducers")
     public ResponseEntity<?> getProducers();
-    @PostMapping("/api/createEmployee")
+    @PostMapping("/api/createProducer")
     public ResponseEntity<?>createProducer(@RequestBody ProducerDto producerDto);
-    @PutMapping("/api/updateEmployee")
+    @PutMapping("/api/updateProducer")
     public ResponseEntity<?> updateProducer(@RequestBody  ProducerDto producerDto);
-    @DeleteMapping("/api/deleteEmployee/{id}")
+    @DeleteMapping("/api/deleteProducer/{id}")
     public ResponseEntity<?> deleteProducer(@PathVariable Long id);
 }

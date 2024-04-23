@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public interface TypeApi {
     @GetMapping("/api/getTypes")
     public ResponseEntity<?> getTypes();
-    @PostMapping("/api/createEmployee")
+    @PostMapping("/api/createType")
     public ResponseEntity<?>createType(@RequestBody TypeDto typeDto);
-    @PutMapping("/api/updateEmployee")
+    @PutMapping("/api/updateType")
     public ResponseEntity<?> updateType(@RequestBody  TypeDto typeDto);
-    @DeleteMapping("/api/deleteEmployee/{id}")
+    @DeleteMapping("/api/deleteType/{id}")
     public ResponseEntity<?> deleteType(@PathVariable Long id);
 }
