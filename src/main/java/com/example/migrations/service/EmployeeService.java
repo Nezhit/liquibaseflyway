@@ -3,7 +3,6 @@ package com.example.migrations.service;
 import com.example.migrations.dto.EmployeeDto;
 import com.example.migrations.entity.Employee;
 import com.example.migrations.repository.EmployeeRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(EmployeeDto employeeDto) {
-        Employee employee=new Employee();
+        Employee employee = new Employee();
         employee.setPassport(employeeDto.getPassport());
         employee.setBirthdate(employeeDto.getBirthdate());
         employee.setPhone(employeeDto.getPhone());
@@ -29,8 +28,8 @@ public class EmployeeService {
         return employee;
     }
 
-    public Employee updateEmployee(Long id,EmployeeDto employeeDto) {
-        Employee employee=employeeRepo.findById(employeeDto.getId()).get();
+    public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
+        Employee employee = employeeRepo.findById(employeeDto.getId()).get();
         employee.setPassport(employeeDto.getPassport());
         employee.setBirthdate(employeeDto.getBirthdate());
         employee.setPhone(employeeDto.getPhone());
@@ -50,5 +49,9 @@ public class EmployeeService {
         Employee employee = employeeRepo.findById(id).get();
         employeeRepo.delete(employee);
         return employee;
+    }
+
+    public Employee getEmployeeById(Long id) {
+        return employeeRepo.findById(id).get();
     }
 }

@@ -1,6 +1,5 @@
 package com.example.migrations.dto;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,11 +10,8 @@ import lombok.Setter;
 public class CustomerDto {
 
     private Long id;
-
     private String title;
-
     private String address;
-
     private String phone;
 
     @Override

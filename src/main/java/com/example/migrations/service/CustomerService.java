@@ -3,7 +3,6 @@ package com.example.migrations.service;
 import com.example.migrations.dto.CustomerDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class CustomerService {
         return customer;
     }
 
-    public Customer updateCustomer(Long id,CustomerDto customerDto) {
+    public Customer updateCustomer(Long id, CustomerDto customerDto) {
         if (customerDto.getId() == null || customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
             throw new RuntimeException("Не все поля заполнены");
         }
@@ -42,13 +41,17 @@ public class CustomerService {
     }
 
     public Customer deleteCustomer(Long id) {
-        Customer customer=customerRepo.findById(id).get();
+        Customer customer = customerRepo.findById(id).get();
         customerRepo.delete(customer);
         return customer;
     }
 
     public List<Customer> getCustomers() {
         return customerRepo.findAll();
+    }
+
+    public Customer getCustomerById(Long id) {
+        return customerRepo.findById(id).get();
     }
 }
 

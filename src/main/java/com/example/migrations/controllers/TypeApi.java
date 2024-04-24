@@ -1,9 +1,7 @@
-package com.example.migrations.controllers.api;
+package com.example.migrations.controllers;
 
-import com.example.migrations.dto.CustomerDto;
-import com.example.migrations.dto.EmployeeDto;
-import com.example.migrations.entity.Employee;
-import org.springframework.http.ResponseEntity;
+import com.example.migrations.dto.TypeDto;
+import com.example.migrations.entity.Type;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/employee")
-public interface EmployeeApi {
+@RequestMapping("/api/type")
+public interface TypeApi {
     @GetMapping
-    public List<Employee> getEmployees();
+    public List<Type> getTypes();
+
     @PostMapping
-    public Employee createEmployee(@RequestBody EmployeeDto employeeDto);
+    public Type createType(@RequestBody TypeDto typeDto);
+
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id,@RequestBody EmployeeDto employeeDto);
+    public Type updateType(@PathVariable Long id, @RequestBody TypeDto typeDto);
+
     @DeleteMapping("/{id}")
-    public Employee deleteEmployee(@PathVariable Long id);
+    public Type deleteType(@PathVariable Long id);
+
+    @GetMapping("/{id}")
+    public Type getTypeById(@PathVariable Long id);
 }

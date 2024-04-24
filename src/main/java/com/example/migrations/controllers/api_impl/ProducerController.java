@@ -1,11 +1,9 @@
-package com.example.migrations.controllers;
+package com.example.migrations.controllers.api_impl;
 
-import com.example.migrations.controllers.api.ProducerApi;
+import com.example.migrations.controllers.ProducerApi;
 import com.example.migrations.dto.ProducerDto;
 import com.example.migrations.entity.Producer;
-import com.example.migrations.repository.ProducerRepo;
 import com.example.migrations.service.ProducerService;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -28,12 +26,17 @@ public class ProducerController implements ProducerApi {
     }
 
     @Override
-    public Producer updateProducer(Long id,ProducerDto producerDto) {
+    public Producer updateProducer(Long id, ProducerDto producerDto) {
         return producerService.updateProducer(producerDto);
     }
 
     @Override
     public Producer deleteProducer(Long id) {
         return producerService.deleteProducer(id);
+    }
+
+    @Override
+    public Producer getProducerById(Long id) {
+        return producerService.getProducerById(id);
     }
 }

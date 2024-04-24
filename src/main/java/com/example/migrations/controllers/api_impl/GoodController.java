@@ -1,10 +1,9 @@
-package com.example.migrations.controllers;
+package com.example.migrations.controllers.api_impl;
 
-import com.example.migrations.controllers.api.GoodApi;
+import com.example.migrations.controllers.GoodApi;
 import com.example.migrations.dto.GoodDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.service.GoodService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,12 +27,17 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public Good updateGood(Long id,GoodDto goodDto) {
-        return goodService.updateGood(id,goodDto);
+    public Good updateGood(Long id, GoodDto goodDto) {
+        return goodService.updateGood(id, goodDto);
     }
 
     @Override
     public Good deleteGood(Long id) {
         return goodService.deleteGood(id);
+    }
+
+    @Override
+    public Good getGoodById(Long id) {
+        return goodService.getGoodById(id);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.migrations.dto;
 
 import com.example.migrations.entity.enums.ETypes;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +11,5 @@ import lombok.Setter;
 public class TypeDto {
 
     private Long id;
-
     private ETypes Title;
 }

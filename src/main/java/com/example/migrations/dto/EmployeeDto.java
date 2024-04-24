@@ -13,19 +13,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class EmployeeDto {
+
     private Long id;
-
     private String name;
-
     private String surname;
-
     private String papaname;
-
     private LocalDate birthdate;
-
     private String address;
-
     private String phone;
-
     private Integer passport;
 }

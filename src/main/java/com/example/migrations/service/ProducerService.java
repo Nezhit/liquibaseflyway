@@ -3,7 +3,6 @@ package com.example.migrations.service;
 import com.example.migrations.dto.ProducerDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.repository.ProducerRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class ProducerService {
     }
 
     public Producer createProducer(ProducerDto producerDto) {
-        Producer producer= new Producer();
+        Producer producer = new Producer();
         producer.setAddress(producerDto.getAddress());
         producer.setPhone(producerDto.getPhone());
         producer.setPhone(producer.getPhone());
@@ -30,7 +29,7 @@ public class ProducerService {
     }
 
     public Producer updateProducer(ProducerDto producerDto) {
-        Producer producer=producerRepo.findById(producerDto.getId()).get();
+        Producer producer = producerRepo.findById(producerDto.getId()).get();
         producer.setAddress(producerDto.getAddress());
         producer.setPhone(producerDto.getPhone());
         producer.setPhone(producer.getPhone());
@@ -39,8 +38,12 @@ public class ProducerService {
     }
 
     public Producer deleteProducer(Long id) {
-        Producer producer=producerRepo.findById(id).get();
+        Producer producer = producerRepo.findById(id).get();
         producerRepo.delete(producer);
         return producer;
+    }
+
+    public Producer getProducerById(Long id) {
+        return producerRepo.findById(id).get();
     }
 }

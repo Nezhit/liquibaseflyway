@@ -1,8 +1,7 @@
-package com.example.migrations.controllers.api;
+package com.example.migrations.controllers;
 
-import com.example.migrations.dto.CustomerDto;
-import com.example.migrations.entity.Customer;
-import org.springframework.http.ResponseEntity;
+import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.entity.Employee;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/customer")
-public interface CustomerApi {
+@RequestMapping("api/employee")
+public interface EmployeeApi {
     @GetMapping
-    public List<Customer> getCustomers();
-    @PostMapping
-    public Customer createCustomer(@RequestBody CustomerDto customerDto);
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id,@RequestBody CustomerDto customerDto);
-    @DeleteMapping("/{id}")
-    public Customer deleteCustomer(@PathVariable Long id);
+    public List<Employee> getEmployees();
 
+    @PostMapping
+    public Employee createEmployee(@RequestBody EmployeeDto employeeDto);
+
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto);
+
+    @DeleteMapping("/{id}")
+    public Employee deleteEmployee(@PathVariable Long id);
+
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id);
 }

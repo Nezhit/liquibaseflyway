@@ -1,9 +1,7 @@
-package com.example.migrations.controllers.api;
+package com.example.migrations.controllers;
 
-import com.example.migrations.dto.EmployeeDto;
-import com.example.migrations.dto.ProducerDto;
-import com.example.migrations.entity.Producer;
-import org.springframework.http.ResponseEntity;
+import com.example.migrations.dto.CustomerDto;
+import com.example.migrations.entity.Customer;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/producer")
-public interface ProducerApi {
+@RequestMapping("api/customer")
+public interface CustomerApi {
     @GetMapping
-    public List<Producer> getProducers();
+    public List<Customer> getCustomers();
+
     @PostMapping
-    public Producer createProducer(@RequestBody ProducerDto producerDto);
+    public Customer createCustomer(@RequestBody CustomerDto customerDto);
+
     @PutMapping("/{id}")
-    public Producer updateProducer(@PathVariable Long id,@RequestBody  ProducerDto producerDto);
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto);
+
     @DeleteMapping("/{id}")
-    public Producer deleteProducer(@PathVariable Long id);
+    public Customer deleteCustomer(@PathVariable Long id);
+
+    @GetMapping("/{id}")
+    public Customer getCustomerById(Long id);
+
 }

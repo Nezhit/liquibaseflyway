@@ -3,7 +3,6 @@ package com.example.migrations.service;
 import com.example.migrations.dto.TypeDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,14 +20,14 @@ public class TypeService {
     }
 
     public Type createType(TypeDto typeDto) {
-        Type type=new Type();
+        Type type = new Type();
         type.setTitle(typeDto.getTitle());
         typeRepo.save(type);
         return type;
     }
 
-    public Type updateType(Long id,TypeDto typeDto) {
-        Type type=typeRepo.findById(id).get();
+    public Type updateType(Long id, TypeDto typeDto) {
+        Type type = typeRepo.findById(id).get();
         type.setTitle(typeDto.getTitle());
         typeRepo.save(type);
         return type;
@@ -36,8 +35,12 @@ public class TypeService {
     }
 
     public Type deleteType(Long id) {
-        Type type=typeRepo.findById(id).get();
+        Type type = typeRepo.findById(id).get();
         typeRepo.delete(type);
         return type;
+    }
+
+    public Type getTypeById(Long id) {
+        return typeRepo.findById(id).get();
     }
 }

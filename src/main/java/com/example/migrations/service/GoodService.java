@@ -3,7 +3,6 @@ package com.example.migrations.service;
 import com.example.migrations.dto.GoodDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.repository.GoodRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class GoodService {
     }
 
     public Good createGood(GoodDto goodDto) {
-        Good good= new Good();
+        Good good = new Good();
         good.setProducer(goodDto.getProducer());
         good.setTitle(goodDto.getTitle());
         good.setType(goodDto.getType());
@@ -30,7 +29,7 @@ public class GoodService {
     }
 
     public Good updateGood(Long id, GoodDto goodDto) {
-        Good good=goodRepo.findById(id).get();
+        Good good = goodRepo.findById(id).get();
         good.setProducer(goodDto.getProducer());
         good.setTitle(goodDto.getTitle());
         good.setType(goodDto.getType());
@@ -40,8 +39,12 @@ public class GoodService {
     }
 
     public Good deleteGood(Long id) {
-        Good good=goodRepo.findById(id).get();
+        Good good = goodRepo.findById(id).get();
         goodRepo.delete(good);
         return good;
+    }
+
+    public Good getGoodById(Long id) {
+        return goodRepo.findById(id).get();
     }
 }

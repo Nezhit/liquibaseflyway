@@ -1,11 +1,9 @@
-package com.example.migrations.controllers;
+package com.example.migrations.controllers.api_impl;
 
-import com.example.migrations.controllers.api.OrderApi;
-import com.example.migrations.dto.GoodDto;
+import com.example.migrations.controllers.OrderApi;
 import com.example.migrations.dto.OrderDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -28,12 +26,17 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order updateOrder(Long id,OrderDto orderDto) {
-        return orderService.updateOrder(id,orderDto);
+    public Order updateOrder(Long id, OrderDto orderDto) {
+        return orderService.updateOrder(id, orderDto);
     }
 
     @Override
     public Order deleteOrder(Long id) {
         return orderService.deleteOrder(id);
+    }
+
+    @Override
+    public Order getOrderById(Long id) {
+        return orderService.getOrderById(id);
     }
 }

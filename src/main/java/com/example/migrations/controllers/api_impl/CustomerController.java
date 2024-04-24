@@ -1,11 +1,9 @@
-package com.example.migrations.controllers;
+package com.example.migrations.controllers.api_impl;
 
-import com.example.migrations.controllers.api.CustomerApi;
+import com.example.migrations.controllers.CustomerApi;
 import com.example.migrations.dto.CustomerDto;
 import com.example.migrations.entity.Customer;
-import com.example.migrations.repository.CustomerRepo;
 import com.example.migrations.service.CustomerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,17 +26,22 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public Customer createCustomer(@RequestBody CustomerDto customerDto) {
+    public Customer createCustomer( CustomerDto customerDto) {
         return customerService.createCustomer(customerDto);
     }
 
     @Override
-    public Customer updateCustomer(@PathVariable Long id,@RequestBody CustomerDto customerDto) {
-        return customerService.updateCustomer(id,customerDto);
+    public Customer updateCustomer( Long id,  CustomerDto customerDto) {
+        return customerService.updateCustomer(id, customerDto);
     }
 
     @Override
-    public Customer deleteCustomer(@PathVariable Long id) {
-      return customerService.deleteCustomer(id);
+    public Customer deleteCustomer( Long id) {
+        return customerService.deleteCustomer(id);
+    }
+
+    @Override
+    public Customer getCustomerById(Long id) {
+        return customerService.getCustomerById(id);
     }
 }
