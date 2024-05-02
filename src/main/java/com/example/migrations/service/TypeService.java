@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
 import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public class TypeService {
         return typeRepo.save(type);
     }
 
-    public Type updateType(Long id, TypeDto typeDto) {
+    public Type updateType(Long id, TypeUpdateDto typeUpdateDto) {
         Type type = typeRepo.findById(id).get();
-        type.setTitle(typeDto.getTitle());
+        if(typeUpdateDto.getTitle()!=null) type.setTitle(typeUpdateDto.getTitle());
         return typeRepo.save(type);
     }
 

@@ -2,6 +2,7 @@ package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.CustomerApi;
 import com.example.migrations.dto.CustomerDto;
+import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.service.CustomerService;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,6 @@ public class CustomerController implements CustomerApi {
         this.customerService = customerService;
     }
 
-
     @Override
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
@@ -27,8 +27,8 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public Customer updateCustomer(Long id, CustomerDto customerDto) {
-        return customerService.updateCustomer(id, customerDto);
+    public Customer updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
+        return customerService.updateCustomer(id, customerUpdateDto);
     }
 
     @Override

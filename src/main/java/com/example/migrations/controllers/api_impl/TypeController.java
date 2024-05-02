@@ -2,6 +2,7 @@ package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.TypeApi;
 import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.service.TypeService;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +27,8 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public Type updateType(Long id, TypeDto typeDto) {
-        return typeService.updateType(id, typeDto);
+    public Type updateType(Long id, TypeUpdateDto typeUpdateDto) {
+        return typeService.updateType(id, typeUpdateDto);
     }
 
     @Override

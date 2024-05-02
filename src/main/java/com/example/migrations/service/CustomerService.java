@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
 import com.example.migrations.dto.CustomerDto;
+import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,11 @@ public class CustomerService {
         return customerRepo.save(customer);
     }
 
-    public Customer updateCustomer(Long id, CustomerDto customerDto) {
-        if (customerDto.getId() == null || customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
-            throw new RuntimeException("Не все поля заполнены");
-        }
+    public Customer updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
         Customer customer = customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден"));
-        customer.setAddress(customerDto.getAddress());
-        customer.setPhone(customerDto.getPhone());
-        customer.setTitle(customerDto.getTitle());
+        if(customerUpdateDto.getAddress()!=null) customer.setAddress(customerUpdateDto.getAddress());
+        if(customerUpdateDto.getPhone()!=null) customer.setPhone(customerUpdateDto.getPhone());
+        if(customerUpdateDto.getTitle()!=null)customer.setTitle(customerUpdateDto.getTitle());
         return customerRepo.save(customer);
     }
 

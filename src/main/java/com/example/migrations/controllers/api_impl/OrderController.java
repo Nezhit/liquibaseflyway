@@ -2,6 +2,7 @@ package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.OrderApi;
 import com.example.migrations.dto.OrderDto;
+import com.example.migrations.dto.OrderUpdateDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +28,8 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order updateOrder(Long id, OrderDto orderDto) {
-        return orderService.updateOrder(id, orderDto);
+    public Order updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
+        return orderService.updateOrder(id, orderUpdateDto);
     }
 
     @Override

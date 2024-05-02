@@ -2,6 +2,7 @@ package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.EmployeeApi;
 import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.entity.Employee;
 import com.example.migrations.service.EmployeeService;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,6 @@ public class EmployeeController implements EmployeeApi {
         this.employeeService = employeeService;
     }
 
-
     @Override
     public List<Employee> getEmployees() {
         return employeeService.getEmployees();
@@ -27,8 +27,8 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
-        return employeeService.updateEmployee(id, employeeDto);
+    public Employee updateEmployee(Long id, EmployeeUpdateDto employeeUpdateDto) {
+        return employeeService.updateEmployee(id, employeeUpdateDto);
     }
 
     @Override

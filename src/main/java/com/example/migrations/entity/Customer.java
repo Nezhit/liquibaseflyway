@@ -31,12 +31,6 @@ public class Customer {
     @Column(name = "Phone", nullable = false, length = 11)
     private String phone;
 
-    public Customer(String title, String address, String phone) {
-        this.title = title;
-        this.address = address;
-        this.phone = phone;
-    }
-
     public Customer(CustomerDto customerDto){
         this.title= customerDto.getTitle();
         this.phone= customerDto.getPhone();

@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
 import com.example.migrations.dto.CustomerDto;
+import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,11 @@ public interface CustomerApi {
     public Customer createCustomer(@RequestBody CustomerDto customerDto);
 
     @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto);
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody CustomerUpdateDto customerUpdateDto);
 
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Customer getCustomerById(Long id);
-
 }

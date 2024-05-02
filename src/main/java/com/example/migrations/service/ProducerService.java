@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
 import com.example.migrations.dto.ProducerDto;
+import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.repository.ProducerRepo;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,11 @@ public class ProducerService {
         return producerRepo.save(producer);
     }
 
-    public Producer updateProducer(ProducerDto producerDto) {
-        Producer producer = producerRepo.findById(producerDto.getId()).get();
-        producer.setAddress(producerDto.getAddress());
-        producer.setPhone(producerDto.getPhone());
-        producer.setPhone(producer.getPhone());
+    public Producer updateProducer(ProducerUpdateDto producerUpdateDto) {
+        Producer producer = producerRepo.findById(producerUpdateDto.getId()).get();
+        if(producerUpdateDto.getAddress()!=null) producer.setAddress(producerUpdateDto.getAddress());
+        if(producerUpdateDto.getPhone()!=null) producer.setPhone(producerUpdateDto.getPhone());
+        if(producer.getPhone()!=null) producer.setPhone(producer.getPhone());
         return producerRepo.save(producer);
     }
 

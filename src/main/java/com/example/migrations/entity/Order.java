@@ -58,6 +58,5 @@ public class Order {
         this.customer=orderDto.getCustomer();
         this.good=orderDto.getGood();
         this.price=orderDto.getPrice();
-
     }
 }

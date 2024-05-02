@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
 import com.example.migrations.dto.OrderDto;
+import com.example.migrations.dto.OrderUpdateDto;
 import com.example.migrations.entity.Order;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public interface OrderApi {
     public Order createOrder(@RequestBody OrderDto orderDto);
 
     @PutMapping("/{id}")
-    public Order updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto);
+    public Order updateOrder(@PathVariable Long id, @RequestBody OrderUpdateDto orderUpdateDto);
 
     @DeleteMapping("/api/order/{id}")
     public void deleteOrder(@PathVariable Long id);

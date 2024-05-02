@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
 import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.entity.Employee;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public interface EmployeeApi {
     public Employee createEmployee(@RequestBody EmployeeDto employeeDto);
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto);
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody EmployeeUpdateDto employeeUpdateDto);
 
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable Long id);

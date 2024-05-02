@@ -54,5 +54,4 @@ public class Employee {
         this.passport=employeeDto.getPassport();
         this.surname=employeeDto.getSurname();
     }
-
 }

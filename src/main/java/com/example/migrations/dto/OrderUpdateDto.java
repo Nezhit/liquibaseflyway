@@ -8,35 +8,20 @@ import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderDto {
-
+public class OrderUpdateDto {
     private Long id;
-
-    @NotNull(message = "Good cannot be null")
     private Good good;
-
-    @NotNull(message = "Order date cannot be null")
-    @PastOrPresent(message = "Order date must be in the past or present")
     private LocalDate orderDate;
-
-    @NotNull(message = "Arrive date cannot be null")
     private LocalDate arriveDate;
-
-    @NotNull(message = "Customer date cannot be null")
     private Customer customer;
-
-    @NotNull(message = "Amount cannot be null")
     private Integer amount;
-
-    @NotNull(message = "Price cannot be null")
     private BigDecimal price;
-
-    @NotNull(message = "Employee cannot be null")
     private Employee employee;
 }

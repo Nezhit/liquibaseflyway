@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
 import com.example.migrations.dto.OrderDto;
+import com.example.migrations.dto.OrderUpdateDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.repository.OrderRepo;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,15 @@ public class OrderService {
         return orderRepo.save(order);
     }
 
-    public Order updateOrder(Long id, OrderDto orderDto) {
+    public Order updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
         Order order = orderRepo.findById(id).get();
-        order.setAmount(orderDto.getAmount());
-        order.setOrderDate(orderDto.getOrderDate());
-        order.setArriveDate(orderDto.getArriveDate());
-        order.setGood(orderDto.getGood());
-        order.setEmployee(orderDto.getEmployee());
-        order.setCustomer(orderDto.getCustomer());
-        order.setPrice(orderDto.getPrice());
+        if(orderUpdateDto.getAmount() !=null) order.setAmount(orderUpdateDto.getAmount());
+        if(orderUpdateDto.getOrderDate() !=null) order.setOrderDate(orderUpdateDto.getOrderDate());
+        if(orderUpdateDto.getArriveDate() !=null) order.setArriveDate(orderUpdateDto.getArriveDate());
+        if(orderUpdateDto.getGood() !=null) order.setGood(orderUpdateDto.getGood());
+        if(orderUpdateDto.getEmployee() !=null) order.setEmployee(orderUpdateDto.getEmployee());
+        if(orderUpdateDto.getCustomer() !=null) order.setCustomer(orderUpdateDto.getCustomer());
+        if(orderUpdateDto.getPrice() !=null) order.setPrice(orderUpdateDto.getPrice());
         return orderRepo.save(order);
     }
 
