@@ -5,7 +5,6 @@ import com.example.migrations.dto.TypeDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.service.TypeService;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -32,8 +31,8 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public Type deleteType(Long id) {
-        return typeService.deleteType(id);
+    public void deleteType(Long id) {
+        typeService.deleteType(id);
     }
 
     @Override

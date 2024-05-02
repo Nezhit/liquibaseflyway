@@ -4,15 +4,11 @@ import com.example.migrations.controllers.CustomerApi;
 import com.example.migrations.dto.CustomerDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.service.CustomerService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
 public class CustomerController implements CustomerApi {
-
     private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
@@ -26,18 +22,18 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public Customer createCustomer( CustomerDto customerDto) {
+    public Customer createCustomer(CustomerDto customerDto) {
         return customerService.createCustomer(customerDto);
     }
 
     @Override
-    public Customer updateCustomer( Long id,  CustomerDto customerDto) {
+    public Customer updateCustomer(Long id, CustomerDto customerDto) {
         return customerService.updateCustomer(id, customerDto);
     }
 
     @Override
-    public Customer deleteCustomer( Long id) {
-        return customerService.deleteCustomer(id);
+    public void deleteCustomer(Long id) {
+        customerService.deleteCustomer(id);
     }
 
     @Override

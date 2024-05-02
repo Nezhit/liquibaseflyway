@@ -4,9 +4,10 @@ import com.example.migrations.controllers.OrderApi;
 import com.example.migrations.dto.OrderDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
-
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+@RestController
 public class OrderController implements OrderApi {
     private final OrderService orderService;
 
@@ -31,8 +32,8 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order deleteOrder(Long id) {
-        return orderService.deleteOrder(id);
+    public void deleteOrder(Long id) {
+        orderService.deleteOrder(id);
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.example.migrations.dto.GoodDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.repository.GoodRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,12 +19,8 @@ public class GoodService {
     }
 
     public Good createGood(GoodDto goodDto) {
-        Good good = new Good();
-        good.setProducer(goodDto.getProducer());
-        good.setTitle(goodDto.getTitle());
-        good.setType(goodDto.getType());
-        goodRepo.save(good);
-        return good;
+        Good good = new Good(goodDto);
+        return goodRepo.save(good);
     }
 
     public Good updateGood(Long id, GoodDto goodDto) {
@@ -33,15 +28,12 @@ public class GoodService {
         good.setProducer(goodDto.getProducer());
         good.setTitle(goodDto.getTitle());
         good.setType(goodDto.getType());
-        goodRepo.save(good);
-        return good;
-
+        return goodRepo.save(good);
     }
 
-    public Good deleteGood(Long id) {
+    public void deleteGood(Long id) {
         Good good = goodRepo.findById(id).get();
         goodRepo.delete(good);
-        return good;
     }
 
     public Good getGoodById(Long id) {

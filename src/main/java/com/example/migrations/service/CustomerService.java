@@ -4,7 +4,6 @@ import com.example.migrations.dto.CustomerDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -16,34 +15,27 @@ public class CustomerService {
     }
 
     public Customer createCustomer(CustomerDto customerDto) {
-        System.out.println(customerDto.toString());
         if (customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
             throw new RuntimeException("Не все поля заполнены");
         }
-        Customer customer = new Customer(customerDto.getTitle(), customerDto.getAddress(), customerDto.getPhone());
-        customerRepo.save(customer);
-        return customer;
+        Customer customer = new Customer(customerDto);
+        return customerRepo.save(customer);
     }
 
     public Customer updateCustomer(Long id, CustomerDto customerDto) {
         if (customerDto.getId() == null || customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
             throw new RuntimeException("Не все поля заполнены");
         }
-        Customer customer = customerRepo.findById(id).orElse(null);
-        if (customer == null) {
-            throw new RuntimeException("Покупатель не найден");
-        }
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден"));
         customer.setAddress(customerDto.getAddress());
         customer.setPhone(customerDto.getPhone());
         customer.setTitle(customerDto.getTitle());
-        customerRepo.save(customer);
-        return customer;
+        return customerRepo.save(customer);
     }
 
-    public Customer deleteCustomer(Long id) {
+    public void deleteCustomer(Long id) {
         Customer customer = customerRepo.findById(id).get();
         customerRepo.delete(customer);
-        return customer;
     }
 
     public List<Customer> getCustomers() {

@@ -1,6 +1,12 @@
 package com.example.migrations.entity;
 
-import jakarta.persistence.*;
+import com.example.migrations.dto.CustomerDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +19,7 @@ import lombok.Setter;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cust")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "Title", nullable = false, length = 15)
@@ -31,10 +37,9 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Customer(Long id, String title, String address, String phone) {
-        this.id = id;
-        this.title = title;
-        this.address = address;
-        this.phone = phone;
+    public Customer(CustomerDto customerDto){
+        this.title= customerDto.getTitle();
+        this.phone= customerDto.getPhone();
+        this.address= customerDto.getAddress();
     }
 }

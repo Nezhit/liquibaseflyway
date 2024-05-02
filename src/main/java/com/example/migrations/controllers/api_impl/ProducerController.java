@@ -4,9 +4,10 @@ import com.example.migrations.controllers.ProducerApi;
 import com.example.migrations.dto.ProducerDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.service.ProducerService;
-
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+@RestController
 public class ProducerController implements ProducerApi {
     private final ProducerService producerService;
 
@@ -31,8 +32,8 @@ public class ProducerController implements ProducerApi {
     }
 
     @Override
-    public Producer deleteProducer(Long id) {
-        return producerService.deleteProducer(id);
+    public void deleteProducer(Long id) {
+        producerService.deleteProducer(id);
     }
 
     @Override

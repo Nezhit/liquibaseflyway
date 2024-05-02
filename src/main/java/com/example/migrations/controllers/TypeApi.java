@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-@RestController
 @RequestMapping("/api/type")
 public interface TypeApi {
     @GetMapping
@@ -26,7 +23,7 @@ public interface TypeApi {
     public Type updateType(@PathVariable Long id, @RequestBody TypeDto typeDto);
 
     @DeleteMapping("/{id}")
-    public Type deleteType(@PathVariable Long id);
+    public void deleteType(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Type getTypeById(@PathVariable Long id);

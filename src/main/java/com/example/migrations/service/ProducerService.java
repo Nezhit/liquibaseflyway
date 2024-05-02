@@ -4,7 +4,6 @@ import com.example.migrations.dto.ProducerDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.repository.ProducerRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,12 +19,8 @@ public class ProducerService {
     }
 
     public Producer createProducer(ProducerDto producerDto) {
-        Producer producer = new Producer();
-        producer.setAddress(producerDto.getAddress());
-        producer.setPhone(producerDto.getPhone());
-        producer.setPhone(producer.getPhone());
-        producerRepo.save(producer);
-        return producer;
+        Producer producer = new Producer(producerDto);
+        return producerRepo.save(producer);
     }
 
     public Producer updateProducer(ProducerDto producerDto) {
@@ -33,14 +28,12 @@ public class ProducerService {
         producer.setAddress(producerDto.getAddress());
         producer.setPhone(producerDto.getPhone());
         producer.setPhone(producer.getPhone());
-        producerRepo.save(producer);
-        return producer;
+        return producerRepo.save(producer);
     }
 
-    public Producer deleteProducer(Long id) {
+    public void deleteProducer(Long id) {
         Producer producer = producerRepo.findById(id).get();
         producerRepo.delete(producer);
-        return producer;
     }
 
     public Producer getProducerById(Long id) {

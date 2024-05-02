@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-@RestController
 @RequestMapping("/api/producer")
 public interface ProducerApi {
     @GetMapping
@@ -26,7 +23,7 @@ public interface ProducerApi {
     public Producer updateProducer(@PathVariable Long id, @RequestBody ProducerDto producerDto);
 
     @DeleteMapping("/{id}")
-    public Producer deleteProducer(@PathVariable Long id);
+    public void deleteProducer(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Producer getProducerById(@PathVariable Long id);

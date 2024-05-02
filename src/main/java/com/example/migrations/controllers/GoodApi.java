@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-@RestController
 @RequestMapping("/api/good")
 public interface GoodApi {
     @GetMapping
@@ -26,7 +23,7 @@ public interface GoodApi {
     public Good updateGood(@PathVariable Long id, @RequestBody GoodDto goodDto);
 
     @DeleteMapping("/{id}")
-    public Good deleteGood(@PathVariable Long id);
+    public void deleteGood(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Good getGoodById(@PathVariable Long id);

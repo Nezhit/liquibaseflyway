@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-@RestController
 @RequestMapping("/api/order")
 public interface OrderApi {
     @GetMapping
@@ -26,7 +23,7 @@ public interface OrderApi {
     public Order updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto);
 
     @DeleteMapping("/api/order/{id}")
-    public Order deleteOrder(@PathVariable Long id);
+    public void deleteOrder(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable Long id);

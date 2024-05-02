@@ -4,7 +4,6 @@ import com.example.migrations.dto.OrderDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.repository.OrderRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,16 +19,8 @@ public class OrderService {
     }
 
     public Order createOrder(OrderDto orderDto) {
-        Order order = new Order();
-        order.setAmount(orderDto.getAmount());
-        order.setOrderDate(orderDto.getOrderDate());
-        order.setArriveDate(orderDto.getArriveDate());
-        order.setGood(orderDto.getGood());
-        order.setEmployee(orderDto.getEmployee());
-        order.setCustomer(orderDto.getCustomer());
-        order.setPrice(orderDto.getPrice());
-        orderRepo.save(order);
-        return order;
+        Order order = new Order(orderDto);
+        return orderRepo.save(order);
     }
 
     public Order updateOrder(Long id, OrderDto orderDto) {
@@ -41,14 +32,12 @@ public class OrderService {
         order.setEmployee(orderDto.getEmployee());
         order.setCustomer(orderDto.getCustomer());
         order.setPrice(orderDto.getPrice());
-        orderRepo.save(order);
-        return order;
+        return orderRepo.save(order);
     }
 
-    public Order deleteOrder(Long id) {
+    public void deleteOrder(Long id) {
         Order order = orderRepo.findById(id).get();
         orderRepo.delete(order);
-        return order;
     }
 
     public Order getOrderById(Long id) {

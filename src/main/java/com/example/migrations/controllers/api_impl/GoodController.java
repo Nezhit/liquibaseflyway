@@ -5,7 +5,6 @@ import com.example.migrations.dto.GoodDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.service.GoodService;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -32,8 +31,8 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public Good deleteGood(Long id) {
-        return goodService.deleteGood(id);
+    public void deleteGood(Long id) {
+        goodService.deleteGood(id);
     }
 
     @Override

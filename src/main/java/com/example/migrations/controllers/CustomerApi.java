@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-@RestController
-@RequestMapping("api/customer")
+@RequestMapping("/api/customer")
 public interface CustomerApi {
     @GetMapping
     public List<Customer> getCustomers();
@@ -26,7 +23,7 @@ public interface CustomerApi {
     public Customer updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto);
 
     @DeleteMapping("/{id}")
-    public Customer deleteCustomer(@PathVariable Long id);
+    public void deleteCustomer(@PathVariable Long id);
 
     @GetMapping("/{id}")
     public Customer getCustomerById(Long id);

@@ -4,7 +4,6 @@ import com.example.migrations.dto.TypeDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,24 +19,19 @@ public class TypeService {
     }
 
     public Type createType(TypeDto typeDto) {
-        Type type = new Type();
-        type.setTitle(typeDto.getTitle());
-        typeRepo.save(type);
-        return type;
+        Type type = new Type(typeDto);
+        return typeRepo.save(type);
     }
 
     public Type updateType(Long id, TypeDto typeDto) {
         Type type = typeRepo.findById(id).get();
         type.setTitle(typeDto.getTitle());
-        typeRepo.save(type);
-        return type;
-
+        return typeRepo.save(type);
     }
 
-    public Type deleteType(Long id) {
+    public void deleteType(Long id) {
         Type type = typeRepo.findById(id).get();
         typeRepo.delete(type);
-        return type;
     }
 
     public Type getTypeById(Long id) {
