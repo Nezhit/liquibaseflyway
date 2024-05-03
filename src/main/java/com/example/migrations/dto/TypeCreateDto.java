@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class TypeCreateDto {
     @NotNull(message = "Title cannot be null")
     private ETypes Title;

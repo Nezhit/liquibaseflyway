@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class ProducerCreateDto {
     @NotNull(message = "Title cannot be null")
     private String title;

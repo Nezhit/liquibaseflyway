@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class EmployeeUpdateDto {
     private String name;
     private String surname;

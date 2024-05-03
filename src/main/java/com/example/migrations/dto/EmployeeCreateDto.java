@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class EmployeeCreateDto {
     @NotNull(message = "Name cannot be null")
     private String name;

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class GoodCreateDto {
     @NotNull(message = "Type cannot be null")
     private Type type;

@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class OrderRsDto {
     private Good good;
     private LocalDate orderDate;

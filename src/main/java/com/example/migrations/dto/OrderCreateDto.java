@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class OrderCreateDto {
     @NotNull(message = "Good cannot be null")
     private Good good;
