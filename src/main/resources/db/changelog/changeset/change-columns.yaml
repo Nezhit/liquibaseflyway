@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: customers
+            oldColumnName: Title
+            newColumnName: title
+        - renameColumn:
+            tableName: customers
+            oldColumnName: Adress
+            newColumnName: address
+        - renameColumn:
+            tableName: customers
+            oldColumnName: Phone
+            newColumnName: phone
+
+  - changeSet:
+      id: 13
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Name
+            newColumnName: name
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Surname
+            newColumnName: surname
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Papaname
+            newColumnName: papaname
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Birthdate
+            newColumnName: birthdate
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Address
+            newColumnName: address
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Phone
+            newColumnName: phone
+        - renameColumn:
+            tableName: employees
+            oldColumnName: Passport
+            newColumnName: passport
+
+  - changeSet:
+      id: 14
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: types
+            oldColumnName: Title
+            newColumnName: title
+
+  - changeSet:
+      id: 15
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: producers
+            oldColumnName: Title
+            newColumnName: title
+        - renameColumn:
+            tableName: producers
+            oldColumnName: Address
+            newColumnName: address
+        - renameColumn:
+            tableName: producers
+            oldColumnName: Phone
+            newColumnName: phone
+
+  - changeSet:
+      id: 16
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: goods
+            oldColumnName: Title
+            newColumnName: title
+
+  - changeSet:
+      id: 17
+      author: your_name
+      changes:
+        - renameColumn:
+            tableName: goods_orders
+            oldColumnName: Order_Date
+            newColumnName: order_date
+        - renameColumn:
+            tableName: goods_orders
+            oldColumnName: Arrive_Date
+            newColumnName: arrive_date

@@ -1,16 +1,28 @@
 package com.example.migrations.entity;
 
-import jakarta.persistence.*;
+import com.example.migrations.dto.EmployeeCreateDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "employees")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_emp")
-    private Integer id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "Name", nullable = false, length = 15)
     private String name;
@@ -33,5 +45,13 @@ public class Employee {
     @Column(name = "Passport", nullable = false, unique = true)
     private Integer passport;
 
-
+    public Employee(EmployeeCreateDto employeeCreateDto) {
+        this.address = employeeCreateDto.getAddress();
+        this.phone = employeeCreateDto.getPhone();
+        this.birthdate = employeeCreateDto.getBirthdate();
+        this.name = employeeCreateDto.getName();
+        this.papaname = employeeCreateDto.getPapaname();
+        this.passport = employeeCreateDto.getPassport();
+        this.surname = employeeCreateDto.getSurname();
+    }
 }

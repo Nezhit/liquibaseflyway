@@ -6,8 +6,11 @@ databaseChangeLog:
       file: db/changelog/changeset/foreign-keys-tables.yaml
   - include:
       file: db/changelog/changeset/editing-db.yaml
+
+  - include:
+      file: db/changelog/changeset/newdb.yaml
 database:
   driver: org.postgresql.Driver
-  url: jdbc:postgresql://service-db/optoviy
+  url: jdbc:postgresql://localhost:5432/optoviy
   username: postgres
   password: root
