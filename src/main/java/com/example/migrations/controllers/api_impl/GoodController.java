@@ -18,7 +18,7 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public List<Good> getGoods() {
+    public List<GoodRsDto> getGoods() {
         return goodService.getGoods();
     }
 

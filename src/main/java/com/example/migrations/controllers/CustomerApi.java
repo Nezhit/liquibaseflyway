@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/customer")
 public interface CustomerApi {
     @GetMapping
-    public List<Customer> getCustomers();
+    public List<CustomerRsDto> getCustomers();
 
     @PostMapping
     public CustomerRsDto createCustomer(@RequestBody CustomerCreateDto customerCreateDto);

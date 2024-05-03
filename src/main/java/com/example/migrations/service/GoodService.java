@@ -7,6 +7,7 @@ import com.example.migrations.entity.Good;
 import com.example.migrations.repository.GoodRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GoodService {
@@ -16,8 +17,8 @@ public class GoodService {
         this.goodRepo = goodRepo;
     }
 
-    public List<Good> getGoods() {
-        return goodRepo.findAll();
+    public List<GoodRsDto> getGoods() {
+        return goodRepo.findAll().stream().map(GoodRsDto::new).collect(Collectors.toList());
     }
 
     public GoodRsDto createGood(GoodCreateDto goodCreateDto) {

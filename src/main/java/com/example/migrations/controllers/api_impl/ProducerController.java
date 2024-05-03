@@ -19,7 +19,7 @@ public class ProducerController implements ProducerApi {
 
 
     @Override
-    public List<Producer> getProducers() {
+    public List<ProducerRsDto> getProducers() {
         return producerService.getProducers();
     }
 

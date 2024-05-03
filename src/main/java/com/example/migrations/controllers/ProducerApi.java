@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/producer")
 public interface ProducerApi {
     @GetMapping
-    public List<Producer> getProducers();
+    public List<ProducerRsDto> getProducers();
 
     @PostMapping
     public ProducerRsDto createProducer(@RequestBody ProducerCreateDto producerCreateDto);

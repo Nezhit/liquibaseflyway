@@ -7,6 +7,7 @@ import com.example.migrations.entity.Employee;
 import com.example.migrations.repository.EmployeeRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -33,8 +34,8 @@ public class EmployeeService {
         return new EmployeeRsDto(employeeRepo.save(employee));
     }
 
-    public List<Employee> getEmployees() {
-        return employeeRepo.findAll();
+    public List<EmployeeRsDto> getEmployees() {
+        return employeeRepo.findAll().stream().map(EmployeeRsDto::new).collect(Collectors.toList());
     }
 
     public void deleteEmployee(Long id) {

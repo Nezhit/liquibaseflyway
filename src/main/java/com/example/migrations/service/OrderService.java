@@ -7,6 +7,7 @@ import com.example.migrations.entity.Order;
 import com.example.migrations.repository.OrderRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -16,8 +17,8 @@ public class OrderService {
         this.orderRepo = orderRepo;
     }
 
-    public List<Order> getOrders() {
-        return orderRepo.findAll();
+    public List<OrderRsDto> getOrders() {
+        return orderRepo.findAll().stream().map(OrderRsDto::new).collect(Collectors.toList());
     }
 
     public OrderRsDto createOrder(OrderCreateDto orderCreateDto) {

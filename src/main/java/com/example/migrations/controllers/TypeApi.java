@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/type")
 public interface TypeApi {
     @GetMapping
-    public List<Type> getTypes();
+    public List<TypeRsDto> getTypes();
 
     @PostMapping
     public TypeRsDto createType(@RequestBody TypeCreateDto typeCreateDto);

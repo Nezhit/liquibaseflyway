@@ -18,7 +18,7 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public List<Type> getTypes() {
+    public List<TypeRsDto> getTypes() {
         return typeService.getTypes();
     }
 

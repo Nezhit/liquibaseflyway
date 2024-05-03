@@ -17,9 +17,8 @@ public class OrderController implements OrderApi {
         this.orderService = orderService;
     }
 
-
     @Override
-    public List<Order> getOrders() {
+    public List<OrderRsDto> getOrders() {
         return orderService.getOrders();
     }
 

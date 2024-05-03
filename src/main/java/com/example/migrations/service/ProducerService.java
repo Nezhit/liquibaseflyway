@@ -7,6 +7,7 @@ import com.example.migrations.entity.Producer;
 import com.example.migrations.repository.ProducerRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProducerService {
@@ -16,8 +17,8 @@ public class ProducerService {
         this.producerRepo = producerRepo;
     }
 
-    public List<Producer> getProducers() {
-        return producerRepo.findAll();
+    public List<ProducerRsDto> getProducers() {
+        return producerRepo.findAll().stream().map(ProducerRsDto::new).collect(Collectors.toList());
     }
 
     public ProducerRsDto createProducer(ProducerCreateDto producerCreateDto) {

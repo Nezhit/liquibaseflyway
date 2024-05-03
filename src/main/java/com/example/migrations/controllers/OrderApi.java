@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/order")
 public interface OrderApi {
     @GetMapping
-    public List<Order> getOrders();
+    public List<OrderRsDto> getOrders();
 
     @PostMapping
     public OrderRsDto createOrder(@RequestBody OrderCreateDto orderCreateDto);

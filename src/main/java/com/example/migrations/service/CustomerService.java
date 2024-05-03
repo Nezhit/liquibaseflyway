@@ -7,6 +7,7 @@ import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -34,8 +35,8 @@ public class CustomerService {
         customerRepo.delete(customer);
     }
 
-    public List<Customer> getCustomers() {
-        return customerRepo.findAll();
+    public List<CustomerRsDto> getCustomers() {
+        return customerRepo.findAll().stream().map(CustomerRsDto::new).collect(Collectors.toList());
     }
 
     public CustomerRsDto getCustomerById(Long id) {

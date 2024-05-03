@@ -18,7 +18,7 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public List<Customer> getCustomers() {
+    public List<CustomerRsDto> getCustomers() {
         return customerService.getCustomers();
     }
 

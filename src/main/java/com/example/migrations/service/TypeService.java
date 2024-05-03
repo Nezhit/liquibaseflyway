@@ -7,6 +7,7 @@ import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TypeService {
@@ -16,8 +17,8 @@ public class TypeService {
         this.typeRepo = typeRepo;
     }
 
-    public List<Type> getTypes() {
-        return typeRepo.findAll();
+    public List<TypeRsDto> getTypes() {
+        return typeRepo.findAll().stream().map(TypeRsDto::new).collect(Collectors.toList());
     }
 
     public TypeRsDto createType(TypeCreateDto typeCreateDto) {

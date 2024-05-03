@@ -18,7 +18,7 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public List<EmployeeRsDto> getEmployees() {
         return employeeService.getEmployees();
     }
 

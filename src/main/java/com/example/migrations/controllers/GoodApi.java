@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/good")
 public interface GoodApi {
     @GetMapping
-    public List<Good> getGoods();
+    public List<GoodRsDto> getGoods();
 
     @PostMapping
     public GoodRsDto createGood(@RequestBody GoodCreateDto goodCreateDto);

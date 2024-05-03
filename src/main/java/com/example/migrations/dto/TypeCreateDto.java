@@ -4,7 +4,6 @@ import com.example.migrations.entity.enums.ETypes;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor

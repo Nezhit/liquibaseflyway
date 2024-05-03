@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/employee")
 public interface EmployeeApi {
     @GetMapping
-    public List<Employee> getEmployees();
+    public List<EmployeeRsDto> getEmployees();
 
     @PostMapping
     public EmployeeRsDto createEmployee(@RequestBody EmployeeCreateDto employeeCreateDto);

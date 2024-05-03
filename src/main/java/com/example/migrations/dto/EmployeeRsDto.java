@@ -3,7 +3,6 @@ package com.example.migrations.dto;
 import com.example.migrations.entity.Employee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Getter
