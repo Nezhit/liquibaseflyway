@@ -1,6 +1,6 @@
 package com.example.migrations.entity;
 
-import com.example.migrations.dto.ProducerDto;
+import com.example.migrations.dto.ProducerCreateDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,9 +31,9 @@ public class Producer {
     @Column(name = "Phone", nullable = false, length = 11)
     private String phone;
 
-    public Producer(ProducerDto producerDto){
-        this.title=producerDto.getTitle();
-        this.phone= producerDto.getPhone();
-        this.address= producerDto.getAddress();
+    public Producer(ProducerCreateDto producerCreateDto) {
+        this.title = producerCreateDto.getTitle();
+        this.phone = producerCreateDto.getPhone();
+        this.address = producerCreateDto.getAddress();
     }
 }

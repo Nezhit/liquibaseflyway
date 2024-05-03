@@ -6,11 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class ProducerDto {
-    private Long id;
-
+public class ProducerCreateDto {
     @NotNull(message = "Title cannot be null")
     private String title;
 

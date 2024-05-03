@@ -8,12 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class GoodDto {
-
-    private Long id;
-
+public class GoodCreateDto {
     @NotNull(message = "Type cannot be null")
     private Type type;
 

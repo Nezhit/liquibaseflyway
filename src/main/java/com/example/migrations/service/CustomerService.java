@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
-import com.example.migrations.dto.CustomerDto;
+import com.example.migrations.dto.CustomerCreateDto;
+import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
@@ -15,24 +16,21 @@ public class CustomerService {
         this.customerRepo = customerRepo;
     }
 
-    public Customer createCustomer(CustomerDto customerDto) {
-        if (customerDto.getTitle() == null || customerDto.getAddress() == null || customerDto.getPhone() == null) {
-            throw new RuntimeException("Не все поля заполнены");
-        }
-        Customer customer = new Customer(customerDto);
-        return customerRepo.save(customer);
+    public CustomerRsDto createCustomer(CustomerCreateDto customerCreateDto) {
+        Customer customer = new Customer(customerCreateDto);
+        return new CustomerRsDto(customerRepo.save(customer));
     }
 
-    public Customer updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
+    public CustomerRsDto updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
         Customer customer = customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден"));
-        if(customerUpdateDto.getAddress()!=null) customer.setAddress(customerUpdateDto.getAddress());
-        if(customerUpdateDto.getPhone()!=null) customer.setPhone(customerUpdateDto.getPhone());
-        if(customerUpdateDto.getTitle()!=null)customer.setTitle(customerUpdateDto.getTitle());
-        return customerRepo.save(customer);
+        if (customerUpdateDto.getAddress() != null) customer.setAddress(customerUpdateDto.getAddress());
+        if (customerUpdateDto.getPhone() != null) customer.setPhone(customerUpdateDto.getPhone());
+        if (customerUpdateDto.getTitle() != null) customer.setTitle(customerUpdateDto.getTitle());
+        return new CustomerRsDto(customerRepo.save(customer));
     }
 
     public void deleteCustomer(Long id) {
-        Customer customer = customerRepo.findById(id).get();
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден"));
         customerRepo.delete(customer);
     }
 
@@ -40,8 +38,8 @@ public class CustomerService {
         return customerRepo.findAll();
     }
 
-    public Customer getCustomerById(Long id) {
-        return customerRepo.findById(id).get();
+    public CustomerRsDto getCustomerById(Long id) {
+        return new CustomerRsDto(customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден")));
     }
 }
 

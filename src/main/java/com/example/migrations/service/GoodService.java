@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
-import com.example.migrations.dto.GoodDto;
+import com.example.migrations.dto.GoodCreateDto;
+import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.repository.GoodRepo;
@@ -19,25 +20,25 @@ public class GoodService {
         return goodRepo.findAll();
     }
 
-    public Good createGood(GoodDto goodDto) {
-        Good good = new Good(goodDto);
-        return goodRepo.save(good);
+    public GoodRsDto createGood(GoodCreateDto goodCreateDto) {
+        Good good = new Good(goodCreateDto);
+        return new GoodRsDto(goodRepo.save(good));
     }
 
-    public Good updateGood(Long id, GoodUpdateDto goodUpdateDto) {
-        Good good = goodRepo.findById(id).get();
-        if(goodUpdateDto.getProducer()!=null) good.setProducer(goodUpdateDto.getProducer());
-        if(goodUpdateDto.getTitle()!=null) good.setTitle(goodUpdateDto.getTitle());
-        if(goodUpdateDto.getType()!=null) good.setType(goodUpdateDto.getType());
-        return goodRepo.save(good);
+    public GoodRsDto updateGood(Long id, GoodUpdateDto goodUpdateDto) {
+        Good good = goodRepo.findById(id).orElseThrow(() -> new RuntimeException("Товар не найден"));
+        if (goodUpdateDto.getProducer() != null) good.setProducer(goodUpdateDto.getProducer());
+        if (goodUpdateDto.getTitle() != null) good.setTitle(goodUpdateDto.getTitle());
+        if (goodUpdateDto.getType() != null) good.setType(goodUpdateDto.getType());
+        return new GoodRsDto(goodRepo.save(good));
     }
 
     public void deleteGood(Long id) {
-        Good good = goodRepo.findById(id).get();
+        Good good = goodRepo.findById(id).orElseThrow(() -> new RuntimeException("Товар не найден"));
         goodRepo.delete(good);
     }
 
-    public Good getGoodById(Long id) {
-        return goodRepo.findById(id).get();
+    public GoodRsDto getGoodById(Long id) {
+        return new GoodRsDto(goodRepo.findById(id).orElseThrow(() -> new RuntimeException("Товар не найден")));
     }
 }

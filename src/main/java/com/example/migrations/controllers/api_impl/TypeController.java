@@ -1,7 +1,8 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.TypeApi;
-import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeCreateDto;
+import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.service.TypeService;
@@ -22,12 +23,12 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public Type createType(TypeDto typeDto) {
-        return typeService.createType(typeDto);
+    public TypeRsDto createType(TypeCreateDto typeCreateDto) {
+        return typeService.createType(typeCreateDto);
     }
 
     @Override
-    public Type updateType(Long id, TypeUpdateDto typeUpdateDto) {
+    public TypeRsDto updateType(Long id, TypeUpdateDto typeUpdateDto) {
         return typeService.updateType(id, typeUpdateDto);
     }
 
@@ -37,7 +38,7 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public Type getTypeById(Long id) {
+    public TypeRsDto getTypeById(Long id) {
         return typeService.getTypeById(id);
     }
 }

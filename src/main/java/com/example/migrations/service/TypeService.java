@@ -1,6 +1,7 @@
 package com.example.migrations.service;
 
-import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeCreateDto;
+import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import com.example.migrations.repository.TypeRepo;
@@ -19,23 +20,23 @@ public class TypeService {
         return typeRepo.findAll();
     }
 
-    public Type createType(TypeDto typeDto) {
-        Type type = new Type(typeDto);
-        return typeRepo.save(type);
+    public TypeRsDto createType(TypeCreateDto typeCreateDto) {
+        Type type = new Type(typeCreateDto);
+        return new TypeRsDto(typeRepo.save(type));
     }
 
-    public Type updateType(Long id, TypeUpdateDto typeUpdateDto) {
-        Type type = typeRepo.findById(id).get();
-        if(typeUpdateDto.getTitle()!=null) type.setTitle(typeUpdateDto.getTitle());
-        return typeRepo.save(type);
+    public TypeRsDto updateType(Long id, TypeUpdateDto typeUpdateDto) {
+        Type type = typeRepo.findById(id).orElseThrow(() -> new RuntimeException("Тип не найден"));
+        if (typeUpdateDto.getTitle() != null) type.setTitle(typeUpdateDto.getTitle());
+        return new TypeRsDto(typeRepo.save(type));
     }
 
     public void deleteType(Long id) {
-        Type type = typeRepo.findById(id).get();
+        Type type = typeRepo.findById(id).orElseThrow(() -> new RuntimeException("Тип не найден"));
         typeRepo.delete(type);
     }
 
-    public Type getTypeById(Long id) {
-        return typeRepo.findById(id).get();
+    public TypeRsDto getTypeById(Long id) {
+        return new TypeRsDto(typeRepo.findById(id).orElseThrow(() -> new RuntimeException("Тип не найден")));
     }
 }

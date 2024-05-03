@@ -1,6 +1,6 @@
 package com.example.migrations.entity;
 
-import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.entity.enums.ETypes;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class Type {
     @Column(name = "Title")
     private ETypes Title;
 
-    public Type(TypeDto typeDto) {
-        this.Title = typeDto.getTitle();
+    public Type(TypeCreateDto typeCreateDto) {
+        this.Title = typeCreateDto.getTitle();
     }
 }

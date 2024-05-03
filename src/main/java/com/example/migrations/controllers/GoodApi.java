@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
-import com.example.migrations.dto.GoodDto;
+import com.example.migrations.dto.GoodCreateDto;
+import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.entity.Good;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +19,14 @@ public interface GoodApi {
     public List<Good> getGoods();
 
     @PostMapping
-    public Good createGood(@RequestBody GoodDto goodDto);
+    public GoodRsDto createGood(@RequestBody GoodCreateDto goodCreateDto);
 
     @PutMapping("/{id}")
-    public Good updateGood(@PathVariable Long id, @RequestBody GoodUpdateDto goodUpdateDto);
+    public GoodRsDto updateGood(@PathVariable Long id, @RequestBody GoodUpdateDto goodUpdateDto);
 
     @DeleteMapping("/{id}")
     public void deleteGood(@PathVariable Long id);
 
     @GetMapping("/{id}")
-    public Good getGoodById(@PathVariable Long id);
+    public GoodRsDto getGoodById(@PathVariable Long id);
 }

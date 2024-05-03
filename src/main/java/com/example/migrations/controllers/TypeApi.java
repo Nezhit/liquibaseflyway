@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
-import com.example.migrations.dto.TypeDto;
+import com.example.migrations.dto.TypeCreateDto;
+import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +19,14 @@ public interface TypeApi {
     public List<Type> getTypes();
 
     @PostMapping
-    public Type createType(@RequestBody TypeDto typeDto);
+    public TypeRsDto createType(@RequestBody TypeCreateDto typeCreateDto);
 
     @PutMapping("/{id}")
-    public Type updateType(@PathVariable Long id, @RequestBody TypeUpdateDto typeUpdateDto);
+    public TypeRsDto updateType(@PathVariable Long id, @RequestBody TypeUpdateDto typeUpdateDto);
 
     @DeleteMapping("/{id}")
     public void deleteType(@PathVariable Long id);
 
     @GetMapping("/{id}")
-    public Type getTypeById(@PathVariable Long id);
+    public TypeRsDto getTypeById(@PathVariable Long id);
 }

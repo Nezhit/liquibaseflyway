@@ -6,12 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class CustomerDto {
-
-    private Long id;
-
+public class CustomerCreateDto {
     @NotNull(message = "Title cannot be null")
     private String title;
 
@@ -24,7 +20,6 @@ public class CustomerDto {
     @Override
     public String toString() {
         return "CustomerDto{" +
-                "id=" + id +
                 ", title='" + title + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

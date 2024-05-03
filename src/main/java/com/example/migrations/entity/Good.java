@@ -1,6 +1,6 @@
 package com.example.migrations.entity;
 
-import com.example.migrations.dto.GoodDto;
+import com.example.migrations.dto.GoodCreateDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +34,10 @@ public class Good {
     @ManyToOne
     @JoinColumn(name = "id_prod", nullable = false)
     private Producer producer;
-    public Good(GoodDto goodDto){
-        this.title = goodDto.getTitle();
-        this.type=goodDto.getType();
-        this.producer=goodDto.getProducer();
+
+    public Good(GoodCreateDto goodCreateDto) {
+        this.title = goodCreateDto.getTitle();
+        this.type = goodCreateDto.getType();
+        this.producer = goodCreateDto.getProducer();
     }
 }

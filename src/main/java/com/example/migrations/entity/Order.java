@@ -1,6 +1,6 @@
 package com.example.migrations.entity;
 
-import com.example.migrations.dto.OrderDto;
+import com.example.migrations.dto.OrderCreateDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -50,13 +51,13 @@ public class Order {
     @JoinColumn(name = "id_emp", nullable = false)
     private Employee employee;
 
-    public Order(OrderDto orderDto){
-        this.amount= orderDto.getAmount();
-        this.employee=orderDto.getEmployee();
-        this.arriveDate=orderDto.getArriveDate();
-        this.orderDate=orderDto.getOrderDate();
-        this.customer=orderDto.getCustomer();
-        this.good=orderDto.getGood();
-        this.price=orderDto.getPrice();
+    public Order(OrderCreateDto orderCreateDto) {
+        this.amount = orderCreateDto.getAmount();
+        this.employee = orderCreateDto.getEmployee();
+        this.arriveDate = orderCreateDto.getArriveDate();
+        this.orderDate = orderCreateDto.getOrderDate();
+        this.customer = orderCreateDto.getCustomer();
+        this.good = orderCreateDto.getGood();
+        this.price = orderCreateDto.getPrice();
     }
 }

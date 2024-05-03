@@ -1,6 +1,6 @@
 package com.example.migrations.entity;
 
-import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.dto.EmployeeCreateDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,13 +45,13 @@ public class Employee {
     @Column(name = "Passport", nullable = false, unique = true)
     private Integer passport;
 
-    public Employee(EmployeeDto employeeDto){
-        this.address=employeeDto.getAddress();
-        this.phone=employeeDto.getPhone();
-        this.birthdate=employeeDto.getBirthdate();
-        this.name= employeeDto.getName();
-        this.papaname=employeeDto.getPapaname();
-        this.passport=employeeDto.getPassport();
-        this.surname=employeeDto.getSurname();
+    public Employee(EmployeeCreateDto employeeCreateDto) {
+        this.address = employeeCreateDto.getAddress();
+        this.phone = employeeCreateDto.getPhone();
+        this.birthdate = employeeCreateDto.getBirthdate();
+        this.name = employeeCreateDto.getName();
+        this.papaname = employeeCreateDto.getPapaname();
+        this.passport = employeeCreateDto.getPassport();
+        this.surname = employeeCreateDto.getSurname();
     }
 }

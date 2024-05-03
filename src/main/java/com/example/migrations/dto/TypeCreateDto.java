@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class TypeDto {
-
-    private Long id;
-
+public class TypeCreateDto {
     @NotNull(message = "Title cannot be null")
     private ETypes Title;
 }

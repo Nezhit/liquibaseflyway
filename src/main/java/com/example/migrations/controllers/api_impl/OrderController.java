@@ -1,7 +1,8 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.OrderApi;
-import com.example.migrations.dto.OrderDto;
+import com.example.migrations.dto.OrderCreateDto;
+import com.example.migrations.dto.OrderRsDto;
 import com.example.migrations.dto.OrderUpdateDto;
 import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
@@ -23,12 +24,12 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order createOrder(OrderDto orderDto) {
-        return orderService.createOrder(orderDto);
+    public OrderRsDto createOrder(OrderCreateDto orderCreateDto) {
+        return orderService.createOrder(orderCreateDto);
     }
 
     @Override
-    public Order updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
+    public OrderRsDto updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
         return orderService.updateOrder(id, orderUpdateDto);
     }
 
@@ -38,7 +39,7 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order getOrderById(Long id) {
+    public OrderRsDto getOrderById(Long id) {
         return orderService.getOrderById(id);
     }
 }

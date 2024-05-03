@@ -1,7 +1,8 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.ProducerApi;
-import com.example.migrations.dto.ProducerDto;
+import com.example.migrations.dto.ProducerCreateDto;
+import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.service.ProducerService;
@@ -23,13 +24,13 @@ public class ProducerController implements ProducerApi {
     }
 
     @Override
-    public Producer createProducer(ProducerDto producerDto) {
-        return producerService.createProducer(producerDto);
+    public ProducerRsDto createProducer(ProducerCreateDto producerCreateDto) {
+        return producerService.createProducer(producerCreateDto);
     }
 
     @Override
-    public Producer updateProducer(Long id, ProducerUpdateDto producerUpdateDto) {
-        return producerService.updateProducer(producerUpdateDto);
+    public ProducerRsDto updateProducer(Long id, ProducerUpdateDto producerUpdateDto) {
+        return producerService.updateProducer(id,producerUpdateDto);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class ProducerController implements ProducerApi {
     }
 
     @Override
-    public Producer getProducerById(Long id) {
+    public ProducerRsDto getProducerById(Long id) {
         return producerService.getProducerById(id);
     }
 }

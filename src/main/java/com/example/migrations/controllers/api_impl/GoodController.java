@@ -1,7 +1,8 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.GoodApi;
-import com.example.migrations.dto.GoodDto;
+import com.example.migrations.dto.GoodCreateDto;
+import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.entity.Good;
 import com.example.migrations.service.GoodService;
@@ -22,12 +23,12 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public Good createGood(GoodDto goodDto) {
-        return goodService.createGood(goodDto);
+    public GoodRsDto createGood(GoodCreateDto goodCreateDto) {
+        return goodService.createGood(goodCreateDto);
     }
 
     @Override
-    public Good updateGood(Long id, GoodUpdateDto goodUpdateDto) {
+    public GoodRsDto updateGood(Long id, GoodUpdateDto goodUpdateDto) {
         return goodService.updateGood(id, goodUpdateDto);
     }
 
@@ -37,7 +38,7 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public Good getGoodById(Long id) {
+    public GoodRsDto getGoodById(Long id) {
         return goodService.getGoodById(id);
     }
 }

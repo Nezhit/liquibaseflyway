@@ -1,6 +1,7 @@
 package com.example.migrations.controllers;
 
-import com.example.migrations.dto.ProducerDto;
+import com.example.migrations.dto.ProducerCreateDto;
+import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.entity.Producer;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +19,14 @@ public interface ProducerApi {
     public List<Producer> getProducers();
 
     @PostMapping
-    public Producer createProducer(@RequestBody ProducerDto producerDto);
+    public ProducerRsDto createProducer(@RequestBody ProducerCreateDto producerCreateDto);
 
     @PutMapping("/{id}")
-    public Producer updateProducer(@PathVariable Long id, @RequestBody ProducerUpdateDto producerUpdateDto);
+    public ProducerRsDto updateProducer(@PathVariable Long id, @RequestBody ProducerUpdateDto producerUpdateDto);
 
     @DeleteMapping("/{id}")
     public void deleteProducer(@PathVariable Long id);
 
     @GetMapping("/{id}")
-    public Producer getProducerById(@PathVariable Long id);
+    public ProducerRsDto getProducerById(@PathVariable Long id);
 }

@@ -1,7 +1,8 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.EmployeeApi;
-import com.example.migrations.dto.EmployeeDto;
+import com.example.migrations.dto.EmployeeCreateDto;
+import com.example.migrations.dto.EmployeeRsDto;
 import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.entity.Employee;
 import com.example.migrations.service.EmployeeService;
@@ -22,12 +23,12 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public Employee createEmployee(EmployeeDto employeeDto) {
-        return employeeService.createEmployee(employeeDto);
+    public EmployeeRsDto createEmployee(EmployeeCreateDto employeeCreateDto) {
+        return employeeService.createEmployee(employeeCreateDto);
     }
 
     @Override
-    public Employee updateEmployee(Long id, EmployeeUpdateDto employeeUpdateDto) {
+    public EmployeeRsDto updateEmployee(Long id, EmployeeUpdateDto employeeUpdateDto) {
         return employeeService.updateEmployee(id, employeeUpdateDto);
     }
 
@@ -37,7 +38,7 @@ public class EmployeeController implements EmployeeApi {
     }
 
     @Override
-    public Employee getEmployeeById(Long id) {
+    public EmployeeRsDto getEmployeeById(Long id) {
         return employeeService.getEmployeeById(id);
     }
 }
