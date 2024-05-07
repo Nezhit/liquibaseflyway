@@ -1,10 +1,13 @@
 package com.example.migrations.controllers;
 
+import com.example.migrations.dto.EmployeeRsDto;
 import com.example.migrations.dto.GoodCreateDto;
 import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.entity.Good;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,40 +24,49 @@ public interface GoodApi {
     @GetMapping
     @Operation(summary = "Get goods")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Get all goods"),
+            @ApiResponse(responseCode = "200", description = "Found all goods", content =
+                    {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = List.class))}),
             @ApiResponse(responseCode = "404", description = "Goods not found or exception")
     })
     public List<GoodRsDto> getGoods();
 
     @PostMapping
-    @Operation(summary = "Create goods")
+    @Operation(summary = "Create good")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good created"),
-            @ApiResponse(responseCode = "404", description = "Good  not created")
+            @ApiResponse(responseCode = "200", description = "Good successfully created", content =
+                    {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Good not created")
     })
     public GoodRsDto createGood(@RequestBody GoodCreateDto goodCreateDto);
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update goods")
+    @Operation(summary = "Update good")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good updated"),
-            @ApiResponse(responseCode = "404", description = "Good  not updated")
+            @ApiResponse(responseCode = "200", description = "Good successfully updated", content =
+                    {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Good not updated")
     })
     public GoodRsDto updateGood(@PathVariable Long id, @RequestBody GoodUpdateDto goodUpdateDto);
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete goods")
+    @Operation(summary = "Delete good")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good deleted"),
-            @ApiResponse(responseCode = "404", description = "Good  not deleted")
+            @ApiResponse(responseCode = "200", description = "Good successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Good not deleted")
     })
     public void deleteGood(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(summary = "Get good by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good found"),
-            @ApiResponse(responseCode = "404", description = "Good  not found or exception")
+            @ApiResponse(responseCode = "200", description = "Good found", content =
+                    {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Good not found or exception")
     })
     public GoodRsDto getGoodById(@PathVariable Long id);
 }
+

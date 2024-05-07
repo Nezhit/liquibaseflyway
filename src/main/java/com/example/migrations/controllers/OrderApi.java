@@ -21,7 +21,7 @@ public interface OrderApi {
     @GetMapping
     @Operation(summary = "Get orders")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get all orders"),
+            @ApiResponse(responseCode = "200", description = "Found all orders"),
             @ApiResponse(responseCode = "404", description = "Orders not found or exception")
     })
     public List<OrderRsDto> getOrders();
@@ -29,23 +29,23 @@ public interface OrderApi {
     @PostMapping
     @Operation(summary = "Create order")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order created"),
-            @ApiResponse(responseCode = "404", description = "Order  not created")
+            @ApiResponse(responseCode = "200", description = "Order successfully created"),
+            @ApiResponse(responseCode = "404", description = "Order not created")
     })
     public OrderRsDto createOrder(@RequestBody OrderCreateDto orderCreateDto);
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update orders")
+    @Operation(summary = "Update order")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order update"),
-            @ApiResponse(responseCode = "404", description = "Order  not updated")
+            @ApiResponse(responseCode = "200", description = "Order successfully updated"),
+            @ApiResponse(responseCode = "404", description = "Order not updated")
     })
     public OrderRsDto updateOrder(@PathVariable Long id, @RequestBody OrderUpdateDto orderUpdateDto);
 
-    @DeleteMapping("/api/order/{id}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Delete order")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order deleted"),
+            @ApiResponse(responseCode = "200", description = "Order successfully deleted"),
             @ApiResponse(responseCode = "404", description = "Order not deleted")
     })
     public void deleteOrder(@PathVariable Long id);
@@ -58,3 +58,4 @@ public interface OrderApi {
     })
     public OrderRsDto getOrderById(@PathVariable Long id);
 }
+

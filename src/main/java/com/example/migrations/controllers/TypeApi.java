@@ -21,31 +21,31 @@ public interface TypeApi {
     @GetMapping
     @Operation(summary = "Get types")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Found types"),
+            @ApiResponse(responseCode = "200", description = "Found all types"),
             @ApiResponse(responseCode = "404", description = "Types not found or exception")
     })
     public List<TypeRsDto> getTypes();
 
     @PostMapping
-    @Operation(summary = "Create types")
+    @Operation(summary = "Create type")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Type created"),
+            @ApiResponse(responseCode = "200", description = "Type successfully created"),
             @ApiResponse(responseCode = "404", description = "Type not created")
     })
     public TypeRsDto createType(@RequestBody TypeCreateDto typeCreateDto);
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update types")
+    @Operation(summary = "Update type")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Type updated"),
+            @ApiResponse(responseCode = "200", description = "Type successfully updated"),
             @ApiResponse(responseCode = "404", description = "Type not updated")
     })
     public TypeRsDto updateType(@PathVariable Long id, @RequestBody TypeUpdateDto typeUpdateDto);
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete types")
+    @Operation(summary = "Delete type")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Type deleted"),
+            @ApiResponse(responseCode = "200", description = "Type successfully deleted"),
             @ApiResponse(responseCode = "404", description = "Type not deleted")
     })
     public void deleteType(@PathVariable Long id);
@@ -53,7 +53,7 @@ public interface TypeApi {
     @GetMapping("/{id}")
     @Operation(summary = "Get type by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Type found"),
+            @ApiResponse(responseCode = "200", description = "Type found"),
             @ApiResponse(responseCode = "404", description = "Type not found or exception")
     })
     public TypeRsDto getTypeById(@PathVariable Long id);
