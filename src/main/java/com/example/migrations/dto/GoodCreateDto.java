@@ -3,10 +3,12 @@ package com.example.migrations.dto;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.entity.Type;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 public class GoodCreateDto {
     @NotNull(message = "Type cannot be null")
     private Type type;

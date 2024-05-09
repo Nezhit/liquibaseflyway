@@ -5,11 +5,13 @@ import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
 import com.example.migrations.repository.CustomerRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CustomerService {
     private final CustomerRepo customerRepo;
 
@@ -40,6 +42,7 @@ public class CustomerService {
     }
 
     public CustomerRsDto getCustomerById(Long id) {
+        log.info("Fetching customer with ID: {}", id);
         return new CustomerRsDto(customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден")));
     }
 }

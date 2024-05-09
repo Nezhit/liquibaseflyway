@@ -22,6 +22,7 @@ public class TypeService {
     }
 
     public TypeRsDto createType(TypeCreateDto typeCreateDto) {
+        System.out.println("Received DTO: " + typeCreateDto.toString());
         Type type = new Type(typeCreateDto);
         return new TypeRsDto(typeRepo.save(type));
     }

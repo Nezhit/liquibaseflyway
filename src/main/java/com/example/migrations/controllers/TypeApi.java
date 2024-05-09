@@ -4,6 +4,7 @@ import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.entity.Type;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public interface TypeApi {
     public List<TypeRsDto> getTypes();
 
     @PostMapping
-    public TypeRsDto createType(@RequestBody TypeCreateDto typeCreateDto);
+    public TypeRsDto createType(@Valid @RequestBody TypeCreateDto typeCreateDto);
 
     @PutMapping("/{id}")
     public TypeRsDto updateType(@PathVariable Long id, @RequestBody TypeUpdateDto typeUpdateDto);

@@ -27,10 +27,11 @@ public class ProducerService {
     }
 
     public ProducerRsDto updateProducer(Long id, ProducerUpdateDto producerUpdateDto) {
+        System.out.println("Performed dto = "+producerUpdateDto.toString());
         Producer producer = producerRepo.findById(id).orElseThrow(() -> new RuntimeException("Производитель не найден"));
         if (producerUpdateDto.getAddress() != null) producer.setAddress(producerUpdateDto.getAddress());
         if (producerUpdateDto.getPhone() != null) producer.setPhone(producerUpdateDto.getPhone());
-        if (producer.getPhone() != null) producer.setPhone(producer.getPhone());
+        if (producerUpdateDto.getTitle() != null) producer.setTitle(producerUpdateDto.getTitle());
         return new ProducerRsDto(producerRepo.save(producer));
     }
 
