@@ -1,10 +1,12 @@
 package com.example.migrations.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 public class ProducerCreateDto {
     @NotNull(message = "Title cannot be null")
     private String title;

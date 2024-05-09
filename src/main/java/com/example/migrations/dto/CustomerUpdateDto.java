@@ -1,9 +1,11 @@
 package com.example.migrations.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 public class CustomerUpdateDto {
     private String title;
     private String address;

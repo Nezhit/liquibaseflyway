@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 public class TypeRsDto {
-    private ETypes Title;
+    private ETypes title;
 
     public TypeRsDto(Type type){
-        this.Title=type.getTitle();
+        this.title=type.getTitle();
     }
 }

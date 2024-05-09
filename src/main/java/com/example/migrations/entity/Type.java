@@ -23,10 +23,10 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "Title")
-    private ETypes Title;
+    @Column(name = "title")
+    private ETypes title;
 
     public Type(TypeCreateDto typeCreateDto) {
-        this.Title = typeCreateDto.getTitle();
+        this.title = typeCreateDto.getTitle();
     }
 }

@@ -2,11 +2,13 @@ package com.example.migrations.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
+@Builder
 public class EmployeeCreateDto {
     @NotNull(message = "Name cannot be null")
     private String name;
