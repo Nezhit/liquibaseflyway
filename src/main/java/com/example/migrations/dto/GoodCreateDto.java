@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Schema(description = "Data Transfer Object for creating a new good, detailing its type, title, and associated producer. This DTO focuses on cataloging goods in a store or inventory system.")
 public class GoodCreateDto {
     @Schema(description = "Type of the good")
     private Type type;

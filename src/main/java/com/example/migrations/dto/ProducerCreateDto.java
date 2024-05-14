@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Schema(description = "Data Transfer Object for registering a new producer. Includes all necessary information to identify and contact the producer such as title, address, and phone number.")
 public class ProducerCreateDto {
     @Schema(description = "Title of the producer", example = "BestGoods Inc.", required = true)
     @NotNull(message = "Title cannot be null")

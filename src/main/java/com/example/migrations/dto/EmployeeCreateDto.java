@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
+@Schema(description = "Data Transfer Object for creating a new employee record, capturing essential personal details including name, surname, papaname, and contact information along with birthdate and passport number.")
 public class EmployeeCreateDto {
     @Schema(description = "First name of the employee", example = "John", required = true)
     @NotNull(message = "Name cannot be null")
