@@ -1,12 +1,12 @@
 package com.example.migrations.controllers;
 
-import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
-import com.example.migrations.entity.Type;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,51 +18,84 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.util.List;
 
 @RequestMapping("/api/type")
 @Tag(name = "Type API", description = "API for type management")
 public interface TypeApi {
     @GetMapping
-    @Operation(summary = "Get types")
+    @Operation(
+            summary = "Get types",
+            method = "GET",
+            tags = {"Type API"},
+            description = "Retrieve a list of all types.",
+            operationId = "getTypes"
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found all types"),
-            @ApiResponse(responseCode = "404", description = "Types not found or exception")
+            @ApiResponse(responseCode = "200", description = "Found all types", content =
+                    {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = TypeRsDto.class)))}),
+            @ApiResponse(responseCode = "500", description = "Types not found or exception")
     })
     public List<TypeRsDto> getTypes();
 
     @PostMapping
-    @Operation(summary = "Create type")
+    @Operation(
+            summary = "Create type",
+            method = "POST",
+            tags = {"Type API"},
+            description = "Create a new type using the provided DTO.",
+            operationId = "createType"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type successfully created"),
-            @ApiResponse(responseCode = "404", description = "Type not created")
+            @ApiResponse(responseCode = "500", description = "Type not created")
     })
-    public TypeRsDto createType(@Schema(implementation = TypeCreateDto.class)@RequestBody TypeCreateDto typeCreateDto);
+    public TypeRsDto createType(@Schema(implementation = TypeCreateDto.class) @RequestBody TypeCreateDto typeCreateDto);
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update type",
-            parameters = @Parameter(name = "id", description = "ID of the customer to update", required = true, example = "1"))
+    @Operation(
+            summary = "Update type",
+            method = "PUT",
+            tags = {"Type API"},
+            description = "Update an existing type by ID using the provided DTO.",
+            operationId = "updateType",
+            parameters = @Parameter(name = "id", description = "ID of the type to update", required = true, example = "1")
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type successfully updated"),
-            @ApiResponse(responseCode = "404", description = "Type not updated")
+            @ApiResponse(responseCode = "500", description = "Type not updated")
     })
-    public TypeRsDto updateType(@PathVariable Long id, @Schema(implementation = TypeUpdateDto.class)@RequestBody TypeUpdateDto typeUpdateDto);
+    public TypeRsDto updateType(@PathVariable Long id, @Schema(implementation = TypeUpdateDto.class) @RequestBody TypeUpdateDto typeUpdateDto);
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete type",
-            parameters = @Parameter(name = "id", description = "ID of the customer to delete", required = true, example = "1"))
+    @Operation(
+            summary = "Delete type",
+            method = "DELETE",
+            tags = {"Type API"},
+            description = "Delete a type by ID.",
+            operationId = "deleteType",
+            parameters = @Parameter(name = "id", description = "ID of the type to delete", required = true, example = "1")
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type successfully deleted"),
-            @ApiResponse(responseCode = "404", description = "Type not deleted")
+            @ApiResponse(responseCode = "500", description = "Type not deleted")
     })
     public void deleteType(@PathVariable Long id);
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get type by id",
-            parameters = @Parameter(name = "id", description = "ID of the customer to get", required = true, example = "1"))
+    @Operation(
+            summary = "Get type by id",
+            method = "GET",
+            tags = {"Type API"},
+            description = "Retrieve a type by its ID.",
+            operationId = "getTypeById",
+            parameters = @Parameter(name = "id", description = "ID of the type to get", required = true, example = "1")
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type found"),
-            @ApiResponse(responseCode = "404", description = "Type not found or exception")
+            @ApiResponse(responseCode = "500", description = "Type not found or exception")
     })
     public TypeRsDto getTypeById(@PathVariable Long id);
 }
