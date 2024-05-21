@@ -42,7 +42,7 @@ public class CustomerService {
     }
 
     public CustomerRsDto getCustomerById(Long id) {
-        log.info("Fetching customer with ID: {}", id);
+        System.out.println("ID = " + id);
         return new CustomerRsDto(customerRepo.findById(id).orElseThrow(() -> new RuntimeException("Покупатель не найден")));
     }
 }

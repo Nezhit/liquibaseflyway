@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @SpringBootTest
-public class OrderCRUDtest extends SpringBootApplicationTest {
+public class OrderControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private OrderRepo orderRepo;

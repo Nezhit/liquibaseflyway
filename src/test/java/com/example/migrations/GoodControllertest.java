@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class GoodCRUDtest extends SpringBootApplicationTest {
+public class GoodControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private GoodRepo goodRepo;

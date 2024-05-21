@@ -1,13 +1,9 @@
 package com.example.migrations;
 
 import com.example.migrations.config.SpringBootApplicationTest;
-import com.example.migrations.dto.CustomerCreateDto;
-import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.dto.EmployeeCreateDto;
 import com.example.migrations.dto.EmployeeUpdateDto;
-import com.example.migrations.entity.Customer;
 import com.example.migrations.entity.Employee;
-import com.example.migrations.repository.CustomerRepo;
 import com.example.migrations.repository.EmployeeRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -19,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -28,12 +23,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class EmployeeCRUDtest extends SpringBootApplicationTest {
+public class EmployeeControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private EmployeeRepo employeeRepo;
