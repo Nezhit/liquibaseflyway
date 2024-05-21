@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/api/type")
 @Tag(name = "Type API", description = "API for type management")
+@RequestMapping("/api/type")
 public interface TypeApi {
     @GetMapping
     @Operation(

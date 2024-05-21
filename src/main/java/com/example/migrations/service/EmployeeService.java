@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Tag(name = "Employee service", description = "Service providing basci CRUD operations")
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
 

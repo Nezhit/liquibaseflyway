@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/api/good")
 @Tag(name = "Good API", description = "API for good management")
+@RequestMapping("/api/good")
 public interface GoodApi {
     @GetMapping
     @Operation(

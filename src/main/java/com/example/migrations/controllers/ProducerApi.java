@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/api/producer")
 @Tag(name = "Producer API", description = "API for producer management")
+@RequestMapping("/api/producer")
 public interface ProducerApi {
     @GetMapping
     @Operation(

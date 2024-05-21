@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/api/order")
 @Tag(name = "Order API", description = "API for order management")
+@RequestMapping("/api/order")
 public interface OrderApi {
     @GetMapping
     @Operation(
