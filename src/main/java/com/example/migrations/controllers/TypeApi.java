@@ -33,10 +33,11 @@ public interface TypeApi {
             operationId = "getTypes"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found all types", content =
-                    {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "All types retrieved successfully",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = TypeRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Types not found or exception")
+            @ApiResponse(responseCode = "404", description = "No types found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<TypeRsDto> getTypes();
 
@@ -49,8 +50,11 @@ public interface TypeApi {
             operationId = "createType"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Type successfully created"),
-            @ApiResponse(responseCode = "500", description = "Type not created")
+            @ApiResponse(responseCode = "201", description = "Type created successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypeRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public TypeRsDto createType(@Schema(implementation = TypeCreateDto.class) @RequestBody TypeCreateDto typeCreateDto);
 
@@ -64,8 +68,11 @@ public interface TypeApi {
             parameters = @Parameter(name = "id", description = "ID of the type to update", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Type successfully updated"),
-            @ApiResponse(responseCode = "500", description = "Type not updated")
+            @ApiResponse(responseCode = "200", description = "Type updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypeRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Type not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public TypeRsDto updateType(@PathVariable Long id, @Schema(implementation = TypeUpdateDto.class) @RequestBody TypeUpdateDto typeUpdateDto);
 
@@ -79,8 +86,9 @@ public interface TypeApi {
             parameters = @Parameter(name = "id", description = "ID of the type to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Type successfully deleted"),
-            @ApiResponse(responseCode = "500", description = "Type not deleted")
+            @ApiResponse(responseCode = "200", description = "Type deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Type not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteType(@PathVariable Long id);
 
@@ -94,8 +102,11 @@ public interface TypeApi {
             parameters = @Parameter(name = "id", description = "ID of the type to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Type found"),
-            @ApiResponse(responseCode = "500", description = "Type not found or exception")
+            @ApiResponse(responseCode = "200", description = "Type found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypeRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Type not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public TypeRsDto getTypeById(@PathVariable Long id);
 }

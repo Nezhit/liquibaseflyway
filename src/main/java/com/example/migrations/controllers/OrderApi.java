@@ -36,10 +36,11 @@ public interface OrderApi {
             operationId = "getOrders"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found all orders", content =
-                    {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "All orders retrieved successfully",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = OrderRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Orders not found or exception")
+            @ApiResponse(responseCode = "404", description = "No orders found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<OrderRsDto> getOrders();
 
@@ -52,8 +53,11 @@ public interface OrderApi {
             operationId = "createOrder"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order successfully created"),
-            @ApiResponse(responseCode = "500", description = "Order not created")
+            @ApiResponse(responseCode = "201", description = "Order created successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public OrderRsDto createOrder(@Schema(implementation = OrderCreateDto.class) @RequestBody OrderCreateDto orderCreateDto);
 
@@ -82,8 +86,11 @@ public interface OrderApi {
             parameters = @Parameter(name = "id", description = "ID of the order to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order successfully deleted"),
-            @ApiResponse(responseCode = "500", description = "Order not deleted")
+            @ApiResponse(responseCode = "200", description = "Order updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Order not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteOrder(@PathVariable Long id);
 
@@ -97,8 +104,11 @@ public interface OrderApi {
             parameters = @Parameter(name = "id", description = "ID of the order to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order found"),
-            @ApiResponse(responseCode = "500", description = "Order not found or exception")
+            @ApiResponse(responseCode = "200", description = "Order found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Order not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public OrderRsDto getOrderById(@PathVariable Long id);
 }

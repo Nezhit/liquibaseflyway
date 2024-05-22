@@ -36,9 +36,11 @@ public interface EmployeeApi {
             operationId = "getEmployees"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found employees", content =
-                    {@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EmployeeRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Employees not found or exception")
+            @ApiResponse(responseCode = "200", description = "Employees found",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = EmployeeRsDto.class)))}),
+            @ApiResponse(responseCode = "404", description = "No employees found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<EmployeeRsDto> getEmployees();
 
@@ -51,10 +53,11 @@ public interface EmployeeApi {
             operationId = "createEmployee"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employee created", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = EmployeeRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Employee not created")
+            @ApiResponse(responseCode = "201", description = "Employee created",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EmployeeRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public EmployeeRsDto createEmployee(@Schema(implementation = EmployeeCreateDto.class) @RequestBody EmployeeCreateDto employeeCreateDto);
 
@@ -68,10 +71,12 @@ public interface EmployeeApi {
             parameters = @Parameter(name = "id", description = "ID of the employee to update", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employee updated", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = EmployeeRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Employee not updated")
+            @ApiResponse(responseCode = "200", description = "Employee updated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EmployeeRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Employee not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public EmployeeRsDto updateEmployee(@PathVariable Long id, @Schema(implementation = EmployeeUpdateDto.class) @RequestBody EmployeeUpdateDto employeeUpdateDto);
 
@@ -86,7 +91,8 @@ public interface EmployeeApi {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Employee deleted"),
-            @ApiResponse(responseCode = "500", description = "Employee not deleted")
+            @ApiResponse(responseCode = "404", description = "Employee not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteEmployee(@PathVariable Long id);
 
@@ -100,10 +106,11 @@ public interface EmployeeApi {
             parameters = @Parameter(name = "id", description = "ID of the employee to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employee found", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = EmployeeRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Employee not found or exception")
+            @ApiResponse(responseCode = "200", description = "Employee found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EmployeeRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Employee not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public EmployeeRsDto getEmployeeById(@PathVariable Long id);
 }

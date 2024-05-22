@@ -34,9 +34,11 @@ public interface CustomerApi {
             operationId = "getCustomers"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the customers", content =
-                    {@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomerRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Customers not found or exception")
+            @ApiResponse(responseCode = "200", description = "Customers found",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CustomerRsDto.class)))}),
+            @ApiResponse(responseCode = "404", description = "No customers found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<CustomerRsDto> getCustomers();
 
@@ -49,10 +51,11 @@ public interface CustomerApi {
             operationId = "createCustomer"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Customer created", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = CustomerRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Customer not created")
+            @ApiResponse(responseCode = "201", description = "Customer created",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CustomerRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public CustomerRsDto createCustomer(@Schema(implementation = CustomerCreateDto.class) @RequestBody CustomerCreateDto customerCreateDto);
 
@@ -66,10 +69,12 @@ public interface CustomerApi {
             parameters = @Parameter(name = "id", description = "ID of the customer to update", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Customer updated", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = CustomerRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Customer not updated")
+            @ApiResponse(responseCode = "200", description = "Customer updated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CustomerRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Customer not found"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public CustomerRsDto updateCustomer(@PathVariable Long id, @Schema(implementation = CustomerUpdateDto.class) @RequestBody CustomerUpdateDto customerUpdateDto);
 
@@ -84,7 +89,8 @@ public interface CustomerApi {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customer deleted"),
-            @ApiResponse(responseCode = "500", description = "Customer not deleted")
+            @ApiResponse(responseCode = "404", description = "Customer not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteCustomer(@PathVariable Long id);
 
@@ -98,10 +104,11 @@ public interface CustomerApi {
             parameters = @Parameter(name = "id", description = "ID of the customer to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Customer found by id", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = CustomerRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Customer not found or exception")
+            @ApiResponse(responseCode = "200", description = "Customer found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CustomerRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Customer not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public CustomerRsDto getCustomerById(Long id);
 }

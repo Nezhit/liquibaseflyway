@@ -36,10 +36,11 @@ public interface ProducerApi {
             operationId = "getProducers"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found all producers", content =
-                    {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "All producers retrieved successfully",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = ProducerRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Producers not found or exception")
+            @ApiResponse(responseCode = "404", description = "No producers found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<ProducerRsDto> getProducers();
 
@@ -52,8 +53,11 @@ public interface ProducerApi {
             operationId = "createProducer"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producer successfully created"),
-            @ApiResponse(responseCode = "500", description = "Producer not created")
+            @ApiResponse(responseCode = "201", description = "Producer created successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProducerRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ProducerRsDto createProducer(@Schema(implementation = ProducerCreateDto.class) @RequestBody ProducerCreateDto producerCreateDto);
 
@@ -67,8 +71,11 @@ public interface ProducerApi {
             parameters = @Parameter(name = "id", description = "ID of the producer to update", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producer successfully updated"),
-            @ApiResponse(responseCode = "500", description = "Producer not updated")
+            @ApiResponse(responseCode = "200", description = "Producer updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProducerRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Producer not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ProducerRsDto updateProducer(@PathVariable Long id, @Schema(implementation = ProducerUpdateDto.class) @RequestBody ProducerUpdateDto producerUpdateDto);
 
@@ -82,8 +89,9 @@ public interface ProducerApi {
             parameters = @Parameter(name = "id", description = "ID of the producer to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producer successfully deleted"),
-            @ApiResponse(responseCode = "500", description = "Producer not deleted")
+            @ApiResponse(responseCode = "200", description = "Producer deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Producer not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteProducer(@PathVariable Long id);
 
@@ -97,8 +105,11 @@ public interface ProducerApi {
             parameters = @Parameter(name = "id", description = "ID of the producer to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producer found"),
-            @ApiResponse(responseCode = "500", description = "Producer not found or exception")
+            @ApiResponse(responseCode = "200", description = "Producer found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProducerRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Producer not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ProducerRsDto getProducerById(@PathVariable Long id);
 }

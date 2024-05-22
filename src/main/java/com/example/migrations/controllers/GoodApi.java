@@ -36,10 +36,12 @@ public interface GoodApi {
             operationId = "getGoods"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found all goods", content =
-                    {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "All goods retrieved successfully",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = GoodRsDto.class)))}),
-            @ApiResponse(responseCode = "500", description = "Goods not found or exception")
+            @ApiResponse(responseCode = "404", description = "No goods found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+
     })
     public List<GoodRsDto> getGoods();
 
@@ -52,10 +54,11 @@ public interface GoodApi {
             operationId = "createGood"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good successfully created", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = GoodRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Good not created")
+            @ApiResponse(responseCode = "201", description = "Good created successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public GoodRsDto createGood(@Schema(implementation = GoodCreateDto.class) @RequestBody GoodCreateDto goodCreateDto);
 
@@ -69,10 +72,12 @@ public interface GoodApi {
             parameters = @Parameter(name = "id", description = "ID of the good to update", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good successfully updated", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = GoodRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Good not updated")
+            @ApiResponse(responseCode = "200", description = "Good updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "Good not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public GoodRsDto updateGood(@PathVariable Long id, @Schema(implementation = GoodUpdateDto.class) @RequestBody GoodUpdateDto goodUpdateDto);
 
@@ -86,8 +91,9 @@ public interface GoodApi {
             parameters = @Parameter(name = "id", description = "ID of the good to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good successfully deleted"),
-            @ApiResponse(responseCode = "500", description = "Good not deleted")
+            @ApiResponse(responseCode = "200", description = "Good deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Good not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public void deleteGood(@PathVariable Long id);
 
@@ -101,10 +107,11 @@ public interface GoodApi {
             parameters = @Parameter(name = "id", description = "ID of the good to get", required = true, example = "1")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Good found", content =
-                    {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = GoodRsDto.class))}),
-            @ApiResponse(responseCode = "500", description = "Good not found or exception")
+            @ApiResponse(responseCode = "200", description = "Good found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GoodRsDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Good not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public GoodRsDto getGoodById(@PathVariable Long id);
 }
