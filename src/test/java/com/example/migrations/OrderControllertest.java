@@ -39,14 +39,14 @@ public class OrderControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private OrderRepo orderRepo;
-    @Autowired
-    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     @Transactional
-    void getOrders_Success() throws Exception {
+    void getOrders_Success() {
+        // Подготовка данных
         Order order = new Order(OrderCreateDto.builder()
                 .good(new Good(GoodCreateDto.builder()
                         .title("Example Good")
@@ -78,19 +78,23 @@ public class OrderControllertest extends SpringBootApplicationTest {
                 .build());
         order = orderRepo.save(order);
 
-        mockMvc.perform(get("/api/order"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].amount", is(10)));
+        webTestClient.get().uri("/api/order")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].amount").isEqualTo(10);
     }
 
     @Test
     @Transactional
-    void getOrders_NotFound() throws Exception {
+    void getOrders_NotFound() {
         orderRepo.deleteAll();
 
-        mockMvc.perform(get("/api/order"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
+        webTestClient.get().uri("/api/order")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isEmpty();
     }
 
     @Test
@@ -126,11 +130,13 @@ public class OrderControllertest extends SpringBootApplicationTest {
                         .build()))
                 .build();
 
-        mockMvc.perform(post("/api/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amount", is(5)));
+        webTestClient.post().uri("/api/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.amount").isEqualTo(5);
     }
 
     @Test
@@ -146,10 +152,11 @@ public class OrderControllertest extends SpringBootApplicationTest {
                 .employee(null)
                 .build();
 
-        mockMvc.perform(post("/api/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+        webTestClient.post().uri("/api/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
@@ -216,11 +223,13 @@ public class OrderControllertest extends SpringBootApplicationTest {
                         .build()))
                 .build();
 
-        mockMvc.perform(put("/api/order/" + order.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amount", is(30)));
+        webTestClient.put().uri("/api/order/" + order.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.amount").isEqualTo(30);
     }
 
     @Test
@@ -256,10 +265,11 @@ public class OrderControllertest extends SpringBootApplicationTest {
                         .build()))
                 .build();
 
-        mockMvc.perform(put("/api/order/999")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+        webTestClient.put().uri("/api/order/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -296,18 +306,21 @@ public class OrderControllertest extends SpringBootApplicationTest {
                 .build());
         order = orderRepo.save(order);
 
-        mockMvc.perform(delete("/api/order/" + order.getId()))
-                .andExpect(status().isOk());
+        webTestClient.delete().uri("/api/order/" + order.getId())
+                .exchange()
+                .expectStatus().isOk();
 
-        mockMvc.perform(get("/api/order/" + order.getId()))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/order/" + order.getId())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
     void deleteOrder_Fail_NotFound() throws Exception {
-        mockMvc.perform(delete("/api/order/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.delete().uri("/api/order/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -344,16 +357,19 @@ public class OrderControllertest extends SpringBootApplicationTest {
                 .build());
         order = orderRepo.save(order);
 
-        mockMvc.perform(get("/api/order/" + order.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amount", is(10)));
+        webTestClient.get().uri("/api/order/" + order.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.amount").isEqualTo(10);
     }
 
     @Test
     @Transactional
     void getOrderById_Fail_NotFound() throws Exception {
-        mockMvc.perform(get("/api/order/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/order/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
 

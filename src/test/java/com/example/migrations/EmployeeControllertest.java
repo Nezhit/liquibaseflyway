@@ -31,8 +31,7 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private EmployeeRepo employeeRepo;
-    @Autowired
-    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -49,20 +48,22 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .passport(123456789)
                 .build());
         employee = employeeRepo.save(employee);
+        webTestClient.get().uri("/api/employee")
+                        .exchange()
+                                .expectStatus().isOk()
+                        .expectBody().jsonPath("$[0].name").isEqualTo("John");
 
-        mockMvc.perform(get("/api/employee"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name", is("John")));
     }
 
     @Test
     @Transactional
     void getEmployees_NotFound() throws Exception {
         employeeRepo.deleteAll();
+        webTestClient.get().uri("/api/employee")
+                        .exchange()
+                                .expectStatus().isOk()
+                        .expectBody().jsonPath("$").isEmpty();
 
-        mockMvc.perform(get("/api/employee"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
     }
 
     @Test
@@ -77,11 +78,12 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .phone("555-1234")
                 .passport(123456789)
                 .build();
-        mockMvc.perform(post("/api/employee")
+        webTestClient.post().uri("/api/employee")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("Jane")));
+                                .bodyValue(objectMapper.writeValueAsString(dto))
+                                        .exchange()
+                                                .expectStatus().isOk()
+                        .expectBody().jsonPath("$.name").isEqualTo("Jane");
     }
 
     @Test
@@ -96,10 +98,11 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .phone("555-1234")
                 .passport(123456789)
                 .build();
-        mockMvc.perform(post("/api/employee")
+        webTestClient.post().uri("/api/employee")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                                .exchange()
+                                        .expectStatus().isNotFound();
     }
 
     @Test
@@ -125,11 +128,12 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .phone("555-1234")
                 .passport(123456789)
                 .build();
-        mockMvc.perform(put("/api/employee/" + employee.getId())
+        webTestClient.put().uri("/api/employee/" + employee.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("New Name")));
+                                .bodyValue(objectMapper.writeValueAsString(dto))
+                                        .exchange()
+                                                .expectStatus().isOk()
+                        .expectBody().jsonPath("$.name").isEqualTo("New Name");
     }
 
     @Test
@@ -144,10 +148,11 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .phone("555-1234")
                 .passport(123456789)
                 .build();
-        mockMvc.perform(put("/api/employee/999")
+        webTestClient.put().uri("/api/employee/999")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+                                .bodyValue(objectMapper.writeValueAsString(dto))
+                                        .exchange()
+                                                .expectStatus().isNotFound();
     }
 
     @Test
@@ -163,19 +168,20 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .passport(123456789)
                 .build());
         employee = employeeRepo.save(employee);
-
-        mockMvc.perform(delete("/api/employee/" + employee.getId()))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(get("/api/employee/" + employee.getId()))
-                .andExpect(status().isNotFound());
+        webTestClient.delete().uri("/api/employee/" + employee.getId())
+                        .exchange()
+                                .expectStatus().isOk();
+        webTestClient.get().uri("/api/employee/" + employee.getId())
+                        .exchange()
+                                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
     void deleteEmployee_Fail_NotFound() throws Exception {
-        mockMvc.perform(delete("/api/employee/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.delete().uri("/api/employee/999")
+                        .exchange()
+                                .expectStatus().isNotFound();
     }
 
     @Test
@@ -191,16 +197,17 @@ public class EmployeeControllertest extends SpringBootApplicationTest {
                 .passport(123456789)
                 .build());
         employee = employeeRepo.save(employee);
-
-        mockMvc.perform(get("/api/employee/" + employee.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("John")));
+        webTestClient.get().uri("/api/employee/" + employee.getId())
+                        .exchange()
+                                .expectStatus().isOk().
+                                expectBody().jsonPath("$.name").isEqualTo("John");
     }
 
     @Test
     @Transactional
     void getEmployeeById_Fail_NotFound() throws Exception {
-        mockMvc.perform(get("/api/employee/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/employee/999")
+                        .exchange()
+                                .expectStatus().isNotFound();
     }
 }

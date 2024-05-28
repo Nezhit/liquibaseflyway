@@ -31,14 +31,14 @@ public class GoodControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private GoodRepo goodRepo;
-    @Autowired
-    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     @Transactional
-    void getGoods_Success() throws Exception {
+    void getGoods_Success() {
+        // Подготовка данных
         Good good = new Good(GoodCreateDto.builder()
                 .title("Example Good")
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
@@ -50,19 +50,23 @@ public class GoodControllertest extends SpringBootApplicationTest {
                 .build());
         good = goodRepo.save(good);
 
-        mockMvc.perform(get("/api/good"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title", is("Example Good")));
+        webTestClient.get().uri("/api/good")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].title").isEqualTo("Example Good");
     }
 
     @Test
     @Transactional
-    void getGoods_NotFound() throws Exception {
+    void getGoods_NotFound() {
         goodRepo.deleteAll();
 
-        mockMvc.perform(get("/api/good"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
+        webTestClient.get().uri("/api/good")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isEmpty();
     }
 
     @Test
@@ -77,17 +81,20 @@ public class GoodControllertest extends SpringBootApplicationTest {
                         .title("Title")
                         .build()))
                 .build();
-        mockMvc.perform(post("/api/good")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("New Good")));
+
+        webTestClient.post().uri("/api/good")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("New Good");
     }
 
     @Test
     @Transactional
     void createGood_Fail_InvalidData() throws Exception {
-        GoodCreateDto dto =GoodCreateDto.builder()
+        GoodCreateDto dto = GoodCreateDto.builder()
                 .title(null)
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
                 .producer(new Producer(ProducerCreateDto.builder()
@@ -96,10 +103,12 @@ public class GoodControllertest extends SpringBootApplicationTest {
                         .title("Title")
                         .build()))
                 .build();
-        mockMvc.perform(post("/api/good")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+
+        webTestClient.post().uri("/api/good")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
@@ -117,44 +126,49 @@ public class GoodControllertest extends SpringBootApplicationTest {
         good = goodRepo.save(good);
 
         GoodUpdateDto dto = GoodUpdateDto.builder()
-                .title("Update Good")
+                .title("Updated Good")
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
                 .producer(new Producer(ProducerCreateDto.builder()
                         .address("Address")
                         .phone("213-123")
-                        .title("Update Customer")
+                        .title("Updated Title")
                         .build()))
                 .build();
-        mockMvc.perform(put("/api/good/" + good.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("Updated Good")));
+
+        webTestClient.put().uri("/api/good/" + good.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("Updated Good");
     }
 
     @Test
     @Transactional
     void updateGood_Fail_NotFound() throws Exception {
         GoodUpdateDto dto = GoodUpdateDto.builder()
-                .title("Notexisted Good")
+                .title("Nonexistent Good")
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
                 .producer(new Producer(ProducerCreateDto.builder()
                         .address("Address")
                         .phone("213-123")
-                        .title("Notexisted Customer")
+                        .title("Nonexistent Title")
                         .build()))
                 .build();
-        mockMvc.perform(put("/api/good/999")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+
+        webTestClient.put().uri("/api/good/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
-    void deleteGood_Success() throws Exception {
+    void deleteGood_Success() {
         Good good = new Good(GoodCreateDto.builder()
-                .title(null)
+                .title("Good to Delete")
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
                 .producer(new Producer(ProducerCreateDto.builder()
                         .address("Address")
@@ -164,25 +178,28 @@ public class GoodControllertest extends SpringBootApplicationTest {
                 .build());
         good = goodRepo.save(good);
 
-        mockMvc.perform(delete("/api/good/" + good.getId()))
-                .andExpect(status().isOk());
+        webTestClient.delete().uri("/api/good/" + good.getId())
+                .exchange()
+                .expectStatus().isOk();
 
-        mockMvc.perform(get("/api/good/" + good.getId()))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/good/" + good.getId())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
-    void deleteGood_Fail_NotFound() throws Exception {
-        mockMvc.perform(delete("/api/good/999"))
-                .andExpect(status().isNotFound());
+    void deleteGood_Fail_NotFound() {
+        webTestClient.delete().uri("/api/good/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
-    void getGoodById_Success() throws Exception {
+    void getGoodById_Success() {
         Good good = new Good(GoodCreateDto.builder()
-                .title(null)
+                .title("Specific Good")
                 .type(new Type(TypeCreateDto.builder().title(ETypes.TV).build()))
                 .producer(new Producer(ProducerCreateDto.builder()
                         .address("Address")
@@ -192,16 +209,19 @@ public class GoodControllertest extends SpringBootApplicationTest {
                 .build());
         good = goodRepo.save(good);
 
-        mockMvc.perform(get("/api/good/" + good.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("Specific Good")));
+        webTestClient.get().uri("/api/good/" + good.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("Specific Good");
     }
 
     @Test
     @Transactional
-    void getGoodById_Fail_NotFound() throws Exception {
-        mockMvc.perform(get("/api/good/999"))
-                .andExpect(status().isNotFound());
+    void getGoodById_Fail_NotFound() {
+        webTestClient.get().uri("/api/good/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
 
