@@ -6,6 +6,7 @@ import com.example.migrations.dto.ProducerCreateDto;
 import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.entity.Producer;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -32,8 +33,15 @@ public interface ProducerApi {
             summary = "Get producers",
             method = "GET",
             tags = {"Producer API"},
-            description = "Retrieve a list of all producers.",
-            operationId = "getProducers"
+            description = "Retrieve a list of all producers",
+            operationId = "getProducers",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All producers retrieved successfully",
@@ -49,8 +57,15 @@ public interface ProducerApi {
             summary = "Create producer",
             method = "POST",
             tags = {"Producer API"},
-            description = "Create a new producer using the provided DTO.",
-            operationId = "createProducer"
+            description = "Create a new producer using the provided DTO",
+            operationId = "createProducer",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Producer created successfully",
@@ -66,9 +81,15 @@ public interface ProducerApi {
             summary = "Update producer",
             method = "PUT",
             tags = {"Producer API"},
-            description = "Update an existing producer by ID using the provided DTO.",
+            description = "Update an existing producer by ID using the provided DTO",
             operationId = "updateProducer",
-            parameters = @Parameter(name = "id", description = "ID of the producer to update", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the producer to update", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Producer updated successfully",
@@ -84,9 +105,15 @@ public interface ProducerApi {
             summary = "Delete producer",
             method = "DELETE",
             tags = {"Producer API"},
-            description = "Delete a producer by ID.",
+            description = "Delete a producer by ID",
             operationId = "deleteProducer",
-            parameters = @Parameter(name = "id", description = "ID of the producer to delete", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the producer to delete", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Producer deleted successfully"),
@@ -100,9 +127,15 @@ public interface ProducerApi {
             summary = "Get producer by id",
             method = "GET",
             tags = {"Producer API"},
-            description = "Retrieve a producer by its ID.",
+            description = "Retrieve a producer by its ID",
             operationId = "getProducerById",
-            parameters = @Parameter(name = "id", description = "ID of the producer to get", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the producer to get", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Producer found",

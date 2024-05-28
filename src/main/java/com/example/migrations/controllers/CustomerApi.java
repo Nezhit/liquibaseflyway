@@ -4,6 +4,7 @@ import com.example.migrations.dto.CustomerCreateDto;
 import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.entity.Customer;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,8 +31,15 @@ public interface CustomerApi {
             summary = "Get all customers",
             method = "GET",
             tags = {"Customer API"},
-            description = "Retrieve a list of all customers.",
-            operationId = "getCustomers"
+            description = "Retrieve a list of all customers",
+            operationId = "getCustomers",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customers found",
@@ -47,8 +55,15 @@ public interface CustomerApi {
             summary = "Create Customer",
             method = "POST",
             tags = {"Customer API"},
-            description = "Creating a customer using the provided DTO.",
-            operationId = "createCustomer"
+            description = "Creating a customer using the provided DTO",
+            operationId = "createCustomer",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Customer created",
@@ -64,9 +79,15 @@ public interface CustomerApi {
             summary = "Update Customer",
             method = "PUT",
             tags = {"Customer API"},
-            description = "Update an existing customer by ID using the provided DTO.",
+            description = "Update an existing customer by ID using the provided DTO",
             operationId = "updateCustomer",
-            parameters = @Parameter(name = "id", description = "ID of the customer to update", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the customer to update", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customer updated",
@@ -83,9 +104,15 @@ public interface CustomerApi {
             summary = "Delete Customer",
             method = "DELETE",
             tags = {"Customer API"},
-            description = "Delete a customer by ID.",
+            description = "Delete a customer by ID",
             operationId = "deleteCustomer",
-            parameters = @Parameter(name = "id", description = "ID of the customer to delete", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the customer to delete", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customer deleted"),
@@ -99,9 +126,15 @@ public interface CustomerApi {
             summary = "Find customer by id",
             method = "GET",
             tags = {"Customer API"},
-            description = "Retrieve a customer by their ID.",
+            description = "Retrieve a customer by their ID",
             operationId = "getCustomerById",
-            parameters = @Parameter(name = "id", description = "ID of the customer to get", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the customer to get", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customer found",
@@ -110,5 +143,5 @@ public interface CustomerApi {
             @ApiResponse(responseCode = "404", description = "Customer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public CustomerRsDto getCustomerById(Long id);
+    public CustomerRsDto getCustomerById(@PathVariable Long id);
 }

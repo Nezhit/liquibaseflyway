@@ -6,6 +6,7 @@ import com.example.migrations.dto.GoodCreateDto;
 import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.entity.Good;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -32,8 +33,15 @@ public interface GoodApi {
             summary = "Get goods",
             method = "GET",
             tags = {"Good API"},
-            description = "Retrieve a list of all goods.",
-            operationId = "getGoods"
+            description = "Retrieve a list of all goods",
+            operationId = "getGoods",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All goods retrieved successfully",
@@ -50,8 +58,15 @@ public interface GoodApi {
             summary = "Create good",
             method = "POST",
             tags = {"Good API"},
-            description = "Create a new good using the provided DTO.",
-            operationId = "createGood"
+            description = "Create a new good using the provided DTO",
+            operationId = "createGood",
+            deprecated = false,
+            hidden = false,
+            parameters = {},
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Good created successfully",
@@ -67,9 +82,15 @@ public interface GoodApi {
             summary = "Update good",
             method = "PUT",
             tags = {"Good API"},
-            description = "Update an existing good by ID using the provided DTO.",
+            description = "Update an existing good by ID using the provided DTO",
             operationId = "updateGood",
-            parameters = @Parameter(name = "id", description = "ID of the good to update", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the good to update", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Good updated successfully",
@@ -86,9 +107,15 @@ public interface GoodApi {
             summary = "Delete good",
             method = "DELETE",
             tags = {"Good API"},
-            description = "Delete a good by ID.",
+            description = "Delete a good by ID",
             operationId = "deleteGood",
-            parameters = @Parameter(name = "id", description = "ID of the good to delete", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the good to delete", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Good deleted successfully"),
@@ -102,9 +129,15 @@ public interface GoodApi {
             summary = "Get good by id",
             method = "GET",
             tags = {"Good API"},
-            description = "Retrieve a good by its ID.",
+            description = "Retrieve a good by its ID",
             operationId = "getGoodById",
-            parameters = @Parameter(name = "id", description = "ID of the good to get", required = true, example = "1")
+            parameters = @Parameter(name = "id", description = "ID of the good to get", required = true, example = "1"),
+            deprecated = false,
+            hidden = false,
+            security = {},
+            servers = {},
+            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
+            extensions = {}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Good found",

@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Schema(description = "Data Transfer Object for creating a new customer.")
+@Schema(description = "Data Transfer Object for creating a new customer")
 public class CustomerCreateDto {
     @Schema(description = "title of a customer", example = "John", required = true)
     @NotNull(message = "Title cannot be null")

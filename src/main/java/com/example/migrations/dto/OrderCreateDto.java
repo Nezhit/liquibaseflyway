@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@Schema(description = "Data Transfer Object for placing a new order.")
+@Schema(description = "Data Transfer Object for placing a new order")
 public class OrderCreateDto {
     @Schema(description = "Good associated with the order")
     private Good good;
