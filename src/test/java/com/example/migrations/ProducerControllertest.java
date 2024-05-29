@@ -25,14 +25,14 @@ public class ProducerControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private ProducerRepo producerRepo;
-    @Autowired
-    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     @Transactional
-    void getProducers_Success() throws Exception {
+    void getProducers_Success() {
+        // Подготовка данных
         Producer producer = new Producer(ProducerCreateDto.builder()
                 .title("Best Producer")
                 .address("1234 Main St")
@@ -40,19 +40,23 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .build());
         producer = producerRepo.save(producer);
 
-        mockMvc.perform(get("/api/producer"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title", is("Best Producer")));
+        webTestClient.get().uri("/api/producer")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].title").isEqualTo("Best Producer");
     }
 
     @Test
     @Transactional
-    void getProducers_NotFound() throws Exception {
+    void getProducers_NotFound() {
         producerRepo.deleteAll();
 
-        mockMvc.perform(get("/api/producer"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
+        webTestClient.get().uri("/api/producer")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isEmpty();
     }
 
     @Test
@@ -64,11 +68,13 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .phone("555-6789")
                 .build();
 
-        mockMvc.perform(post("/api/producer")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("New Producer")));
+        webTestClient.post().uri("/api/producer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("New Producer");
     }
 
     @Test
@@ -80,10 +86,11 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .phone("555-6789")
                 .build();
 
-        mockMvc.perform(post("/api/producer")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+        webTestClient.post().uri("/api/producer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
@@ -102,11 +109,13 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .phone("UpdPhone")
                 .build();
 
-        mockMvc.perform(put("/api/producer/" + producer.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("Upd")));
+        webTestClient.put().uri("/api/producer/" + producer.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("Upd");
     }
 
     @Test
@@ -118,10 +127,11 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .phone("Nonexistent Phone")
                 .build();
 
-        mockMvc.perform(put("/api/producer/999")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+        webTestClient.put().uri("/api/producer/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -134,18 +144,21 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .build());
         producer = producerRepo.save(producer);
 
-        mockMvc.perform(delete("/api/producer/" + producer.getId()))
-                .andExpect(status().isOk());
+        webTestClient.delete().uri("/api/producer/" + producer.getId())
+                .exchange()
+                .expectStatus().isOk();
 
-        mockMvc.perform(get("/api/producer/" + producer.getId()))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/producer/" + producer.getId())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
     void deleteProducer_Fail_NotFound() throws Exception {
-        mockMvc.perform(delete("/api/producer/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.delete().uri("/api/producer/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -158,15 +171,18 @@ public class ProducerControllertest extends SpringBootApplicationTest {
                 .build());
         producer = producerRepo.save(producer);
 
-        mockMvc.perform(get("/api/producer/" + producer.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("Spec Producer")));
+        webTestClient.get().uri("/api/producer/" + producer.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("Spec Producer");
     }
 
     @Test
     @Transactional
     void getProducerById_Fail_NotFound() throws Exception {
-        mockMvc.perform(get("/api/producer/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/producer/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

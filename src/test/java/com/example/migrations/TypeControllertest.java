@@ -29,32 +29,36 @@ public class TypeControllertest extends SpringBootApplicationTest {
 
     @Autowired
     private TypeRepo typeRepo;
-    @Autowired
-    private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     @Transactional
-    void getTypes_Success() throws Exception {
+    void getTypes_Success() {
+        // Подготовка данных
         Type type = new Type(TypeCreateDto.builder()
                 .title(ETypes.TV)
                 .build());
         type = typeRepo.save(type);
 
-        mockMvc.perform(get("/api/type"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title", is("TV")));
+        webTestClient.get().uri("/api/type")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0].title").isEqualTo("TV");
     }
 
     @Test
     @Transactional
-    void getTypes_NotFound() throws Exception {
+    void getTypes_NotFound() {
         typeRepo.deleteAll();
 
-        mockMvc.perform(get("/api/type"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
+        webTestClient.get().uri("/api/type")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isEmpty();
     }
 
     @Test
@@ -63,12 +67,14 @@ public class TypeControllertest extends SpringBootApplicationTest {
         TypeCreateDto dto = TypeCreateDto.builder()
                 .title(ETypes.TV)
                 .build();
-        System.out.println(objectMapper.writeValueAsString(dto));
-        mockMvc.perform(post("/api/type")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("TV")));
+
+        webTestClient.post().uri("/api/type")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("TV");
     }
 
     @Test
@@ -77,10 +83,12 @@ public class TypeControllertest extends SpringBootApplicationTest {
         TypeCreateDto dto = TypeCreateDto.builder()
                 .title(null)
                 .build();
-        mockMvc.perform(post("/api/type")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isBadRequest());
+
+        webTestClient.post().uri("/api/type")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
@@ -94,12 +102,14 @@ public class TypeControllertest extends SpringBootApplicationTest {
         TypeUpdateDto dto = TypeUpdateDto.builder()
                 .title(ETypes.VACUUM_CLEANER)
                 .build();
-        System.out.println(type.getId());
-        mockMvc.perform(put("/api/type/" + type.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("VACUUM_CLEANER")));
+
+        webTestClient.put().uri("/api/type/" + type.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("VACUUM_CLEANER");
     }
 
     @Test
@@ -109,10 +119,11 @@ public class TypeControllertest extends SpringBootApplicationTest {
                 .title(ETypes.VACUUM_CLEANER)
                 .build();
 
-        mockMvc.perform(put("/api/type/999")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isNotFound());
+        webTestClient.put().uri("/api/type/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(objectMapper.writeValueAsString(dto))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -123,18 +134,21 @@ public class TypeControllertest extends SpringBootApplicationTest {
                 .build());
         type = typeRepo.save(type);
 
-        mockMvc.perform(delete("/api/type/" + type.getId()))
-                .andExpect(status().isOk());
+        webTestClient.delete().uri("/api/type/" + type.getId())
+                .exchange()
+                .expectStatus().isOk();
 
-        mockMvc.perform(get("/api/type/" + type.getId()))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/type/" + type.getId())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     @Transactional
     void deleteType_Fail_NotFound() throws Exception {
-        mockMvc.perform(delete("/api/type/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.delete().uri("/api/type/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -145,16 +159,18 @@ public class TypeControllertest extends SpringBootApplicationTest {
                 .build());
         type = typeRepo.save(type);
 
-        mockMvc.perform(get("/api/type/" + type.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("TV")));
+        webTestClient.get().uri("/api/type/" + type.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.title").isEqualTo("TV");
     }
 
     @Test
     @Transactional
     void getTypeById_Fail_NotFound() throws Exception {
-        mockMvc.perform(get("/api/type/999"))
-                .andExpect(status().isNotFound());
+        webTestClient.get().uri("/api/type/999")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
-
