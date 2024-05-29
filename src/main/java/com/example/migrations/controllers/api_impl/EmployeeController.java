@@ -4,7 +4,6 @@ import com.example.migrations.controllers.EmployeeApi;
 import com.example.migrations.dto.EmployeeCreateDto;
 import com.example.migrations.dto.EmployeeRsDto;
 import com.example.migrations.dto.EmployeeUpdateDto;
-import com.example.migrations.entity.Employee;
 import com.example.migrations.service.EmployeeService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;

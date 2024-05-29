@@ -4,7 +4,6 @@ import com.example.migrations.controllers.ProducerApi;
 import com.example.migrations.dto.ProducerCreateDto;
 import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
-import com.example.migrations.entity.Producer;
 import com.example.migrations.service.ProducerService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;

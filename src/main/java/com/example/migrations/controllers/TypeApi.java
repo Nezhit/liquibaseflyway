@@ -3,7 +3,6 @@ package com.example.migrations.controllers;
 import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.List;
 
 @Tag(name = "Type API", description = "API for type management")
@@ -31,20 +29,12 @@ public interface TypeApi {
             method = "GET",
             tags = {"Type API"},
             description = "Retrieve a list of all types",
-            operationId = "getTypes",
-            deprecated = false,
-            hidden = false,
-            parameters = {},
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            operationId = "getTypes"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All types retrieved successfully",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = TypeRsDto.class)))}),
-            @ApiResponse(responseCode = "404", description = "No types found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<TypeRsDto> getTypes();
@@ -55,17 +45,10 @@ public interface TypeApi {
             method = "POST",
             tags = {"Type API"},
             description = "Create a new type using the provided DTO",
-            operationId = "createType",
-            deprecated = false,
-            hidden = false,
-            parameters = {},
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            operationId = "createType"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Type created successfully",
+            @ApiResponse(responseCode = "200", description = "Type created successfully",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = TypeRsDto.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
@@ -80,13 +63,7 @@ public interface TypeApi {
             tags = {"Type API"},
             description = "Update an existing type by ID using the provided DTO",
             operationId = "updateType",
-            parameters = @Parameter(name = "id", description = "ID of the type to update", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the type to update", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type updated successfully",
@@ -104,13 +81,7 @@ public interface TypeApi {
             tags = {"Type API"},
             description = "Delete a type by ID",
             operationId = "deleteType",
-            parameters = @Parameter(name = "id", description = "ID of the type to delete", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the type to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type deleted successfully"),
@@ -126,13 +97,7 @@ public interface TypeApi {
             tags = {"Type API"},
             description = "Retrieve a type by its ID",
             operationId = "getTypeById",
-            parameters = @Parameter(name = "id", description = "ID of the type to get", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the type to get", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Type found",

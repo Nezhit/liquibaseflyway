@@ -5,7 +5,6 @@ import com.example.migrations.entity.Employee;
 import com.example.migrations.entity.Good;
 import com.example.migrations.entity.Order;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

@@ -1,12 +1,8 @@
 package com.example.migrations.controllers;
 
-import com.example.migrations.dto.EmployeeRsDto;
-import com.example.migrations.dto.EmployeeUpdateDto;
 import com.example.migrations.dto.OrderCreateDto;
 import com.example.migrations.dto.OrderRsDto;
 import com.example.migrations.dto.OrderUpdateDto;
-import com.example.migrations.entity.Order;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.List;
 
 @Tag(name = "Order API", description = "API for order management")
@@ -34,20 +29,12 @@ public interface OrderApi {
             method = "GET",
             tags = {"Order API"},
             description = "Retrieve a list of all orders.",
-            operationId = "getOrders",
-            deprecated = false,
-            hidden = false,
-            parameters = {},
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            operationId = "getOrders"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All orders retrieved successfully",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = OrderRsDto.class)))}),
-            @ApiResponse(responseCode = "404", description = "No orders found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public List<OrderRsDto> getOrders();
@@ -58,17 +45,10 @@ public interface OrderApi {
             method = "POST",
             tags = {"Order API"},
             description = "Create a new order using the provided DTO.",
-            operationId = "createOrder",
-            deprecated = false,
-            hidden = false,
-            parameters = {},
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            operationId = "createOrder"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Order created successfully",
+            @ApiResponse(responseCode = "200", description = "Order created successfully",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = OrderRsDto.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
@@ -83,13 +63,7 @@ public interface OrderApi {
             tags = {"Order API"},
             description = "Update an existing order by ID using the provided DTO",
             operationId = "updateOrder",
-            parameters = @Parameter(name = "id", description = "ID of the order to update", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the order to update", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Order successfully updated"),
@@ -104,13 +78,7 @@ public interface OrderApi {
             tags = {"Order API"},
             description = "Delete an order by ID",
             operationId = "deleteOrder",
-            parameters = @Parameter(name = "id", description = "ID of the order to delete", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the order to delete", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Order updated successfully",
@@ -128,13 +96,7 @@ public interface OrderApi {
             tags = {"Order API"},
             description = "Retrieve an order by its ID",
             operationId = "getOrderById",
-            parameters = @Parameter(name = "id", description = "ID of the order to get", required = true, example = "1"),
-            deprecated = false,
-            hidden = false,
-            security = {},
-            servers = {},
-            externalDocs = @ExternalDocumentation(description = "More info", url = "http://example.com/docs"),
-            extensions = {}
+            parameters = @Parameter(name = "id", description = "ID of the order to get", required = true, example = "1")
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Order found",

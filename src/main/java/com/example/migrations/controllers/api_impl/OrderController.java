@@ -4,7 +4,6 @@ import com.example.migrations.controllers.OrderApi;
 import com.example.migrations.dto.OrderCreateDto;
 import com.example.migrations.dto.OrderRsDto;
 import com.example.migrations.dto.OrderUpdateDto;
-import com.example.migrations.entity.Order;
 import com.example.migrations.service.OrderService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;

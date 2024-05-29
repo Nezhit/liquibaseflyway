@@ -4,7 +4,6 @@ import com.example.migrations.controllers.CustomerApi;
 import com.example.migrations.dto.CustomerCreateDto;
 import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
-import com.example.migrations.entity.Customer;
 import com.example.migrations.service.CustomerService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
