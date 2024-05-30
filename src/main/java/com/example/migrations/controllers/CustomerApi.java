@@ -28,5 +28,5 @@ public interface CustomerApi {
     public void deleteCustomer(@PathVariable Long id);
 
     @GetMapping("/{id}")
-    public CustomerRsDto getCustomerById(Long id);
+    public CustomerRsDto getCustomerById(@PathVariable Long id);
 }
