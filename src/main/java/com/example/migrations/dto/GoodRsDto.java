@@ -4,7 +4,6 @@ import com.example.migrations.entity.Good;
 import com.example.migrations.entity.Producer;
 import com.example.migrations.entity.Type;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class GoodRsDto {

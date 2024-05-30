@@ -2,7 +2,6 @@ package com.example.migrations.dto;
 
 import com.example.migrations.entity.Customer;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class CustomerRsDto {

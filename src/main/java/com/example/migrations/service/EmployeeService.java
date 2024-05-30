@@ -47,3 +47,4 @@ public class EmployeeService {
         return new EmployeeRsDto(employeeRepo.findById(id).orElseThrow(() -> new RuntimeException("Сотрудник не найден")));
     }
 }
+

@@ -4,7 +4,6 @@ import com.example.migrations.controllers.GoodApi;
 import com.example.migrations.dto.GoodCreateDto;
 import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
-import com.example.migrations.entity.Good;
 import com.example.migrations.service.GoodService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;

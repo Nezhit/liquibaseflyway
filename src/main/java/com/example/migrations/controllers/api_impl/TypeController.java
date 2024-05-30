@@ -4,7 +4,6 @@ import com.example.migrations.controllers.TypeApi;
 import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
-import com.example.migrations.entity.Type;
 import com.example.migrations.service.TypeService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
