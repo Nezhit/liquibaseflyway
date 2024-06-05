@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public interface OrderApi {
                             array = @ArraySchema(schema = @Schema(implementation = OrderRsDto.class)))}),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public List<OrderRsDto> getOrders();
+    public ResponseEntity<List<OrderRsDto>> getOrders();
 
     @PostMapping
     @Operation(
@@ -54,7 +55,7 @@ public interface OrderApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public OrderRsDto createOrder(@Schema(implementation = OrderCreateDto.class) @RequestBody OrderCreateDto orderCreateDto);
+    public ResponseEntity<OrderRsDto> createOrder(@Schema(implementation = OrderCreateDto.class) @RequestBody OrderCreateDto orderCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -69,7 +70,7 @@ public interface OrderApi {
             @ApiResponse(responseCode = "200", description = "Order successfully updated"),
             @ApiResponse(responseCode = "500", description = "Order not updated")
     })
-    public OrderRsDto updateOrder(@PathVariable Long id, @Schema(implementation = OrderUpdateDto.class) @RequestBody OrderUpdateDto orderUpdateDto);
+    public ResponseEntity<OrderRsDto> updateOrder(@PathVariable Long id, @Schema(implementation = OrderUpdateDto.class) @RequestBody OrderUpdateDto orderUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -87,7 +88,7 @@ public interface OrderApi {
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteOrder(@PathVariable Long id);
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -105,6 +106,6 @@ public interface OrderApi {
             @ApiResponse(responseCode = "404", description = "Order not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public OrderRsDto getOrderById(@PathVariable Long id);
+    public ResponseEntity<OrderRsDto> getOrderById(@PathVariable Long id);
 }
 

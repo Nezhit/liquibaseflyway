@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public interface ProducerApi {
                             array = @ArraySchema(schema = @Schema(implementation = ProducerRsDto.class)))}),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public List<ProducerRsDto> getProducers();
+    public ResponseEntity<List<ProducerRsDto>> getProducers();
 
     @PostMapping
     @Operation(
@@ -54,7 +55,7 @@ public interface ProducerApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ProducerRsDto createProducer(@Schema(implementation = ProducerCreateDto.class) @RequestBody ProducerCreateDto producerCreateDto);
+    public ResponseEntity<ProducerRsDto> createProducer(@Schema(implementation = ProducerCreateDto.class) @RequestBody ProducerCreateDto producerCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -72,7 +73,7 @@ public interface ProducerApi {
             @ApiResponse(responseCode = "404", description = "Producer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ProducerRsDto updateProducer(@PathVariable Long id, @Schema(implementation = ProducerUpdateDto.class) @RequestBody ProducerUpdateDto producerUpdateDto);
+    public ResponseEntity<ProducerRsDto> updateProducer(@PathVariable Long id, @Schema(implementation = ProducerUpdateDto.class) @RequestBody ProducerUpdateDto producerUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -88,7 +89,7 @@ public interface ProducerApi {
             @ApiResponse(responseCode = "404", description = "Producer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteProducer(@PathVariable Long id);
+    public ResponseEntity<Void> deleteProducer(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -106,6 +107,6 @@ public interface ProducerApi {
             @ApiResponse(responseCode = "404", description = "Producer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ProducerRsDto getProducerById(@PathVariable Long id);
+    public ResponseEntity<ProducerRsDto> getProducerById(@PathVariable Long id);
 }
 

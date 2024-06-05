@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ public interface GoodApi {
             @ApiResponse(responseCode = "500", description = "Internal server error")
 
     })
-    public List<GoodRsDto> getGoods();
+    public ResponseEntity<List<GoodRsDto>> getGoods();
 
     @PostMapping
     @Operation(
@@ -55,7 +56,7 @@ public interface GoodApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public GoodRsDto createGood(@Schema(implementation = GoodCreateDto.class) @RequestBody GoodCreateDto goodCreateDto);
+    public ResponseEntity<GoodRsDto> createGood(@Schema(implementation = GoodCreateDto.class) @RequestBody GoodCreateDto goodCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -74,7 +75,7 @@ public interface GoodApi {
             @ApiResponse(responseCode = "404", description = "Good not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public GoodRsDto updateGood(@PathVariable Long id, @Schema(implementation = GoodUpdateDto.class) @RequestBody GoodUpdateDto goodUpdateDto);
+    public ResponseEntity<GoodRsDto> updateGood(@PathVariable Long id, @Schema(implementation = GoodUpdateDto.class) @RequestBody GoodUpdateDto goodUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -90,7 +91,7 @@ public interface GoodApi {
             @ApiResponse(responseCode = "404", description = "Good not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteGood(@PathVariable Long id);
+    public ResponseEntity<Void> deleteGood(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -108,6 +109,6 @@ public interface GoodApi {
             @ApiResponse(responseCode = "404", description = "Good not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public GoodRsDto getGoodById(@PathVariable Long id);
+    public ResponseEntity<GoodRsDto> getGoodById(@PathVariable Long id);
 }
 

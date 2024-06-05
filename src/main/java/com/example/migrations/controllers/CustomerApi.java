@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public interface CustomerApi {
                             array = @ArraySchema(schema = @Schema(implementation = CustomerRsDto.class)))}),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public List<CustomerRsDto> getCustomers();
+    public ResponseEntity<List<CustomerRsDto>> getCustomers();
 
     @PostMapping
     @Operation(
@@ -54,7 +55,7 @@ public interface CustomerApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public CustomerRsDto createCustomer(@Schema(implementation = CustomerCreateDto.class) @RequestBody CustomerCreateDto customerCreateDto);
+    public ResponseEntity<CustomerRsDto> createCustomer(@Schema(implementation = CustomerCreateDto.class) @RequestBody CustomerCreateDto customerCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -73,7 +74,7 @@ public interface CustomerApi {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public CustomerRsDto updateCustomer(@PathVariable Long id, @Schema(implementation = CustomerUpdateDto.class) @RequestBody CustomerUpdateDto customerUpdateDto);
+    public ResponseEntity<CustomerRsDto> updateCustomer(@PathVariable Long id, @Schema(implementation = CustomerUpdateDto.class) @RequestBody CustomerUpdateDto customerUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -89,7 +90,7 @@ public interface CustomerApi {
             @ApiResponse(responseCode = "404", description = "Customer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteCustomer(@PathVariable Long id);
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -107,5 +108,5 @@ public interface CustomerApi {
             @ApiResponse(responseCode = "404", description = "Customer not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public CustomerRsDto getCustomerById(@PathVariable Long id);
+    public ResponseEntity<CustomerRsDto> getCustomerById(@PathVariable Long id);
 }

@@ -5,6 +5,7 @@ import com.example.migrations.dto.ProducerCreateDto;
 import com.example.migrations.dto.ProducerRsDto;
 import com.example.migrations.dto.ProducerUpdateDto;
 import com.example.migrations.service.ProducerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -18,27 +19,32 @@ public class ProducerController implements ProducerApi {
 
 
     @Override
-    public List<ProducerRsDto> getProducers() {
-        return producerService.getProducers();
+    public ResponseEntity<List<ProducerRsDto>> getProducers() {
+        List<ProducerRsDto> producers = producerService.getProducers();
+        return ResponseEntity.ok(producers);
     }
 
     @Override
-    public ProducerRsDto createProducer(ProducerCreateDto producerCreateDto) {
-        return producerService.createProducer(producerCreateDto);
+    public ResponseEntity<ProducerRsDto> createProducer(ProducerCreateDto producerCreateDto) {
+        ProducerRsDto createdProducer = producerService.createProducer(producerCreateDto);
+        return ResponseEntity.ok(createdProducer);
     }
 
     @Override
-    public ProducerRsDto updateProducer(Long id, ProducerUpdateDto producerUpdateDto) {
-        return producerService.updateProducer(id,producerUpdateDto);
+    public ResponseEntity<ProducerRsDto> updateProducer(Long id, ProducerUpdateDto producerUpdateDto) {
+            ProducerRsDto updatedProducer = producerService.updateProducer(id, producerUpdateDto);
+            return ResponseEntity.ok(updatedProducer);
     }
 
     @Override
-    public void deleteProducer(Long id) {
-        producerService.deleteProducer(id);
+    public ResponseEntity<Void> deleteProducer(Long id) {
+            producerService.deleteProducer(id);
+            return ResponseEntity.ok().build();
     }
 
     @Override
-    public ProducerRsDto getProducerById(Long id) {
-        return producerService.getProducerById(id);
+    public ResponseEntity<ProducerRsDto> getProducerById(Long id) {
+            ProducerRsDto producer = producerService.getProducerById(id);
+            return ResponseEntity.ok(producer);
     }
 }

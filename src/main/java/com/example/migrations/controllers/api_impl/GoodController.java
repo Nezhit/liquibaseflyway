@@ -5,6 +5,7 @@ import com.example.migrations.dto.GoodCreateDto;
 import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.GoodUpdateDto;
 import com.example.migrations.service.GoodService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -17,27 +18,31 @@ public class GoodController implements GoodApi {
     }
 
     @Override
-    public List<GoodRsDto> getGoods() {
-        return goodService.getGoods();
+    public ResponseEntity<List<GoodRsDto>> getGoods() {
+        List<GoodRsDto> goods = goodService.getGoods();
+        return ResponseEntity.ok(goods);
     }
 
     @Override
-    public GoodRsDto createGood(GoodCreateDto goodCreateDto) {
-        return goodService.createGood(goodCreateDto);
+    public ResponseEntity<GoodRsDto> createGood(GoodCreateDto goodCreateDto) {
+        GoodRsDto createdGood = goodService.createGood(goodCreateDto);
+        return ResponseEntity.ok(createdGood);
+    }
+    @Override
+    public ResponseEntity<GoodRsDto> updateGood(Long id, GoodUpdateDto goodUpdateDto) {
+            GoodRsDto updatedGood = goodService.updateGood(id, goodUpdateDto);
+            return ResponseEntity.ok(updatedGood);
     }
 
     @Override
-    public GoodRsDto updateGood(Long id, GoodUpdateDto goodUpdateDto) {
-        return goodService.updateGood(id, goodUpdateDto);
+    public ResponseEntity<Void> deleteGood(Long id) {
+            goodService.deleteGood(id);
+            return ResponseEntity.ok().build();
     }
 
     @Override
-    public void deleteGood(Long id) {
-        goodService.deleteGood(id);
-    }
-
-    @Override
-    public GoodRsDto getGoodById(Long id) {
-        return goodService.getGoodById(id);
+    public ResponseEntity<GoodRsDto> getGoodById(Long id) {
+            GoodRsDto good = goodService.getGoodById(id);
+            return ResponseEntity.ok(good);
     }
 }

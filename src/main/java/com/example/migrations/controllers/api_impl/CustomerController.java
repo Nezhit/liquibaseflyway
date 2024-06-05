@@ -5,6 +5,8 @@ import com.example.migrations.dto.CustomerCreateDto;
 import com.example.migrations.dto.CustomerRsDto;
 import com.example.migrations.dto.CustomerUpdateDto;
 import com.example.migrations.service.CustomerService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -17,27 +19,32 @@ public class CustomerController implements CustomerApi {
     }
 
     @Override
-    public List<CustomerRsDto> getCustomers() {
-        return customerService.getCustomers();
+    public ResponseEntity<List<CustomerRsDto>> getCustomers() {
+        List<CustomerRsDto> customers = customerService.getCustomers();
+        return ResponseEntity.ok(customers);
     }
 
     @Override
-    public CustomerRsDto createCustomer(CustomerCreateDto customerCreateDto) {
-        return customerService.createCustomer(customerCreateDto);
+    public ResponseEntity<CustomerRsDto> createCustomer(CustomerCreateDto customerCreateDto) {
+        CustomerRsDto createdCustomer = customerService.createCustomer(customerCreateDto);
+        return ResponseEntity.ok(createdCustomer);
     }
 
     @Override
-    public CustomerRsDto updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
-        return customerService.updateCustomer(id, customerUpdateDto);
+    public ResponseEntity<CustomerRsDto> updateCustomer(Long id, CustomerUpdateDto customerUpdateDto) {
+            CustomerRsDto updatedCustomer = customerService.updateCustomer(id, customerUpdateDto);
+            return ResponseEntity.ok(updatedCustomer);
     }
 
     @Override
-    public void deleteCustomer(Long id) {
-        customerService.deleteCustomer(id);
+    public ResponseEntity<Void> deleteCustomer(Long id) {
+            customerService.deleteCustomer(id);
+            return ResponseEntity.ok().build();
     }
 
     @Override
-    public CustomerRsDto getCustomerById(Long id) {
-        return customerService.getCustomerById(id);
+    public ResponseEntity<CustomerRsDto> getCustomerById(Long id) {
+            CustomerRsDto customer = customerService.getCustomerById(id);
+            return ResponseEntity.ok(customer);
     }
 }

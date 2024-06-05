@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public interface TypeApi {
                             array = @ArraySchema(schema = @Schema(implementation = TypeRsDto.class)))}),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public List<TypeRsDto> getTypes();
+    public ResponseEntity<List<TypeRsDto>> getTypes();
 
     @PostMapping
     @Operation(
@@ -54,7 +55,7 @@ public interface TypeApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public TypeRsDto createType(@Schema(implementation = TypeCreateDto.class) @RequestBody TypeCreateDto typeCreateDto);
+    public ResponseEntity<TypeRsDto> createType(@Schema(implementation = TypeCreateDto.class) @RequestBody TypeCreateDto typeCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -72,7 +73,7 @@ public interface TypeApi {
             @ApiResponse(responseCode = "404", description = "Type not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public TypeRsDto updateType(@PathVariable Long id, @Schema(implementation = TypeUpdateDto.class) @RequestBody TypeUpdateDto typeUpdateDto);
+    public ResponseEntity<TypeRsDto> updateType(@PathVariable Long id, @Schema(implementation = TypeUpdateDto.class) @RequestBody TypeUpdateDto typeUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -88,7 +89,7 @@ public interface TypeApi {
             @ApiResponse(responseCode = "404", description = "Type not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteType(@PathVariable Long id);
+    public ResponseEntity<Void> deleteType(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -106,5 +107,5 @@ public interface TypeApi {
             @ApiResponse(responseCode = "404", description = "Type not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public TypeRsDto getTypeById(@PathVariable Long id);
+    public ResponseEntity<TypeRsDto> getTypeById(@PathVariable Long id);
 }

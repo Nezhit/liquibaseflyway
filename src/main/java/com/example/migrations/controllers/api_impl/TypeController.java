@@ -5,6 +5,7 @@ import com.example.migrations.dto.TypeCreateDto;
 import com.example.migrations.dto.TypeRsDto;
 import com.example.migrations.dto.TypeUpdateDto;
 import com.example.migrations.service.TypeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -17,27 +18,32 @@ public class TypeController implements TypeApi {
     }
 
     @Override
-    public List<TypeRsDto> getTypes() {
-        return typeService.getTypes();
+    public ResponseEntity<List<TypeRsDto>> getTypes() {
+        List<TypeRsDto> types = typeService.getTypes();
+        return ResponseEntity.ok(types);
     }
 
     @Override
-    public TypeRsDto createType(TypeCreateDto typeCreateDto) {
-        return typeService.createType(typeCreateDto);
+    public ResponseEntity<TypeRsDto> createType(TypeCreateDto typeCreateDto) {
+        TypeRsDto createdType = typeService.createType(typeCreateDto);
+        return ResponseEntity.ok(createdType);
     }
 
     @Override
-    public TypeRsDto updateType(Long id, TypeUpdateDto typeUpdateDto) {
-        return typeService.updateType(id, typeUpdateDto);
+    public ResponseEntity<TypeRsDto> updateType(Long id, TypeUpdateDto typeUpdateDto) {
+            TypeRsDto updatedType = typeService.updateType(id, typeUpdateDto);
+            return ResponseEntity.ok(updatedType);
     }
 
     @Override
-    public void deleteType(Long id) {
-        typeService.deleteType(id);
+    public ResponseEntity<Void> deleteType(Long id) {
+            typeService.deleteType(id);
+            return ResponseEntity.ok().build();
     }
 
     @Override
-    public TypeRsDto getTypeById(Long id) {
-        return typeService.getTypeById(id);
+    public ResponseEntity<TypeRsDto> getTypeById(Long id) {
+            TypeRsDto type = typeService.getTypeById(id);
+            return ResponseEntity.ok(type);
     }
 }
