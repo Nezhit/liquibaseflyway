@@ -1,10 +1,12 @@
 package com.example.migrations.controllers.api_impl;
 
 import com.example.migrations.controllers.OrderApi;
+import com.example.migrations.dto.GoodRsDto;
 import com.example.migrations.dto.OrderCreateDto;
 import com.example.migrations.dto.OrderRsDto;
 import com.example.migrations.dto.OrderUpdateDto;
 import com.example.migrations.service.OrderService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -17,27 +19,32 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public List<OrderRsDto> getOrders() {
-        return orderService.getOrders();
+    public ResponseEntity<List<OrderRsDto>> getOrders() {
+        List<OrderRsDto> orders = orderService.getOrders();
+        return ResponseEntity.ok(orders);
     }
 
     @Override
-    public OrderRsDto createOrder(OrderCreateDto orderCreateDto) {
-        return orderService.createOrder(orderCreateDto);
+    public ResponseEntity<OrderRsDto> createOrder(OrderCreateDto orderCreateDto) {
+        OrderRsDto createdOrder = orderService.createOrder(orderCreateDto);
+        return ResponseEntity.ok(createdOrder);
     }
 
     @Override
-    public OrderRsDto updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
-        return orderService.updateOrder(id, orderUpdateDto);
+    public ResponseEntity<OrderRsDto> updateOrder(Long id, OrderUpdateDto orderUpdateDto) {
+            OrderRsDto updatedOrder = orderService.updateOrder(id, orderUpdateDto);
+            return ResponseEntity.ok(updatedOrder);
     }
 
     @Override
-    public void deleteOrder(Long id) {
+    public ResponseEntity<Void> deleteOrder(Long id) {
         orderService.deleteOrder(id);
+        return ResponseEntity.ok().build();
     }
 
     @Override
-    public OrderRsDto getOrderById(Long id) {
-        return orderService.getOrderById(id);
+    public ResponseEntity<OrderRsDto> getOrderById(Long id) {
+        OrderRsDto orderRsDto= orderService.getOrderById(id);
+        return ResponseEntity.ok(orderRsDto);
     }
 }

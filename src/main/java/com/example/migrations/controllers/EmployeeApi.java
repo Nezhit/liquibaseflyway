@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public interface EmployeeApi {
                             array = @ArraySchema(schema = @Schema(implementation = EmployeeRsDto.class)))}),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public List<EmployeeRsDto> getEmployees();
+    public ResponseEntity<List<EmployeeRsDto>> getEmployees();
 
     @PostMapping
     @Operation(
@@ -54,7 +55,7 @@ public interface EmployeeApi {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public EmployeeRsDto createEmployee(@Schema(implementation = EmployeeCreateDto.class) @RequestBody EmployeeCreateDto employeeCreateDto);
+    public ResponseEntity<EmployeeRsDto> createEmployee(@Schema(implementation = EmployeeCreateDto.class) @RequestBody EmployeeCreateDto employeeCreateDto);
 
     @PutMapping("/{id}")
     @Operation(
@@ -73,7 +74,7 @@ public interface EmployeeApi {
             @ApiResponse(responseCode = "404", description = "Employee not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public EmployeeRsDto updateEmployee(@PathVariable Long id, @Schema(implementation = EmployeeUpdateDto.class) @RequestBody EmployeeUpdateDto employeeUpdateDto);
+    public ResponseEntity<EmployeeRsDto> updateEmployee(@PathVariable Long id, @Schema(implementation = EmployeeUpdateDto.class) @RequestBody EmployeeUpdateDto employeeUpdateDto);
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -89,7 +90,7 @@ public interface EmployeeApi {
             @ApiResponse(responseCode = "404", description = "Employee not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public void deleteEmployee(@PathVariable Long id);
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id);
 
     @GetMapping("/{id}")
     @Operation(
@@ -107,5 +108,5 @@ public interface EmployeeApi {
             @ApiResponse(responseCode = "404", description = "Employee not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public EmployeeRsDto getEmployeeById(@PathVariable Long id);
+    public ResponseEntity<EmployeeRsDto> getEmployeeById(@PathVariable Long id);
 }
